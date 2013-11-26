@@ -7,7 +7,8 @@ $> auth-tokens-create -V -S
 Consumer secret []: my_client_secret
 Consumer key []: my_client_key
 Agave tenant username []: dooley
-Agave tenant password: Calling curl -sku "my_client_secret:XXXXXX" -X POST -d "grant_type=client_credentials&username=dooley&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://129.114.60.211/token
+Agave tenant password: 
+Calling curl -sku "my_client_secret:XXXXXX" -X POST -d "grant_type=client_credentials&username=dooley&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://129.114.60.211/token
 Token successfully stored
 {
     "access_token": "56e13e12abd0eb8f776b18513622cc", 
@@ -34,15 +35,15 @@ wc-demo-1.00
 
 # find details about an app
 # Q: we should probably allow admins to see all apps when they do a general listing
-$> apps-list -V wsa-1.00
-Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/apps/wc-demo-1.00?pretty=true
+$> apps-list -V wc-demo-1.00
+Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/apps/2.0/wc-demo-1.00?pretty=true
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : {
     "id" : "wc-demo-1.00",
-    "name" : "wca",
+    "name" : "wc-demo",
     "icon" : "",
     "uuid" : "0001379535988467-c29d64962-0001-app",
     "parallelism" : "SERIAL",
@@ -56,11 +57,11 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/apps/wc-demo-1.00?pr
     "tags" : [ "textutils", "gnu" ],
     "ontology" : [ "http://sswapmeet.sswap.info/algorithms/wc" ],
     "executionType" : "CONDOR",
-    "executionSystem" : "condor.opensciencegrid.org",
-    "deploymentPath" : "/sterry1/applications/wc-demo-1.00",
-    "deploymentSystem" : "data.iplantcollaborative.org",
+    "executionSystem" : "demo.execute.example.com",
+    "deploymentPath" : "apps/wc-1.00",
+    "deploymentSystem" : "demo.storage.example.com",
     "templatePath" : "wrapper.sh",
-    "testPath" : "test.sh",
+    "testPath" : "wrapper.sh",
     "checkpointable" : false,
     "lastModified" : "2013-07-06T10:20:24.000-05:00",
     "modules" : [ "purge", "load TACC" ],
@@ -69,9 +70,9 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/apps/wc-demo-1.00?pr
       "id" : "query1",
       "value" : {
         "validator" : "",
-        "default" : "read1.fq",
+        "default" : "apps/wc-1.00/picksumipsum.txt",
         "visible" : true,
-        "required" : false
+        "required" : true
       },
       "details" : {
         "label" : "File to count words in: ",
@@ -84,39 +85,42 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/apps/wc-demo-1.00?pr
         "fileTypes" : [ "text-0" ]
       }
     } ],
-    "parameters" : [ ],
-    "outputs" : [ {
-      "id" : "outputWC",
-      "value" : {
-        "validator" : "",
-        "default" : "wc_out.txt"
-      },
-      "details" : {
-        "label" : "Text file",
-        "description" : "Results of WC"
-      },
-      "semantics" : {
-        "minCardinality" : 1,
-        "maxCardinality" : 1,
-        "ontology" : [ "http://sswapmeet.sswap.info/util/TextDocument" ],
-        "fileTypes" : [ "" ]
+   "parameters":[
+      {
+         "id":"printLongestLine",
+         "value":{
+            "default":false,
+            "type":"string",
+            "validator":"",
+            "visible":true,
+            "required":true
+         },
+         "details":{
+            "label":"Print the length of the longest line",
+            "description":"Command option -L"
+         },
+         "semantics":{
+            "ontology":[
+               "xs:boolean"
+            ]
+         }
       }
-    } ],
+   ],
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/apps/wc-demo-1.00"
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-demo-1.00"
       },
       "executionSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
       },
       "storageSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "owner" : {
-        "href" : "https://129.114.60.211/v2/profiles/sterry1"
+        "href" : "https://agave.iplantc.org/profiles/2.0/sterry1"
       },
       "permissions" : {
-        "href" : "https://129.114.60.211/v2/apps/wc-demo-1.00/pems"
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-demo-1.00/pems"
       }
     }
   }
@@ -133,28 +137,12 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/apps/wc-demo-1.00?pr
 # Q: how do we query for just storage systems?
 # Q: how can we tell which one is the default system?
 $> systems-list
-lonestar4.tacc.teragrid.org
-irods.storage.example.com
-condor.execute.example.com
-sftp.dooley.example.com
-gsissh.execute.example.com
+demo.execute.example.com
+demo.storage.example.com
 data.iplantcollaborative.org
-ranger.tacc.teragrid.org
-trestles.sdsc.teragrid.org
-local.execute.example.com
-condor.opensciencegrid.org
-sang-execute
-blacklight.psc.teragrid.org
-stampede.tacc.utexas.edu
-ssh.execute.example.com
-sang-storage
-gridftp.storage.example.com
-sftp.storage.example.com
-my.cloned.system
-ftp.storage.example.com
 
 # see if your input is there
-$> files-list -S sftp.storage.example.com
+$> files-list -S demo.storage.example.com
 .
 .bash_history
 .bash_logout
@@ -162,52 +150,41 @@ $> files-list -S sftp.storage.example.com
 .bashrc
 .pki
 .viminfo
-agave_icon.png
-applications
-download.rand
-download.zero
-inputs
-irods3.2.tgz
-sftp-file
-slurm.submit
-this_is_sftp_system
-vaughn
 
-$> files-list -S sftp.storage.example.com inputs
-.
-fasta
+$> files-mkdir -S demo.storage.example.com -N inputs
 
-$> files-list -S sftp.storage.example.com inputs/fastq
+$> files-list -S demo.storage.example.com inputs
 .
- 
-# not there, so upload some data
-# Q: the response to this command does not seem to work. I'd expect some sort of tracking id so I can tell when the transfer is done.
-$> files-upload -S lonestar -F acmbcb.fa inputs/fastq
+
+# nothing in there, so upload some data
+$> files-upload -S demo.storage.example.com -F files/picksumipsum.txt inputs
+
+$> files-history
 
 # see it is there
-$> files-list -V -S sftp.storage.example.com inputs/fastq/example.fq
-Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/files/listings/system/sftp.storage.example.com/inputs/fastq/example.fq?pretty=true
+$> files-list -V -S demo.storage.example.com inputs/fastq/example.fq
+Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/files/2.0/listings/system/demo.storage.example.com/inputs/fastq/example.fq?pretty=true
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : [ {
     "name" : "example.fq",
     "path" : "inputs/fastq/example.fq",
     "lastModified" : "2013-09-21T16:56:12.000-05:00",
     "length" : 132,
-    "permisssions" : "EXECUTE",
+    "permisssions" : "ALL",
     "format" : "raw",
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/files/system/sftp.storage.example.com/inputs/fastq/example.fq"
+        "href" : "https://agave.iplantc.org/files/2.0/system/demo.storage.example.com/inputs/fastq/example.fq"
       },
       "system" : {
-        "href" : "https://129.114.60.211/v2/systems/sftp.storage.example.com"
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "metadata" : {
-        "href" : "https://129.114.60.211/v2/meta/search/?query=rel:https://129.114.60.211/v2/files/system/sftp.storage.example.com/inputs/fastq/example.fq"
+        "href" : "https://agave.iplantc.org/meta/2.0/search/?query=rel:https://agave.iplantc.org/files/2.0/system/demo.storage.example.com/inputs/fastq/example.fq"
       }
     }
   } ]
@@ -215,16 +192,15 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/files/listings/syste
 
 
 # my bad. copy to other system
-# Q: this command doesn't see intuitive. it's a transfer, yet we're doing an import? Can we make this a little clearer?
-files-import -V -U "agave://sftp.storage.example.com/inputs/fastq/example.fq" dooley/inputs/fasta/
-Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToIngest=agave://sftp.storage.example.com/slurm.submit" https://129.114.60.211/io-V1/files/media/dooley?pretty=true
+files-import -V -U "agave://demo.storage.example.com/inputs/fastq/example.fq" dooley/inputs/fasta/
+Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToIngest=agave://demo.storage.example.com/slurm.submit" https://129.114.60.211/io-V1/files/media/dooley?pretty=true
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   821  100   764  100    57    182     13  0:00:04  0:00:04 --:--:--   182
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : {
     "name" : "slurm.submit",
     "path" : "dooley",
@@ -235,13 +211,13 @@ Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToInge
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/io/system/data.iplantcollaborative.org/dooley"
+        "href" : "https://129.114.60.211/v2/io/system/demo.storage.example.com/dooley"
       },
       "system" : {
-        "href" : "https://129.114.60.211/v2/systems/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "metadata" : {
-        "href" : "https://129.114.60.211/v2/meta/search/?query=rel:https://129.114.60.211/v2/io/system/data.iplantcollaborative.org/dooley"
+        "href" : "https://agave.iplantc.org/meta/2.0/search/?query=rel:https://129.114.60.211/v2/io/system/demo.storage.example.com/dooley"
       }
     }
   }
@@ -261,11 +237,11 @@ example.fq
 
 # run a job
 $> jobs-submit -V -F submit.json 
-Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job?pretty=true
+Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : {
     "id" : "0001379854320857-5056831b44-0001-job",
     "name" : "demo-1",
@@ -280,7 +256,7 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
     "retries" : 0,
     "localId" : "114",
     "archivePath" : "/dooley/archive/acm-bcb/demo-1",
-    "archiveSystem" : "data.iplantcollaborative.org",
+    "archiveSystem" : "demo.storage.example.com",
     "outputPath" : null,
     "status" : "QUEUED",
     "submitTime" : "2013-09-22T07:52:21.000-05:00",
@@ -292,28 +268,28 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
     "parameters" : [ ],
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job"
       },
       "application" : {
-        "href" : "https://129.114.60.211/v2/apps/wc-demo-1.00"
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-demo-1.00"
       },
       "executionSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
       },
       "archiveSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "archiveData" : {
-        "href" : "https://129.114.60.211/v2/jobs/136/outputs/listings"
+        "href" : "https://agave.iplantc.org/jobs/2.0/136/outputs/listings"
       },
       "owner" : {
-        "href" : "https://129.114.60.211/v2/profiles/dooley"
+        "href" : "https://agave.iplantc.org/profiles/2.0/dooley"
       },
       "permissions" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job/pems"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/pems"
       },
       "history" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job/history"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/history"
       }
     }
   }
@@ -322,11 +298,11 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
 
 # monitor the job
 $> jobs-list -V 0001379854320857-5056831b44-0001-job
-Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job?pretty=true
+Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : {
     "id" : "0001379854320857-5056831b44-0001-job",
     "name" : "demo-1",
@@ -341,7 +317,7 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
     "retries" : 0,
     "localId" : "114",
     "archivePath" : "/dooley/archive/acm-bcb/demo-1",
-    "archiveSystem" : "data.iplantcollaborative.org",
+    "archiveSystem" : "demo.storage.example.com",
     "outputPath" : null,
     "status" : "QUEUED",
     "submitTime" : "2013-09-22T07:52:21.000-05:00",
@@ -353,28 +329,28 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
     "parameters" : [ ],
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job"
       },
       "application" : {
-        "href" : "https://129.114.60.211/v2/apps/wc-demo-1.00"
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-demo-1.00"
       },
       "executionSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
       },
       "archiveSystem" : {
-        "href" : "https://129.114.60.211/v2/systems/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "archiveData" : {
-        "href" : "https://129.114.60.211/v2/jobs/136/outputs/listings"
+        "href" : "https://agave.iplantc.org/jobs/2.0/136/outputs/listings"
       },
       "owner" : {
-        "href" : "https://129.114.60.211/v2/profiles/dooley"
+        "href" : "https://agave.iplantc.org/profiles/2.0/dooley"
       },
       "permissions" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job/pems"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/pems"
       },
       "history" : {
-        "href" : "https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job/history"
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/history"
       }
     }
   }
@@ -393,17 +369,17 @@ Condor job successfully placed into queue
 Job started running
 Job completed execution
 Beginning to archive output.
-Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://data.iplantcollaborative.org//dooley/archive/acm-bcb/demo-1
+Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//dooley/archive/acm-bcb/demo-1
 Job output archiving completed successfully.
 Job completed.
 
 # really stalk the job
 $> jobs-history -V 0001379854320857-5056831b44-0001-job
-Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/0001379854320857-5056831b44-0001-job/history?pretty=true
+Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/history?pretty=true
 {
   "status" : "success",
   "message" : "",
-  "version" : "2.1.8-SNAPSHOT-r8477",
+  "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : [ {
     "created" : "2013-09-22T07:52:00.000-05:00",
     "status" : "PENDING",
@@ -467,7 +443,7 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
     },
     "created" : "2013-09-22T07:53:35.000-05:00",
     "status" : "ARCHIVING",
-    "description" : "Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://data.iplantcollaborative.org//dooley/archive/acm-bcb/demo-1"
+    "description" : "Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//dooley/archive/acm-bcb/demo-1"
   }, {
     "created" : "2013-09-22T07:53:48.000-05:00",
     "status" : "ARCHIVING_FINISHED",
@@ -480,7 +456,6 @@ Calling curl -sku "dooley:XXXXXX" https://129.114.60.211/v2/jobs/000137985432085
 }
 
 # view job output
-# Q: using this because the job output command wasn't working
 $> files-list dooley/archive/acm-bcb/demo-1
 .
 condorSubmit
@@ -493,7 +468,6 @@ transfer.tar.gz
 
 
 # download job output
-# Q: again using this because the job output command wasn't working
 $> files-get dooley/archive/acm-bcb/demo-1/output.tar.gz
 .
 condorSubmit
@@ -513,33 +487,28 @@ transfer.tar.gz
 
 
 # download piece of job output with files service
-# Q: again, job output service wasn't working. i see a pattern here
 $> files-get dooley/archive/acm-bcb/demo-1/job.out
 
 # share file/folder with public
-# Q: this was jacked when I tried to do it. I couldn't assign public permission to anything. I pushed a patch so this now works. 
-# Q: how would people know about public and world readable permissions? Should we have a files-publish or files-pems-publish command instead?
 $> files-pems-update -U public -P READ dooley/archive/acm-bcb/demo-1/job.out
 
 # test public download
-# Q: this didn't work because we lost the public download service from v2 and all services require auth now. I went ahead and added the public download service back and bounced the service.
-$> curl -sk "curl -k https://129.114.60.211/files/download/dooley/system/data.iplantcollaborative.org/dooley/archive/acm-bcb/demo-1/job.out"
+$> curl -sk "curl -k https://129.114.60.211/files/download/dooley/system/demo.storage.example.com/dooley/archive/acm-bcb/demo-1/job.out"
 
 # unshare file/folder with public
-# Q: referencing above, should we have a files-unpublish or files-pems-unpublish command to make this a bit clearer?
 $> files-pems-update -U public -P NONE dooley/archive/acm-bcb/demo-1/job.out
 
 # 404 on public download
-$> curl -k https://129.114.60.211/io-V1/files/download/dooley/system/data.iplantcollaborative.org/dooley/archive/acm-bcb/demo-1/job.out
-{"status":"error","message":"User does not have access to view the requested resource","version":"2.1.8-SNAPSHOT-r8477","result":null}
+$> curl -k https://129.114.60.211/io-V1/files/download/dooley/system/demo.storage.example.com/dooley/archive/acm-bcb/demo-1/job.out
+{"status":"error","message":"User does not have access to view the requested resource","version":"2.0.0-SNAPSHOT-rf64a967","result":null}
 
 # create posit
-$> postits-create -s dooley -m 1 https://129.114.60.211/v2/files/media/dooley/archive/acm-bcb/demo-1/job.out
+$> postits-create -s dooley -m 1 https://agave.iplantc.org/files/2.0/media/dooley/archive/acm-bcb/demo-1/job.out
 API key for authenticating, its recommended to insert : 
-https://129.114.60.211/v2/postits/b399e223fcc3581145a7affd136fd232
+https://agave.iplantc.org/postits/2.0/b399e223fcc3581145a7affd136fd232
 
 # test public download
-$> curl -sk https://129.114.60.211/v2/postits/b399e223fcc3581145a7affd136fd232
+$> curl -sk https://agave.iplantc.org/postits/2.0/b399e223fcc3581145a7affd136fd232
 ./
 ./test.sh
 ./.agave.archive
@@ -551,6 +520,6 @@ $> curl -sk https://129.114.60.211/v2/postits/b399e223fcc3581145a7affd136fd232
 {"status":"success","message":"","version":"2.1.8-SNAPSHOT-r${buildNumber}","result":{}}wc_out.txt
 
 # 404 on now expired postit
-$> curl -sk https://129.114.60.211/v2/postits/b399e223fcc3581145a7affd136fd232
+$> curl -sk https://agave.iplantc.org/postits/2.0/b399e223fcc3581145a7affd136fd232
 {"status":"error","message":"Postit key has already been redeemed.","result":"","version":"2.2.0-r8316"}
 
