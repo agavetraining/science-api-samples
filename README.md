@@ -9,7 +9,7 @@ Requirements
 
 The only requirement to follow along with the included samples is the Agave CLI. You can download the Agave CLI from:
 
-	* AgaveCLI (https://bitbucket.org/taccaci/foundation-cli)
+	* AgaveCLI ([https://bitbucket.org/taccaci/foundation-cli](https://bitbucket.org/taccaci/foundation-cli Agave CLI])
 	
 Installation
 =================
@@ -22,39 +22,38 @@ No installation is necessary. Just download the Agave CLI and add the bin direct
 Contents
 =================
 
-	agave-demo-samples
-	- README.md					This file
+	- README.md						This file
 	+ apps
-		- README.md				Information on registering apps
-		+ head-1.00				A simple head app fully wrapped and ready to register
-		+ wc-1.00				A bare bones wc app fully wrapped and ready to register
+		- README.md					Information on registering apps
+		+ head-1.00					A simple head app fully wrapped and ready to register
+		+ wc-1.00					A bare bones wc app fully wrapped and ready to register
 	+ files
-		- README.md				Information on managing and moving data
-		- picksumipsum.txt 		Simple text file used in the examples
+		- README.md					Information on managing and moving data
+		- picksumipsum.txt 			Simple text file used in the examples
 	+ jobs
-		- README.md				Information on running and managing jobs
-		- head-5.97-submit.json	Detailed job description ready to submit
-		- wc-1.00-submit.json	Bare bones job description ready to submit
+		- README.md					Information on running and managing jobs
+		- head-5.97-submit.json		Detailed job description ready to submit
+		- wc-1.00-submit.json		Bare bones job description ready to submit
 	+ jobs
-		- README.md				Information on running and managing jobs
-		- head-5.97-submit.json	Detailed job description ready to submit
-		- wc-1.00-submit.json	Bare bones job description ready to submit
+		- README.md					Information on running and managing jobs
+		- head-5.97-submit.json		Detailed job description ready to submit
+		- wc-1.00-submit.json		Bare bones job description ready to submit
 	+ metadata
-		- README.md				Information on managing metadata	
-		- complex_meta.json		Structured metadata the validates against the provided schemata
-		- schemata.json			Valid json schema metadata definition
-		- simple_meta.json		Simple key-value metadata entry
+		- README.md					Information on managing metadata	
+		- complex_meta.json			Structured metadata the validates against the provided schemata
+		- schemata.json				Valid json schema metadata definition
+		- simple_meta.json			Simple key-value metadata entry
 	+ notifications
-		- README.md				Information on managing notifications
-		- email_notif.json		Template for one-off email notifications
-		- webhook_notif.json	Template for persistent webhook notifications
+		- README.md					Information on managing notifications
+		- email_notif.json			Template for one-off email notifications
+		- webhook_notif.json		Template for persistent webhook notifications
 	+ systems
 		+ execution
-			- README.md			Information on managing execution systems
-			- condor.json		Sample condor system
-			- gsissh-cred.json 	Sample gsissh system with provided credential
-			- gsissh-myproxy.json Sample gsissh system using myproxy for credential mgmt
-			- ssh-password.json Sample ssh system
+			- README.md				Information on managing execution systems
+			- condor.json			Sample condor system
+			- gsissh-cred.json 		Sample gsissh system with provided credential
+			- gsissh-myproxy.json 	Sample gsissh system using myproxy for credential mgmt
+			- ssh-password.json 	Sample ssh system
 			- ssh-tunnel.json	Sample ssh system accessible via proxy tunnel
 		+ storage
 			- README.md			Information on managing storage systems
