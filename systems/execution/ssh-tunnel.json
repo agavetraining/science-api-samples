@@ -1,0 +1,59 @@
+{
+	"id": "demo.execute.example.com",
+	"name": "Demo PBS + SSH demo vm",
+	"status": "UP",
+	"type": "EXECUTION",
+	"description": "My example system using tunneling ssh to submit jobs used for testing.",
+	"site": "example.com",
+	"executionType": "HPC",
+	"queues": [
+		{
+			"name": "debug",
+			"maxJobs": 100,
+			"maxMemory": "2GB",
+			"maxProcessors": 128,
+			"maxRequestedTime": "24:00:00",
+			"customDirectives": "",
+			"default": true
+		}
+	],
+	"login": {
+		"host": "ssh.example.com",
+		"port": 22,
+		"protocol": "SSH",
+		"scratchDir": "/scratch",
+		"workDir": "/work",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "PASSWORD"
+		},
+		"proxy": {
+			"name": "gateway node",
+			"host": "proxy.example.com",
+			"port": 22
+		}
+	},
+	"storage": {
+		"host": "ssh.example.com",
+		"port": 22,
+		"protocol": "SFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "PASSWORD"
+		},
+		"proxy": {
+			"name": "gateway node",
+			"host": "proxy.example.com",
+			"port": 22
+		}
+	},
+	"scheduler": "PBS",
+	"environment": "",
+	"startupScript": "./bashrc"
+}

@@ -1,0 +1,48 @@
+{
+	"id": "demo.execute.example.com",
+	"name": "Demo Condor + SSH demo vm",
+	"status": "UP",
+	"type": "EXECUTION",
+	"description": "My example system using ssh and condor to submit jobs used for testing.",
+	"site": "example.com",
+	"executionType": "HPC",
+	"default": false,
+	"queues": [
+        {
+            "name": "condorqueue",
+            "maxJobs": 5,
+            "maxMemory": "1GB",
+			"maxProcessors": 128,
+			"maxRequestedTime": "24:00:00",
+            "customDirectives": "",
+            "defaut":true
+        }
+    ],
+	"login": {
+		"host": "condor.example.com",
+		"port": 22,
+		"protocol": "SSH",
+		"scratchDir": "/scratch",
+		"workDir": "/work",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"type": "PASSWORD"
+		}
+	},
+	"storage": {
+		"host": "condor.example.com",
+		"port": 22,
+		"protocol": "SFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"type": "PASSWORD"
+		}
+	},
+	"scheduler": "CONDOR",
+	"environment": "",
+	"startupScript": "./bashrc"
+}

@@ -1,0 +1,65 @@
+{
+	"id": "demo.execute.example.com",
+	"name": "Demo SGE + GSISSH demo vm",
+	"status": "UP",
+	"type": "EXECUTION",
+	"description": "My example system using gsissh and gridftp to submit jobs used for testing.",
+	"site": "example.com",
+	"executionType": "HPC",
+	"queues": [
+		{
+			"name": "debug",
+			"maxJobs": 100,
+			"maxMemory": "2GB",
+			"maxProcessors": 128,
+			"maxRequestedTime": "24:00:00",
+			"customDirectives": "",
+			"default": true
+		}
+	],
+	"login": {
+		"host": "gsissh.example.com",
+		"port": 2222,
+		"protocol": "GSISSH",
+		"scratchDir": "/scratch",
+		"workDir": "/work",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "X509",
+			"server": {
+				"id": "myproxy.teragrid.org",
+				"name": "XSEDE MyProxy Server",
+				"site": "ncsa.uiuc.edu",
+				"endpoint": "myproxy.teragrid.org",
+				"port": 7512,
+				"protocol": "MYPROXY"
+			}
+		}
+	},
+	"storage": {
+		"host": "gridftp.example.com",
+		"port": 2811,
+		"protocol": "GRIDFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "X509",
+			"server": {
+				"id": "myproxy.teragrid.org",
+				"name": "XSEDE MyProxy Server",
+				"site": "ncsa.uiuc.edu",
+				"endpoint": "myproxy.teragrid.org",
+				"port": 7512,
+				"protocol": "MYPROXY"
+			}
+		}
+	},
+	"scheduler": "SGE",
+	"environment": "",
+	"startupScript": "./bashrc"
+}

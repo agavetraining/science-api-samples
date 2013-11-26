@@ -1,0 +1,6 @@
+{
+	"url" : "nryan@mlb.com",
+	"event" : "*",
+	"associatedUuid" : "<insert uuid here>",
+	"persistent": false
+}

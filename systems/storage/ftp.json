@@ -1,0 +1,20 @@
+{
+	"id": "demo.storage.example.com",
+	"name": "Demo FTP demo vm",
+	"status": "UP",
+	"type": "STORAGE",
+	"description": "My example system using ftp to move data.",
+	"site": "example.com",
+	"storage": {
+		"host": "condor.example.com",
+		"port": 22,
+		"protocol": "SFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"type": "PASSWORD"
+		}
+	}
+}

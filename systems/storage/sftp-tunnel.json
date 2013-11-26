@@ -1,0 +1,26 @@
+{
+	"id": "demo.storage.example.com",
+	"name": "Demo sftp tunnel server",
+	"status": "UP",
+	"type": "STORAGE",
+	"description": "My example system using tunneling sftp to move data.",
+	"site": "example.com",
+	"storage": {
+		"host": "ssh.example.com",
+		"port": 22,
+		"protocol": "SFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "PASSWORD"
+		},
+		"proxy": {
+			"name": "gateway node",
+			"host": "proxy.example.com",
+			"port": 22
+		}
+	}
+}

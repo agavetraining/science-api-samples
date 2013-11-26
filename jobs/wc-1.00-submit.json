@@ -1,0 +1,13 @@
+{
+    "jobName": "wc-demo",
+    "appId": "wc-demo-1.00",
+    "notifications": [
+    	{ 
+    		"url" : "nryan@mlb.com",
+    		"event": "FINISHED"
+    	}
+    ],		
+    "inputs": {
+        "query1": "apps/wc-1.00/picksumipsum.txt"
+    }
+}

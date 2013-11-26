@@ -1,0 +1,21 @@
+{
+	"name": "user",
+	"value": {
+		"firstName" : "Pedro",
+		"lastName" : "Martinez",
+		"city" : "Boston",
+		"state" : "MA",
+		"email" : "pmartinez@mlb.com",
+		"position" : "pitcher",
+		"team" : "Red Sox",
+		"wins" : 219,
+		"losses" : 100,
+		"era" : 2.93,
+		"so" : 3154,
+		"ip" : 2827.1,
+		"games": 476,
+		"status": "retired"
+	},
+	"schemaId": "<insert schemata uuid here>",
+	"associatedUuids": []
+}

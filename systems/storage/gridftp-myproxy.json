@@ -1,0 +1,29 @@
+{
+	"id": "demo.storage.example.com",
+	"name": "Demo GRIDFTP + MyProxy demo vm",
+	"status": "UP",
+	"type": "STORAGE",
+	"description": "My example system using gridftp and myproxy to move data.",
+	"site": "example.com",
+	"storage": {
+		"host": "gridftp.example.com",
+		"port": 2811,
+		"protocol": "GRIDFTP",
+		"rootDir": "/home/demo",
+		"homeDir": "/",
+		"auth": {
+			"username": "demo",
+			"password": "demo",
+			"credential": "",
+			"type": "X509",
+			"server": {
+				"id": "myproxy.teragrid.org",
+				"name": "XSEDE MyProxy Server",
+				"site": "ncsa.uiuc.edu",
+				"endpoint": "myproxy.teragrid.org",
+				"port": 7512,
+				"protocol": "MYPROXY"
+			}
+		}
+	}
+}

@@ -1,0 +1,94 @@
+{
+	"schema" : {
+		"title" : "profile",
+		"type" : "object",
+		"properties" : {
+			"firstName" : {
+				"type" : "string"
+			},
+			"lastName" : {
+				"type" : "string"
+			},
+			"city" : {
+				"type" : "string"
+			},
+			"state" : {
+				"type" : "string"
+			},
+			"email" : {
+				"type" : "string"
+			},
+			"team" : {
+				"type" : "string"
+			},
+			"position" : {
+				"type" : { 
+					"enum": [ 
+						"pitcher",
+						"catcher",
+						"first",
+						"second",
+						"third",
+						"shortstop",
+						"left",
+						"right",
+						"center",
+						"manager"
+					] 
+				}
+			},
+			"wins" : {
+				"type" : "integer"
+			},
+			"losses" : {
+				"type" : "integer"
+			},
+			"era" : {
+				"type" : "number"
+			},
+			"so" : {
+				"type" : "string"
+			},
+			"ip" : {
+				"type" : "number"
+			},
+			"games" : {
+				"type" : "string"
+			},
+			"ba" : {
+				"type" : "number",
+			},
+			"hr" : {
+				"type" : "integer",
+			},
+			"hits" : {
+				"type" : "integer",
+			},
+			"runs" : {
+				"type" : "integer",
+			},
+			"slg" : {
+				"type" : "number",
+			},
+			"obp" : {
+				"type" : "number",
+			},
+			"status" : {
+				"type" : { 
+					"enum": [ 
+						"active",
+						"retired",
+						"disabled",
+						"banned"
+					] 
+				}
+			}
+		},
+		"required" : [ 
+			"firstName", 
+			"lastName", 
+			"email",
+			"position"
+		]
+	}
+}
