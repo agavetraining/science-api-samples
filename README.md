@@ -7,9 +7,9 @@ This project contains a collection of json samples that can be used as templates
 Requirements
 =================
 
-The only requirement to follow along with the included samples is the Agave CLI. You can download the Agave CLI from:
+The only requirement to follow along with the included samples is the [Agave CLI](https://bitbucket.org/taccaci/foundation-cli "Agave CLI"). You can download the Agave CLI [here](https://bitbucket.org/taccaci/foundation-cli "Agave CLI"):
 
-	* [Agave CLI](https://bitbucket.org/taccaci/foundation-cli "Agave CLI")
+	
 	
 Installation
 =================
