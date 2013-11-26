@@ -9,7 +9,7 @@ Requirements
 
 The only requirement to follow along with the included samples is the Agave CLI. You can download the Agave CLI from:
 
-	* AgaveCLI ([https://bitbucket.org/taccaci/foundation-cli](https://bitbucket.org/taccaci/foundation-cli Agave CLI])
+	* AgaveCLI ([https://bitbucket.org/taccaci/foundation-cli](https://bitbucket.org/taccaci/foundation-cli Agave CLI))
 	
 Installation
 =================
