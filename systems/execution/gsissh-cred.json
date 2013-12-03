@@ -10,7 +10,9 @@
 		{
 			"name": "debug",
 			"maxJobs": 100,
-			"maxMemory": "2GB",
+			"maxUserJobs": 10,
+			"maxNodes": 256,
+            "maxMemory": "2GB",
 			"maxProcessors": 128,
 			"maxRequestedTime": "24:00:00",
 			"customDirectives": "",

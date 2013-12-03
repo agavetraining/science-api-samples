@@ -10,9 +10,11 @@
 	"queues": [
         {
             "name": "condorqueue",
-            "maxJobs": 5,
-            "maxMemory": "1GB",
-			"maxProcessors": 128,
+            "maxJobs": 50,
+            "maxUserJobs": 5,
+			"maxNodes": -1,
+            "maxMemoryPerNode": "1GB",
+			"maxProcessorsPerNode": 128,
 			"maxRequestedTime": "24:00:00",
             "customDirectives": "",
             "defaut":true
