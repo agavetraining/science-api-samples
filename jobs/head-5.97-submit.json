@@ -11,7 +11,8 @@
     "notifications": [
     	{ 
     		"url" : "http://requestb.in/11pbi6m1?job_id=${JOB_ID}&status=${JOB_STATUS}",
-    		"event": "*"
+    		"event": "*",
+    		"persistent", true
     	},
     	{ 
     		"url" : "nryan@mlb.com",
