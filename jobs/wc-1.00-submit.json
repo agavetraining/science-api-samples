@@ -1,5 +1,5 @@
 {
-    "jobName": "wc-demo",
+    "name": "wc-demo",
     "appId": "wc-demo-1.00",
     "notifications": [
     	{ 

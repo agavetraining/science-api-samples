@@ -1,10 +1,11 @@
 {
-    "jobName": "head-demo",
+    "name": "head-demo",
     "appId": "head-demo-1.00",
-    "requestedTime": "00:30:00",
-    "maxMemory": 1,
-    "processors": 1,
     "queue": "default",
+    "nodeCount": 1,
+    "maxMemoryPerNode": 1,
+    "processorsPerNode": 1,
+    "requestedTime": "00:30:00",
     "archive": true,
     "archivePath": "archive/jobs/head-demo",
     "archiveSystem": "demo.storage.example.com",
@@ -12,7 +13,7 @@
     	{ 
     		"url" : "http://requestb.in/11pbi6m1?job_id=${JOB_ID}&status=${JOB_STATUS}",
     		"event": "*",
-    		"persistent", true
+    		"persistent": true
     	},
     	{ 
     		"url" : "nryan@mlb.com",
