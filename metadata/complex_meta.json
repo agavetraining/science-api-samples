@@ -17,5 +17,5 @@
 		"status": "retired"
 	},
 	"schemaId": "<insert schemata uuid here>",
-	"associatedUuids": []
+	"associatedIds": []
 }

@@ -1,6 +1,5 @@
 {
-	"schema" : {
-		"title" : "profile",
+		"title": "profile",
 		"type" : "object",
 		"properties" : {
 			"firstName" : {
@@ -22,8 +21,7 @@
 				"type" : "string"
 			},
 			"position" : {
-				"type" : { 
-					"enum": [ 
+				"enum": [ 
 						"pitcher",
 						"catcher",
 						"first",
@@ -35,7 +33,6 @@
 						"center",
 						"manager"
 					] 
-				}
 			},
 			"wins" : {
 				"type" : "integer"
@@ -47,41 +44,39 @@
 				"type" : "number"
 			},
 			"so" : {
-				"type" : "string"
+				"type" : "integer"
 			},
 			"ip" : {
 				"type" : "number"
 			},
 			"games" : {
-				"type" : "string"
+				"type" : "integer"
 			},
 			"ba" : {
-				"type" : "number",
+				"type" : "number"
 			},
 			"hr" : {
-				"type" : "integer",
+				"type" : "integer"
 			},
 			"hits" : {
-				"type" : "integer",
+				"type" : "integer"
 			},
 			"runs" : {
-				"type" : "integer",
+				"type" : "integer"
 			},
 			"slg" : {
-				"type" : "number",
+				"type" : "number"
 			},
 			"obp" : {
-				"type" : "number",
+				"type" : "number"
 			},
 			"status" : {
-				"type" : { 
 					"enum": [ 
 						"active",
 						"retired",
 						"disabled",
 						"banned"
 					] 
-				}
 			}
 		},
 		"required" : [ 
@@ -90,5 +85,4 @@
 			"email",
 			"position"
 		]
-	}
 }
