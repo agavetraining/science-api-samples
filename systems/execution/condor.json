@@ -44,6 +44,8 @@
 			"type": "PASSWORD"
 		}
 	},
+	"maxSystemJobs": 50,
+	"maxSystemJobsPerUser": 5,
 	"scheduler": "CONDOR",
 	"environment": "",
 	"startupScript": "./bashrc"

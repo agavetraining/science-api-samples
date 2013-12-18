@@ -41,6 +41,8 @@
 			"type": "X509"
 		}
 	},
+	"maxSystemJobs": 100,
+	"maxSystemJobsPerUser": 10,
 	"scheduler": "SGE",
 	"environment": "",
 	"startupScript": "./bashrc"

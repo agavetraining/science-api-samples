@@ -55,6 +55,8 @@
 			"port": 22
 		}
 	},
+	"maxSystemJobs": 100,
+	"maxSystemJobsPerUser": 10,
 	"scheduler": "PBS",
 	"environment": "",
 	"startupScript": "./bashrc"
