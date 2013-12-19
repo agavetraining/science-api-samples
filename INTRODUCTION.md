@@ -12,8 +12,12 @@ This tutorial assumes you have no prior experience with iPlant, system administr
 
 All examples in this tutorial utilize the Agave Command Line Interface ([Agave CLI](https://bitbucket.org/taccaci/foundation-cli)). The Agave CLI is a set of bash scripts that fully exercise the entire Agave API. You can download the latest version of the Agave CLI from Bitbucket using Git. The following commands will download the code and add the commands to your $PATH so you don't need to prefix them with their full path on your file system.
 
-	> git clone https://bitbucket.org/taccaci/foundation-cli.git
-	> export PATH=$PATH:`pwd`/foundation-cli/bin
+```
+#!bash
+
+$ git clone https://bitbucket.org/taccaci/foundation-cli.git
+$ export PATH=$PATH:`pwd`/foundation-cli/bin
+```
 
 Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line. They will also be available via Bash completion.
 
@@ -52,7 +56,7 @@ Now that you have an account and your client credentials, you can start interact
 ```
 #!bash
 
-> auth-tokens-create -S -V
+$ auth-tokens-create -S -V
 Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
 Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa 
 Agave tenant username [nryan]: 
