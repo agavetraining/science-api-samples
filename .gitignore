@@ -30,3 +30,8 @@ Icon
 .Spotlight-V100
 .Trashes
 
+# Local files
+apps/dnalc-fastqc-osg-0.10.1
+systems/execution/lonestar4.tacc.teragrid.org.json
+systems/execution/stampede.tacc.utexas.edu.json
+
