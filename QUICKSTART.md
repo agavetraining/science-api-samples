@@ -1,7 +1,8 @@
 # Agave Samples Quickstart Tutorial
 ==============================
 
-<div style="padding:10px; background: #0298c3; color:#FFF">This tutorial provides a brief overview of how to use several of the most commonly used features of the <a href="http://agaveapi.co">Agave API</a>. For more in-depth coverage of individual topics, please consult the tutorials found in the subfolders of the Agave Samples project. Each of those tutorials provides more detailed examples of interacting with a specific Agave service along with working sample data.</div>
+> This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co). For more in-depth coverage of individual topics, please consult the tutorials found in the subfolders of the Agave Samples project. Each of those tutorials provides more detailed examples of interacting with a specific Agave service along with working sample data.
+> 
 
 ## Introduction  
 
