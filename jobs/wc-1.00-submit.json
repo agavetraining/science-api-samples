@@ -1,6 +1,7 @@
 {
     "name": "wc-demo",
-    "appId": "wc-demo-1.00",
+    "appId": "wc-1.00",
+    "memoryPerNode": 1,
     "notifications": [
     	{ 
     		"url" : "nryan@mlb.com",
@@ -8,6 +9,6 @@
     	}
     ],		
     "inputs": {
-        "query1": "apps/wc-1.00/picksumipsum.txt"
+        "query1": "nryan/picksumipsum.txt"
     }
 }

@@ -63,7 +63,7 @@ Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
 Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa 
 Agave tenant username []: nryan
 Agave tenant password: 
-Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=dooley&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
+Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=nryan&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
 Token successfully refreshed and cached for 3600 seconds
 {
     "access_token": "bg1f2f732db7842ccm847b15edt5f0",
@@ -301,6 +301,74 @@ The fastest way to add a system is to copy an existing system and rename it for 
 #!bash
 
 $ systems-clone -V stampede.tacc.utexas.edu
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X PUT -d "action=clone&id=stampede-nryan" https://agave.iplantc.org/systems/2.0/stampede.tacc.utexas.edu?pretty=true
+
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "id" : "stampede-nryan",
+    "uuid" : "0001388520343225-b0b0b0bb0b-0001",
+    "name" : "TACC Stampede",
+    "status" : "UP",
+    "type" : "EXECUTION",
+    "description" : "Stampede is intended primarily for parallel applications scalable to tens of thousands of cores.  Normal batch queues will enable users to run simulations up to 24 hours.  Jobs requiring run times and more cores than allowed by the normal queues will be run in a special queue after approval of TACC staff.  Serial and development queues will also be configured. In addition, users will be able to run jobs using thousands of the Intel Xeon Phi coprocessors via the same queues to support massively parallel workflows.",
+    "site" : "tacc.xsede.org",
+    "revision" : 1,
+    "public" : false,
+    "lastModified" : "2013-12-31T14:05:43.225-06:00",
+    "executionType" : "HPC",
+    "scheduler" : "SLURM",
+    "environment" : null,
+    "startupScript" : "./bashrc",
+    "maxSystemJobs" : 2147483647,
+    "maxSystemJobsPerUser" : 2147483647,
+    "workDir" : "",
+    "scratchDir" : "",
+    "queues" : [ {
+      "name" : "normal",
+      "default" : true,
+      "maxJobs" : 100,
+      "maxUserJobs" : -1,
+      "maxNodes" : -1,
+      "maxProcessorsPerNode" : -1,
+      "maxMemoryPerNode" : 2048,
+      "customDirectives" : "#SBATCH -A TG-MCB110022"
+    } ],
+    "login" : {
+      "host" : "stampede.tacc.utexas.edu",
+      "port" : 2222,
+      "protocol" : "GSISSH",
+      "proxy" : null
+    },
+    "storage" : {
+      "host" : "data3.stampede.tacc.utexas.edu",
+      "port" : 2811,
+      "protocol" : "GRIDFTP",
+      "rootDir" : "/",
+      "homeDir" : null,
+      "mirror" : true,
+      "proxy" : null
+    },
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan"
+      },
+      "roles" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan/roles"
+      },
+      "credentials" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan/credentials"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388520343225-b0b0b0bb0b-0001\"}"
+      }
+    }
+  }
+}
+
+
 ```
 
 In the example above you the existing Stampede system was cloned for our own use and given the name *stampede-nryan*. System name is arbitrary, but it must be unique. Once it is cloned, we can add our own login and storage credentials to it to login.
@@ -313,6 +381,51 @@ If the system we want to use isn't already present in your list of systems, you 
 #!bash
 
 $ systems-addupdate -V -F systems/storage/sftp-password.json
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@systems/storage/sftp-password.json" https://agave.iplantc.org/systems/2.0/?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "id" : "demo.storage.example.com",
+    "uuid" : "0001388520565047-b0b0b0bb0b-0001-006",
+    "name" : "Demo sftp server",
+    "status" : "UP",
+    "type" : "STORAGE",
+    "description" : "My example system using sftp to move data.",
+    "site" : "example.com",
+    "revision" : 1,
+    "public" : false,
+    "lastModified" : "2013-12-31T14:09:25.074-06:00",
+    "storage" : {
+      "host" : "ssh.example.com",
+      "port" : 22,
+      "protocol" : "SFTP",
+      "rootDir" : "/home/demo",
+      "homeDir" : "/",
+      "mirror" : true,
+      "proxy" : null,
+      "auth" : {
+        "type" : "PASSWORD"
+      }
+    },
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
+      },
+      "roles" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com/roles"
+      },
+      "credentials" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com/credentials"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388520565047-b0b0b0bb0b-0001-006\"}"
+      }
+    }
+  }
+}
+
 ```
 
 Now that you have a system registered, it is available to you and you alone. To see how to share your system with one or more other users and grant them various roles on that system, see the [System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md).
@@ -320,12 +433,40 @@ Now that you have a system registered, it is available to you and you alone. To 
 
 ## Moving and managing data
 
-The Agave Files service gives you a consistent interface for managing data across multiple storage systems. Let's look at a couple examples of how this works. We will start out by doing a simple directory listing to see what is in our home folder. The iPlant Data Store 
+The Agave Files service gives you a consistent interface for managing data across multiple storage systems. Let's look at a couple examples of how this works. We will start out by doing a simple directory listing to see what is in our home folder. The iPlant Data Store is a public, shared storage system. Because of this, the registered `rootDir` and `homeDir` are both the folder containing all the individual user home folders. In the following examples, this is why we specify the username in the path.
+
 
 ```
 #!bash
 
 $ files-list -V -S data.iplantcollaborative.org nryan
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" https://agave.iplantc.org/files/2.0/listings/system/data.iplantcollaborative.org/nryan?pretty=true
+{
+    "message": null,
+    "result": [
+        {
+            "_links": {
+                "self": {
+                    "href": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan"
+                },
+                "system": {
+                    "href": "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+                }
+            },
+            "format": "folder",
+            "lastModified": "2012-08-03T10:06:08.000-05:00",
+            "length": 0,
+            "name": ".",
+            "path": "nryan",
+            "permisssions": "READ",
+            "type": "file"
+        }
+    ],
+    "status": "success",
+    "version": "2.0.0-SNAPSHOT-r${buildNumber}"
+}
+
+
 ```
 
 Now let's upload a file.
@@ -334,6 +475,39 @@ Now let's upload a file.
 #!bash
 
 $ files-upload -V -S data.iplantcollaborative.org -F files/picksumipsum.txt nryan
+Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@files/picksumipsum.txt" https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan?pretty=true
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4383  100   946  100  3437    136    495  0:00:06  0:00:06 --:--:--     0
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "name" : "picksumipsum.txt",
+    "path" : "nryan/picksumipsum.txt",
+    "lastModified" : "2012-08-03T10:06:08.000-05:00",
+    "length" : 0,
+    "permisssions" : "READ",
+    "format" : "raw",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388523424806-b0b0b0bb0b-0001-002\"}"
+      },
+      "history" : {
+        "href" : "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+      }
+    }
+  }
+}
+
 ```
 
 And make sure it's there.
@@ -342,6 +516,38 @@ And make sure it's there.
 #!bash
 
 $ files-list -V -S data.iplantcollaborative.org nryan/picksumipsum.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/2.0/listings/system/data.iplantcollaborative.org/nryan/picksumipsum.txt?pretty=true
+{
+    "message": null,
+    "result": [
+        {
+            "_links": {
+                "history": {
+                    "href": "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+                },
+                "metadata": {
+                    "href": "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388523718882-b0b0b0bb0b-0001-002\"}"
+                },
+                "self": {
+                    "href": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt/picksumipsum.txt"
+                },
+                "system": {
+                    "href": "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+                }
+            },
+            "format": "raw",
+            "lastModified": "2013-12-31T14:57:05.000-06:00",
+            "length": 3235,
+            "name": "picksumipsum.txt",
+            "path": "nryan/picksumipsum.txt",
+            "permisssions": "READ",
+            "type": "file"
+        }
+    ],
+    "status": "success",
+    "version": "2.0.0-SNAPSHOT-r${buildNumber}"
+}
+
 ```
 
 Now let's copy it to the storage system we registered in the previous section.
@@ -349,7 +555,40 @@ Now let's copy it to the storage system we registered in the previous section.
 ```
 #!bash
 
-$ files-upload -V -S demo.storage.example.com -F files/picksumipsum.txt 
+$ files-upload -V -S demo.storage.example.com -F files/picksumipsum.txt
+Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -F "fileToUpload=@files/picksumipsum.txt" https://agave.iplantc.org/files/2.0/media/system/demo.storage.example.com/?pretty=true
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4325  100   888  100  3437      9     35  0:01:38  0:01:37  0:00:01     0
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "name" : "picksumipsum.txt",
+    "path" : "picksumipsum.txt",
+    "lastModified" : "2013-12-31T15:14:31.000-06:00",
+    "length" : 4096,
+    "permisssions" : "ALL",
+    "format" : "raw",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/files/2.0/media/system/demo.storage.example.com/picksumipsum.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388524468032-b0b0b0bb0b-0001-002\"}"
+      },
+      "history" : {
+        "href" : "https://agave.iplantc.org/files/2.0/history/system/demo.storage.example.com/picksumipsum.txt"
+      }
+    }
+  }
+}
+
 ```
 
 And make sure it's there as well.
@@ -357,7 +596,38 @@ And make sure it's there as well.
 ```
 #!bash
 
-$ files-upload -V -S demo.storage.example.com picksumipsum.txt 
+$ files-list -V -S demo.storage.example.com picksumipsum.txt 
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/2.0/listings/system/demo.storage.example.com/picksumipsum.txt?pretty=true
+{
+    "message": null,
+    "result": [
+        {
+            "_links": {
+                "history": {
+                    "href": "https://agave.iplantc.org/files/2.0/history/system/demo.storage.example.com/picksumipsum.txt"
+                },
+                "metadata": {
+                    "href": "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388524468032-b0b0b0bb0b-0001-002\"}"
+                },
+                "self": {
+                    "href": "https://agave.iplantc.org/files/2.0/media/system/demo.storage.example.com/picksumipsum.txt/picksumipsum.txt"
+                },
+                "system": {
+                    "href": "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
+                }
+            },
+            "format": "raw",
+            "lastModified": "2013-12-31T15:20:49.000-06:00",
+            "length": 3235,
+            "name": "picksumipsum.txt",
+            "path": "picksumipsum.txt",
+            "permisssions": "READ_WRITE",
+            "type": "file"
+        }
+    ],
+    "status": "success",
+    "version": "2.0.0-SNAPSHOT-r${buildNumber}"
+}
 ```
 
 How about importing data from the web. Pretty much the same thing. We'll tell Agave to go grab a URL and download it for us so we don't need to wait around.
@@ -365,7 +635,37 @@ How about importing data from the web. Pretty much the same thing. We'll tell Ag
 ```
 #!bash
 
-$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt
+$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt 
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/2.0/media/system/demo.storage.example.com/?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "name" : "GSM313800.txt",
+    "path" : "",
+    "lastModified" : "2013-12-31T15:14:31.000-06:00",
+    "length" : -1,
+    "permisssions" : "ALL",
+    "format" : "raw",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/files/2.0/media/system/demo.storage.example.com/GSM313800.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388524943090-b0b0b0bb0b-0001-002\"}"
+      },
+      "history" : {
+        "href" : "https://agave.iplantc.org/files/2.0/history/system/demo.storage.example.com/GSM313800.txt"
+      }
+    }
+  }
+}
+
 ```
 
 You can watch the progress of this file by tracking the file's history.
@@ -374,6 +674,62 @@ You can watch the progress of this file by tracking the file's history.
 #!bash
 
 $ files-history -V -S demo.storage.example.com GSM313800.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/2.0/history/system/demo.storage.example.com/GSM313800.txt?pretty=true
+{
+    "message": null,
+    "result": [
+        {
+            "created": "2013-12-31T15:22:23.000-06:00",
+            "description": "File/folder queued for staging",
+            "status": "STAGING_QUEUED"
+        },
+        {
+            "created": "2013-12-31T15:22:23.000-06:00",
+            "description": "File/folder queued for staging",
+            "status": "STAGING_QUEUED"
+        },
+        {
+            "created": "2013-12-31T15:22:23.000-06:00",
+            "description": "File/folder queued for staging",
+            "status": "STAGING_QUEUED"
+        },
+        {
+            "created": "2013-12-31T15:22:31.000-06:00",
+            "description": "Transfer in progress",
+            "progress": {
+                "averageRate": 0,
+                "source": "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800",
+                "totalActiveTransfers": 0,
+                "totalBytes": 0,
+                "totalBytesTransferred": 19332,
+                "totalFiles": 1
+            },
+            "status": "STAGING"
+        },
+        {
+            "created": "2013-12-31T15:22:40.000-06:00",
+            "description": "Staging completed successfully",
+            "status": "STAGING_COMPLETED"
+        },
+        {
+            "created": "2013-12-31T15:22:40.000-06:00",
+            "description": "Prepairing file for processing",
+            "status": "PREPROCESSING"
+        },
+        {
+            "created": "2013-12-31T15:22:40.000-06:00",
+            "description": "Transform completed successfully",
+            "status": "TRANSFORMING_COMPLETED"
+        },
+        {
+            "created": "2013-12-31T15:22:40.000-06:00",
+            "description": "Your scheduled transfer of http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800 completed staging. You can access the raw file on Demo sftp server (demo.storage.example.com) SFTP at /home/nryan/GSM313800.txt or via the API at https://agave.iplantc.org/files/2.0//media/system/demo.storage.example.com/GSM313800.txt.",
+            "status": "TRANSFORMING_COMPLETED"
+        }
+    ],
+    "status": "success",
+    "version": "2.0.0-SNAPSHOT-r${buildNumber}"
+}
 ```
 
 Copying data between systems is just as easy. No need to worry about the fact that the accounts and protocols used by each may be different. Just specify your source file or folder as an Agave URL and the Files service will handle the rest.
@@ -382,6 +738,35 @@ Copying data between systems is just as easy. No need to worry about the fact th
 #!bash
 
 $ files-import -V -U "agave://demo.storage.example.com/GSM313800.txt" -S data.iplantcollaborative.org nryan
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=agave://demo.storage.example.com/GSM313800.txt" https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "name" : "GSM313800.txt",
+    "path" : "nryan",
+    "lastModified" : "2012-08-03T10:06:08.000-05:00",
+    "length" : -1,
+    "permisssions" : "READ",
+    "format" : "raw",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/GSM313800.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388525440624-b0b0b0bb0b-0001-002\"}"
+      },
+      "history" : {
+        "href" : "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/GSM313800.txt"
+      }
+    }
+  }
+}
 ```
 
 Sharing your data with another user is as simple as the following command
@@ -389,15 +774,61 @@ Sharing your data with another user is as simple as the following command
 ```
 #!bash
 
-$ files-pems-addupdate -V -U rclemens -P READ -S demo.storage.example.com GSM313800.txt
+$ files-pems-update -V -U rclemens -P READ -S demo.storage.example.com GSM313800.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "username=rclemens&permission=READ" https://agave.iplantc.org/files/2.0/pems/system/demo.storage.example.com/GSM313800.txt?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : [ {
+    "username" : "rclemens",
+    "internalUsername" : "rclemens",
+    "permission" : {
+      "read" : true,
+      "write" : false,
+      "execute" : false
+    },
+    "_links" : {
+      "parent" : {
+        "href" : "https://agave.iplantc.org/files/2.0/pems/system/demo.storage.example.com/GSM313800.txt"
+      },
+      "profile" : {
+        "href" : "https://agave.iplantc.org/profiles/2.0/rclemens"
+      }
+    }
+  } ]
+}
 ```
 
-To make your data publicy available, grant the `world` user READ permissions.
+To make your data publicy available, grant the `public` user READ permissions.
 
 ```
 #!bash
 
-$ files-pems-addupdate -V -U world -P READ -S demo.storage.example.com GSM313800.txt
+$ files-pems-update -V -U world -P READ -S demo.storage.example.com GSM313800.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "username=public&permission=READ" https://agave.iplantc.org/files/2.0/pems/system/demo.storage.example.com/GSM313800.txt?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : [ {
+    "username" : "public",
+    "internalUsername" : "public",
+    "permission" : {
+      "read" : true,
+      "write" : false,
+      "execute" : false
+    },
+    "_links" : {
+      "parent" : {
+        "href" : "https://agave.iplantc.org/files/2.0/pems/system/demo.storage.example.com/GSM313800.txt"
+      },
+      "profile" : {
+        "href" : "https://agave.iplantc.org/profiles/2.0/public"
+      }
+    }
+  } ]
+}
 ```
 
 Your data will be available as a public url.
@@ -405,7 +836,10 @@ Your data will be available as a public url.
 ```
 #!bash
 
-https://agave.iplantc.org/files/2.0/download/nryan/system/demo.storage.example.com/GSM313800.txt
+curl -O https://agave.iplantc.org/files/2.0/download/nryan/system/demo.storage.example.com/GSM313800.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 19332  100 19332    0     0   3635      0  0:00:05  0:00:05 --:--:--  5833
 ```
 
 ## Finding app
@@ -415,7 +849,28 @@ Agave's Apps service provides a way for you to discover and manage app. An app c
 ```
 #!bash
 
-$ apps-list -V
+$  apps-list -d -V
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/apps/2.0/?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : [ {
+    "id" : "wc-1.00",
+    "name" : "wc",
+    "version" : "1.00",
+    "revision" : 1,
+    "executionHost" : "condor.opensciencegrid.org",
+    "shortDescription" : "Count words in a file",
+    "public" : false,
+    "lastModified" : "2013-11-19T09:49:29.000-06:00",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-1.00"
+      }
+    }
+  } ]
+}
 ```
 
 We see several apps are available to us right off the bat. Let's look at the wc-1.00 app is greater detail.
@@ -423,17 +878,17 @@ We see several apps are available to us right off the bat. Let's look at the wc-
 ```
 #!bash
 
-$ apps-list -V wc-1.00
+$ apps-list -d -V wc-1.00
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/apps/2.0/wc-1.00?pretty=true
 {
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-re2f32",
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
   "result" : {
     "id" : "wc-1.00",
     "name" : "wc",
     "icon" : null,
-    "uuid" : "0001384807414674-5056a550b8-0001-005",
+    "uuid" : "0001384876168811-b0b0b0bb0b-0001-005",
     "parallelism" : "SERIAL",
     "defaultProcessorsPerNode" : null,
     "defaultMemoryPerNode" : null,
@@ -441,23 +896,23 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
     "defaultMaxRunTime" : null,
     "defaultQueue" : null,
     "version" : "1.00",
-    "revision" : 3,
+    "revision" : 1,
     "public" : false,
     "helpURI" : "http://www.gnu.org/s/coreutils/manual/html_node/wc-invocation.html",
     "label" : "wc condor",
     "shortDescription" : "Count words in a file",
     "longDescription" : "",
     "tags" : [ "gnu", "textutils" ],
-    "ontology" : [ "http://sswapmeet.sswap.info/algorithms/wc" ],
+    "ontology" : [ "\"http://sswapmeet.sswap.info/algorithms/wc" ],
     "executionType" : "CONDOR",
-    "executionSystem" : "osg-dooley",
+    "executionSystem" : "condor.opensciencegrid.org",
     "deploymentPath" : "/dooley/applications/wc-1.00",
     "deploymentSystem" : "data.iplantcollaborative.org",
     "templatePath" : "/wrapper.sh",
     "testPath" : "/wrapper.sh",
     "checkpointable" : true,
-    "lastModified" : "2013-11-18T17:51:09.000-06:00",
-    "modules" : [ "load TACC", "purge" ],
+    "lastModified" : "2013-11-19T09:49:29.000-06:00",
+    "modules" : [ "\"load TACC\"", "purge" ],
     "available" : true,
     "inputs" : [ {
       "id" : "query1",
@@ -501,7 +956,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
         "href" : "https://agave.iplantc.org/apps/2.0/wc-1.00"
       },
       "executionSystem" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/osg-dooley"
+        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
       },
       "storageSystem" : {
         "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
@@ -513,7 +968,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
         "href" : "https://agave.iplantc.org/apps/2.0/wc-1.00/pems"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001384807414674-5056a550b8-0001-005\"}"
+        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001384876168811-b0b0b0bb0b-0001-005\"}"
       }
     }
   }
@@ -553,7 +1008,66 @@ Once we submit a job, Agave will handle staging the input files, submitting the 
 ```
 #!bash
 
-$ jobs-list -V <JOB_ID>
+$ jobs-submit -d -V -F jobs/wc-1.00-submit.json
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -F "fileToUpload=@jobs/wc-1.00-submit.json" https://agave.iplantc.org/jobs/2.0/?pretty=true
+f{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "id" : "0001388557444695-b0b0b0bb0b-0001-007",
+    "name" : "wc-demo",
+    "owner" : "nryan",
+    "appId" : "wc-1.00",
+    "executionSystem" : "condor.opensciencegrid.org",
+    "batchQueue" : "condorqueue",
+    "nodeCount" : 1,
+    "processorsPerNode" : 1,
+    "memoryPerNode" : 1,
+    "maxRunTime" : "999:59:59",
+    "archive" : false,
+    "retries" : 0,
+    "localId" : null,
+    "outputPath" : null,
+    "status" : "PENDING",
+    "submitTime" : "2013-12-31T23:36:45.168-06:00",
+    "startTime" : null,
+    "endTime" : null,
+    "inputs" : {
+      "query1" : "nryan/picksumipsum.txt"
+    },
+    "parameters" : { },
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      },
+      "app" : {
+        "href" : "https://agave.iplantc.org/apps/2.0/wc-1.00"
+      },
+      "executionSystem" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
+      },
+      "archiveData" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/193/outputs/listings"
+      },
+      "owner" : {
+        "href" : "https://agave.iplantc.org/profiles/2.0/nryan"
+      },
+      "permissions" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/pems"
+      },
+      "history" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/history"
+      },
+      "metadata" : {
+        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388557444695-b0b0b0bb0b-0001-007\"}"
+      },
+      "notifications" : {
+        "href" : "https://agave.iplantc.org/notifications/2.0/?associatedUuid=0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }
+}
 ```
 
 There is also a way to return just the job status if bandwidth is an issue.
@@ -561,7 +1075,22 @@ There is also a way to return just the job status if bandwidth is an issue.
 ```
 #!bash
 
-$ jobs-status -V <JOB_ID>
+$ jobs-status -d -V 0001388557444695-b0b0b0bb0b-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/status?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : {
+    "_link" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    },
+    "id" : "0001388557444695-b0b0b0bb0b-0001-007",
+    "status" : "FINISHED"
+  }
+}
 ```
 
 For even more detailed information, you can query for the job history. This tracks every event and status change associated with the job.
@@ -569,7 +1098,58 @@ For even more detailed information, you can query for the job history. This trac
 ```
 #!bash
 
-$ jobs-history -V <JOB_ID>
+$ jobs-history -d -V 0001388557444695-b0b0b0bb0b-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/history?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : [ {
+    "created" : "2013-12-31T23:36:45.000-06:00",
+    "status" : "PENDING",
+    "description" : "Job accepted and queued for submission."
+  }, {
+    "created" : "2013-12-31T23:36:47.000-06:00",
+    "status" : "PROCESSING_INPUTS",
+    "description" : "Attempt 1 to stage job inputs"
+  }, {
+    "created" : "2013-12-31T23:36:47.000-06:00",
+    "status" : "PROCESSING_INPUTS",
+    "description" : "Identifying input files for staging"
+  }, {
+    "created" : "2013-12-31T23:36:50.000-06:00",
+    "status" : "STAGING_INPUTS",
+    "description" : "Staging nryan/picksumipsum.txt to execution system"
+  }, {
+    "progress" : {
+      "averageRate" : 0,
+      "totalFiles" : 1,
+      "source" : "nryan/picksumipsum.txt",
+      "totalActiveTransfers" : 0,
+      "totalBytes" : 3235,
+      "totalBytesTransferred" : 3235
+    },
+    "created" : "2013-12-31T23:36:50.000-06:00",
+    "status" : "STAGING_INPUTS",
+    "description" : "Copy in progress"
+  }, {
+    "created" : "2013-12-31T23:36:52.000-06:00",
+    "status" : "STAGED",
+    "description" : "Job inputs staged to execution system"
+  }, {
+    "created" : "2013-12-31T23:36:57.000-06:00",
+    "status" : "SUBMITTING",
+    "description" : "Attempt [1] Preparing job for execution and staging binaries to execution system"
+  }, {
+    "created" : "2013-12-31T23:39:33.000-06:00",
+    "status" : "QUEUED",
+    "description" : "Condor job successfully placed into queue"
+  }, {
+    "created" : "2013-12-31T23:39:58.000-06:00",
+    "status" : "FINISHED",
+    "description" : "Job completed execution. Skipping archiving at user request."
+  } ]
+}
 ```
 
 ### Receiving job notifications
@@ -601,7 +1181,182 @@ Agave handles the archiving and staging of your job data for you by default. Dep
 ```
 #!BASH
 
-$ jobs-output -V <JOB_ID>
+$ jobs-output -d -V  0001388557444695-b0b0b0bb0b-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/listings/?pretty=true
+{
+  "status" : "success",
+  "message" : null,
+  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "result" : [ {
+    "name" : "condorSubmit",
+    "path" : "/condorSubmit",
+    "owner" : "ipcservices",
+    "length" : 308,
+    "lastModified" : "2014-01-01T00:28:01.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/condorSubmit"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "job.err",
+    "path" : "/job.err",
+    "owner" : "ipcservices",
+    "length" : 517,
+    "lastModified" : "2014-01-01T00:28:04.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/job.err"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "job.out",
+    "path" : "/job.out",
+    "owner" : "ipcservices",
+    "length" : 234,
+    "lastModified" : "2014-01-01T00:28:08.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/job.out"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "output.tar.gz",
+    "path" : "/output.tar.gz",
+    "owner" : "ipcservices",
+    "length" : 121,
+    "lastModified" : "2014-01-01T00:28:11.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/output.tar.gz"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "picksumipsum.txt",
+    "path" : "/picksumipsum.txt",
+    "owner" : "ipcservices",
+    "length" : 3235,
+    "lastModified" : "2014-01-01T00:28:13.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/picksumipsum.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "runtime.log",
+    "path" : "/runtime.log",
+    "owner" : "ipcservices",
+    "length" : 1022,
+    "lastModified" : "2014-01-01T00:28:16.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/runtime.log"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "transfer.tar.gz",
+    "path" : "/transfer.tar.gz",
+    "owner" : "ipcservices",
+    "length" : 3230068,
+    "lastModified" : "2014-01-01T00:28:39.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/transfer.tar.gz"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  }, {
+    "name" : "wc_out.txt",
+    "path" : "/wc_out.txt",
+    "owner" : "ipcservices",
+    "length" : 0,
+    "lastModified" : "2014-01-01T00:28:41.000-06:00",
+    "type" : "file",
+    "mimeType" : "application/binary",
+    "format" : "unknown",
+    "permission" : "READ",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/wc_out.txt"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007"
+      }
+    }
+  } ]
+}
 ```
 
 Downloading the data is just as easy.
@@ -609,7 +1364,11 @@ Downloading the data is just as easy.
 ```
 #!BASH
 
-$ jobs-output -V -D -P <RELATIVE_PATH> <JOB_ID>
+$ jobs-output -d -V -P transfer.tar.gz -D  0001388557444695-b0b0b0bb0b-0001-007
+Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -o "transfer.tar.gz" https://agave.iplantc.org/jobs/2.0/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/transfer.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3154k    0 3154k    0     0   100k      0 --:--:--  0:00:31 --:--:--  100k
 ```
 
 ## Sharing your work with the world
@@ -622,7 +1381,32 @@ PostIts are preauthenticated, disposable URLs. Similar to [tinyurl](http://tinyu
 ```
 #!BASH
 
-$ postits-create -V -n 2 https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt
+$ postits-create -d -V -m 2 https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "method=GET" -d "url=https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt" https://agave.iplantc.org/postits/2.0/?pretty=true
+{
+	"status": "success",
+	"message": "",
+	"result": {
+		"creator": "nryan",
+		"internalUsername": null,
+		"authenticated": true,
+		"created": "2014-01-01T01:52:11-06:00",
+		"expires": "2014-01-31T01:52:11-06:00",
+		"remainingUses": 1,
+		"postit": "3e6eab5f14ae48b0240815c068592f09",
+		"url": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt",
+		"method": "GET",
+		"_link": {
+			"self": {
+				"href": "https://agave.iplantc.org/postits/2.0/3e6eab5f14ae48b02409abc068592f09"
+			},
+			"profile": {
+				"href": "https://agave.iplantc.org/profiles/2.0/nryan"
+			}
+		}
+	},
+	"version": "2.0.0-SNAPSHOT-r4c047"
+}
 ```
 
 This returns a PostIt that we can use 2 times before it expires. Let's test that out.
