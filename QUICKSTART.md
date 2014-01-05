@@ -35,9 +35,9 @@ In each of the above interactions, the user is the same, but the context with wh
 
 Agave uses [OAuth2](http://oauth.net/2) to authenticate the client applications that call it and make authorization decisions about what protected resources they have permission to access. A discussion of OAuth is out of the context of this tutorial. You can read more about it on the [OAuth2](http://oauth.net/2) website or from the websites of any of the many other service providers using it today. In this section, we will walk you through getting your client credentials so we can stay focused on learning how to interact with the Agave's services.
 
-In order to interact with any of the Agave services, you will need to first get a set of client credentials so you can authenticate. You can get your client credentials from the [Agave API Store](https://agave.iplantc.org). 
+In order to interact with any of the Agave services, you will need to first get a set of client credentials so you can authenticate. You can get your client credentials from the [Agave API Store](https://agave.iplantc.org/store). 
 
-1. In a browser, visit [https://agave.iplantc.org](https://agave.iplantc.org).
+1. In a browser, visit [https://agave.iplantc.org/store](https://agave.iplantc.org/store).
 1. Login to the site using your iPlant username and password.
 1. Register a new client application by clicking on the *My Applications* tab and filling out the form.
 1. Subscribe to all the APIs you want to use(all of them for this tutorial).
@@ -53,7 +53,7 @@ In order to interact with any of the Agave services, you will need to first get 
 4. Copy your client secret and client key. These are your client credentials. You will need them in the next section.
 
 ## Authenticate and get an access token
-Now that you have an account and your client credentials, you can start interacting with Agave. First up, let's trade your client credentials for an access token (also known as a bearer token). The access token will be added to the header of every call to you make to Agave. It identifies both your individual identity as well as your client's identity to Agave. 
+Now that you have an account and your client credentials, you can start interacting with Agave. First up, let's trade your client credentials for an access token (also known as a bearer token). The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave. 
 
 ```
 #!bash
@@ -465,7 +465,6 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" htt
     "status": "success",
     "version": "2.0.0-SNAPSHOT-r${buildNumber}"
 }
-
 
 ```
 
