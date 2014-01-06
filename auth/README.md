@@ -1,11 +1,11 @@
-# Agave Samples Auth Tutorial
-==============================
+# Agave Auth Tutorial
+*******
 
 > This tutorial provides a brief overview of how to create an account and authenticate to the [Agave API](http://agaveapi.co). This material is also available as part of the  [Quickstart Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/QUICKSTART.md). This should be the first step for any developer getting started with Agave.
 
 ## Introduction  
 
-Welcome to the Agave Samples Auth Tutorial. In this tutorial we will cover the basic steps needed to get an account and authenticate to the rest of the [Agave API](http://agaveapi.co). 
+Welcome to the Agave Auth Tutorial. In this tutorial we will cover the basic steps needed to get an account and authenticate to the rest of the [Agave API](http://agaveapi.co). 
 
 ## Prerequisites  
 

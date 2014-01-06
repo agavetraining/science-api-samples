@@ -1,12 +1,12 @@
-# Data Managment Tutorial
-==============================
+# Agave Data Managment Tutorial
+*******
 
-> This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co) Files Service. Prior to beginning this tutorial, you should have obtained a valid set of client application credentials. If you have not yet done so, please stop here and walk through the [Agave Samples Authentication Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/auth/README.md) before going any further.
+> This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co) Files Service. Prior to beginning this tutorial, you should have obtained a valid set of client application credentials. If you have not yet done so, please stop here and walk through the [Agave Authentication Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/auth/README.md) before going any further.
 
 
 ## Introduction  
 
-Welcome to the Agave Samples Data Management Tutorial. In this tutorial we will cover how to move, manage, and track data using the Agave API. This tutorial utilizes both public and private systems accessible through Agave. The public systems should be visible to you right away as an iPlant user. The private systems are systems you defined representing storage and execution systems you own, rent, or in some other way have access to. If you have not registered any systems of your own, you can walk through the [Agave Samples System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md) and do so. This tutorial should give you a clear understanding of how data management in Agave works with or without your own private system(s).
+Welcome to the Agave Data Management Tutorial. In this tutorial we will cover how to move, manage, and track data using the Agave API. This tutorial utilizes both public and private systems accessible through Agave. The public systems should be visible to you right away as an iPlant user. The private systems are systems you defined representing storage and execution systems you own, rent, or in some other way have access to. If you have not registered any systems of your own, you can walk through the [Agave System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md) and do so. This tutorial should give you a clear understanding of how data management in Agave works with or without your own private system(s).
 
 ## Prerequisites  
 
