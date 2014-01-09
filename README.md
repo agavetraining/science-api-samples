@@ -24,6 +24,8 @@ Contents
 
 	- README.md						This file
 	- QUICKSTART.md					An end-to-end overview of commonly used features
+	+ auth
+		- README.md					Information on authenticating to Agave
 	+ apps
 		- README.md					Information on registering apps
 		+ head-1.00					A simple head app fully wrapped and ready to register
