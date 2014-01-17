@@ -25,6 +25,6 @@
     	"numberOfBytes": 512
     },		
     "inputs": {
-		"inputFile": "agave://demo.execute.example.com/apps/head-1.00/inputs/picksumipsum.txt"
+		"inputFile": "agave://demo.storage.example.com/apps/head-1.00/inputs/picksumipsum.txt"
     }
 }

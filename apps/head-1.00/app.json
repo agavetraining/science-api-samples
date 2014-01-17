@@ -27,7 +27,7 @@
 	  {
          "id":"inputFile",
          "value": {
-         	"default":"apps/head-1.00/inputs/picksumipsum.txt",
+         	"default":"agave://demo.storage.example.com/apps/head-1.00/inputs/picksumipsum.txt",
             "type":"string",
             "validator":"",
             "visible":true,

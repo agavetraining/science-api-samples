@@ -15,7 +15,7 @@
    ],
    "defaultMemory": 1,
    "defaultProcessors": 1,
-   "defaultQueue": "normal",
+   "defaultQueue": "debug",
    "deploymentPath":"apps/wc-1.00",
    "deploymentSystem":"demo.storage.example.com",
    "executionSystem":"demo.execute.example.com",
@@ -31,7 +31,7 @@
       {
          "id":"query1",
          "value":{
-            "default":"apps/wc-1.00/picksumipsum.txt",
+            "default":"agave://demo.storage.example.com/apps/wc-1.00/picksumipsum.txt",
             "validator":"",
             "required":true,
             "visible":true
@@ -60,7 +60,7 @@
             "type":"string",
             "validator":"",
             "visible":true,
-            "required":true
+            "required":false
          },
          "details":{
             "label":"Print the length of the longest line",

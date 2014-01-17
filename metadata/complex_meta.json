@@ -16,6 +16,6 @@
 		"games": 476,
 		"status": "retired"
 	},
-	"schemaId": "<insert schemata uuid here>",
+	"schemaId": "<insert schema id>",
 	"associatedIds": []
 }
