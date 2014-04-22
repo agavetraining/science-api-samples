@@ -61,17 +61,17 @@ Listing directory uniform regardless of the protocol or location of the remote s
 #!bash
 
 $ files-list -V -S data.iplantcollaborative.org nryan
-Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https://agave.iplantc.org/files/2.0/listings/system/data.iplantcollaborative.org/nryan?pretty=true
+Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/nryan?pretty=true
 {
     "message": null,
     "result": [
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan"
                 },
                 "system": {
-                    "href": "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+                    "href": "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
                 }
             },
             "format": "folder",
@@ -94,17 +94,17 @@ Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https
 #!bash
 
 $ files-list -V -S nryan-stampede 
-Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https://agave.iplantc.org/files/2.0/listings/system/data.iplantcollaborative.org/nryan?pretty=true
+Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/nryan?pretty=true
 {
     "message": null,
     "result": [
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan"
                 },
                 "system": {
-                    "href": "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+                    "href": "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
                 }
             },
             "format": "folder",
@@ -119,10 +119,10 @@ Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/2.0/media/system/nryan-stampede//.bash_history"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/nryan-stampede//.bash_history"
                 },
                 "system": {
-                    "href": "https://agave.iplantc.org/systems/2.0/nryan-stampede"
+                    "href": "https://agave.iplantc.org/systems/v2/nryan-stampede"
                 }
             },
             "format": "raw",
@@ -137,10 +137,10 @@ Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/2.0/media/system/nryan-stampede//.profile"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/nryan-stampede//.profile"
                 },
                 "system": {
-                    "href": "https://agave.iplantc.org/systems/2.0/nryan-stampede"
+                    "href": "https://agave.iplantc.org/systems/v2/nryan-stampede"
                 }
             },
             "format": "raw",
@@ -155,10 +155,10 @@ Calling curl -sk -H "Authorization: Bearer d6aff3d85ad8ff97e8e36d3d32e59a" https
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/2.0/media/system/nryan-stampede//.ssh"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/nryan-stampede//.ssh"
                 },
                 "system": {
-                    "href": "https://agave.iplantc.org/systems/2.0/nryan-stampede"
+                    "href": "https://agave.iplantc.org/systems/v2/nryan-stampede"
                 }
             },
             "format": "folder",
@@ -187,7 +187,7 @@ Creating a directory is a recursive operation by default. Unlike the default uni
 #!bash
 
 files-mkdir -V -N foodir/bardir nryan
-Calling curl -sk -H "Authorization: Bearer f316ed9f76c4865cc3a72d14de2e48d9" -X PUT -d "action=mkdir&path=foodir/bardir" https://agave.iplantc.org/files/2.0/media/nryan?pretty=true
+Calling curl -sk -H "Authorization: Bearer f316ed9f76c4865cc3a72d14de2e48d9" -X PUT -d "action=mkdir&path=foodir/bardir" https://agave.iplantc.org/files/v2/media/nryan?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -207,7 +207,7 @@ Uploading data to a remote system is a synchronous activity. When you import a f
 
 #!bash
 $ files-upload -V -S nryan-stampede -F ./picksumipsum.txt 
-Calling curl -k -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -F "fileToUpload=@./picksumipsum.txt" https://agave.iplantc.org/files/2.0/media/system/nryan-stampede/?pretty=true
+Calling curl -k -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -F "fileToUpload=@./picksumipsum.txt" https://agave.iplantc.org/files/v2/media/system/nryan-stampede/?pretty=true
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  4294    0   857  100  3437     83    336  0:00:10  0:00:10 --:--:--     0
@@ -225,16 +225,16 @@ Calling curl -k -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PO
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/nryan-stampede/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/nryan-stampede/picksumipsum.txt"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/nryan-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/nryan-stampede"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388894207138-5056a550b8-0001-002\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388894207138-5056a550b8-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/2.0/history/system/nryan-stampede/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/nryan-stampede/picksumipsum.txt"
       }
     }
   }
@@ -263,7 +263,7 @@ We show two examples of file imports below. The first example shows how to trans
 
 #!bash
 $ files-import -V -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt nryan/foodir
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/2.0/media/nryan/foodir?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/v2/media/nryan/foodir?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -278,16 +278,16 @@ Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X P
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       }
     }
   }
@@ -302,7 +302,7 @@ Notice in this example, Agave is handling an asyncronous transfer from another H
 
 #!bash
 $ files-import -V -U "agave://nryan-stampede/picksumipsum.txt" -N GSM313800.txt nryan/foodir
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=agave://nryan-stampede/picksumipsum.txt" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/2.0/media/nryan/foodir?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=agave://nryan-stampede/picksumipsum.txt" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/v2/media/nryan/foodir?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -317,16 +317,16 @@ Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X P
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       }
     }
   }
@@ -348,7 +348,7 @@ When copying a file or directory, the destination path is relative to the path g
 
 #!bash
 files-copy -V -D nryan/foodir/bardir nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=copy&path=nryan/foodir/bardir" https://agave.iplantc.org/files/2.0/media/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=copy&path=nryan/foodir/bardir" https://agave.iplantc.org/files/v2/media/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -365,7 +365,7 @@ Moving data is analagous to the unix `mv` command. It is effectively equivalent 
 
 #!bash
 $ files-move -V -D nryan/foodir/bardir/picksumipsum2.txt nryan/foodir/bardir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=move&path=nryan/foodir/bardir/picksumipsum2.txt" https://agave.iplantc.org/files/2.0/media/nryan/foodir/bardir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=move&path=nryan/foodir/bardir/picksumipsum2.txt" https://agave.iplantc.org/files/v2/media/nryan/foodir/bardir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -382,7 +382,7 @@ Renaming data is nearly identical to moving it. The difference being that the pa
 
 #!bash
 $ files-rename -V -D nryan/foodir/bardir/picksumipsum.txt nryan/foodir/bardir/picksumipsum2.txt
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=move&path=nryan/foodir/bardir/picksumipsum.txt" https://agave.iplantc.org/files/2.0/media/nryan/foodir/bardir/picksumipsum2.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X PUT -d "action=move&path=nryan/foodir/bardir/picksumipsum.txt" https://agave.iplantc.org/files/v2/media/nryan/foodir/bardir/picksumipsum2.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -403,7 +403,7 @@ $ files-history -V nryan/foodir/picksumipsum.txt
 iPlant Agave API v2.0
 Agave client command line interface (revision 2.0-r58aceca0)
 
-Calling curl -sk -H "Authorization: Bearer a756ec98f659789aa2deae765d24f6b7" https://agave.iplantc.org/files/2.0/history/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer a756ec98f659789aa2deae765d24f6b7" https://agave.iplantc.org/files/v2/history/nryan/foodir/picksumipsum.txt?pretty=true
 {
     "message": null,
     "result": [
@@ -439,12 +439,12 @@ Calling curl -sk -H "Authorization: Bearer a756ec98f659789aa2deae765d24f6b7" htt
         },
         {
             "created": "2014-01-04T20:47:21.000-06:00",
-            "description": "Your scheduled transfer of http://129.114.60.211/picksumipsum.txt has completed successfully. You can access this file on data.iplantcollaborative.org at /nryan/foodir/picksumipsum.txt or through the API at https://agave.iplantc.org/files/2.0//media/system/iPlant Data Store (data.iplantcollaborative.org) IRODS/nryan/foodir/picksumipsum.txt.",
+            "description": "Your scheduled transfer of http://129.114.60.211/picksumipsum.txt has completed successfully. You can access this file on data.iplantcollaborative.org at /nryan/foodir/picksumipsum.txt or through the API at https://agave.iplantc.org/files/v2//media/system/iPlant Data Store (data.iplantcollaborative.org) IRODS/nryan/foodir/picksumipsum.txt.",
             "status": "TRANSFORMING_COMPLETED"
         },
         {
             "created": "2014-01-04T20:47:21.000-06:00",
-            "description": "Your scheduled transfer of http://129.114.60.211/picksumipsum.txt has completed successfully. You can access this file on data.iplantcollaborative.org at /nryan/foodir/picksumipsum.txt or through the API at https://agave.iplantc.org/files/2.0//media/system/iPlant Data Store (data.iplantcollaborative.org) IRODS/nryan/foodir/picksumipsum.txt.",
+            "description": "Your scheduled transfer of http://129.114.60.211/picksumipsum.txt has completed successfully. You can access this file on data.iplantcollaborative.org at /nryan/foodir/picksumipsum.txt or through the API at https://agave.iplantc.org/files/v2//media/system/iPlant Data Store (data.iplantcollaborative.org) IRODS/nryan/foodir/picksumipsum.txt.",
             "status": "TRANSFORMING_COMPLETED"
         }
     ],
@@ -464,7 +464,7 @@ As mentioned above, transfers often time take quite a while to complete due to a
 
 #!bash
 $ files-import -V -U "agave://nryan-stampede/picksumipsum.txt" -N GSM313800.txt nryan/foodir
-Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=agave://nryan-stampede/picksumipsum.txt" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/2.0/media/nryan/foodir?pretty=true
+Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X POST -d "urlToIngest=agave://nryan-stampede/picksumipsum.txt" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/v2/media/nryan/foodir?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -479,22 +479,22 @@ Calling curl -sk -H "Authorization: Bearer 945bcc5bbc396c14320ad2d658677a6" -X P
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388893209105-5056a550b8-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/2.0/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/foodir/GSM313800.txt"
       }
     }
   }
 }
 $ notifications-addupdate -V -U "nyran@mlb.com" -E "*" -P false -A 0001388893209105-5056a550b8-0001-002
-Calling: curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "event=*&persistent=false&associatedUuid=0001388893209105-5056a550b8-0001-002&url=nryan@mlb.com" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling: curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "event=*&persistent=false&associatedUuid=0001388893209105-5056a550b8-0001-002&url=nryan@mlb.com" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -513,10 +513,10 @@ Calling: curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X 
     "created" : "2014-01-05T16:41:56.382-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001388961716382-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001388961716382-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       }
     }
   }
@@ -535,7 +535,7 @@ Deleting a file or directory, just like directory creation, works recursively by
 
 #!bash
 $ files-delete -V nryan/foodir/bardir
-Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" -X DELETE https://agave.iplantc.org/files/2.0/media/nryan/foodir/bardir?pretty=true
+Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" -X DELETE https://agave.iplantc.org/files/v2/media/nryan/foodir/bardir?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -552,7 +552,7 @@ We have focused mostly on pushing data around and managing it on remote systems.
 
 #!bash
 $ files-get -V nryan/foodir/bardir/picksumipsum.txt
-Calling curl -k -H "Authorization: Bearer d08c8a58f298983297bb2429999db86"  -O https://agave.iplantc.org/files/2.0/media/nryan/foodir/bardir/picksumipsum.txt
+Calling curl -k -H "Authorization: Bearer d08c8a58f298983297bb2429999db86"  -O https://agave.iplantc.org/files/v2/media/nryan/foodir/bardir/picksumipsum.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  3235    0  3235    0     0   1530      0 --:--:--  0:00:02 --:--:--  1530
@@ -575,7 +575,7 @@ Let's start out by checking the current permissions on the `picksumipsum.txt` fi
 
 #!bash
 $ files-pems-list -V nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -590,10 +590,10 @@ Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" http
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/nryan"
+        "href" : "https://agave.iplantc.org/profiles/v2/nryan"
       }
     }
   } ]
@@ -612,7 +612,7 @@ Now let's grant another user access to the `picksumipsum.txt`.
 
 #!bash
 $ files-pems-update -V -U mock -P read nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" -X POST -d "username=mock&permission=read" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" -X POST -d "username=mock&permission=read" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -627,10 +627,10 @@ Calling curl -sk -H "Authorization: Bearer d08c8a58f298983297bb2429999db86" -X P
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -644,7 +644,7 @@ Listing the file permissions shows that you and the `mock` user both have permis
 
 #!bash
 $ files-pems-list -V nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -659,10 +659,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https:
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/nryan"
+        "href" : "https://agave.iplantc.org/profiles/v2/nryan"
       }
     }
   }, {
@@ -675,10 +675,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https:
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -691,7 +691,7 @@ Updating permissions is identical to adding them. When yo uupdate a permission i
 
 #!bash
 $ files-pems-update -V -U mock -P write nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=mock&permission=write" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=mock&permission=write" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -706,10 +706,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POS
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -724,7 +724,7 @@ Revoking a user's permissions on a file or directory is done by granting them an
 
 #!bash
 $ files-pems-update -V -U mock -P none nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=mock&permission=none" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=mock&permission=none" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -739,10 +739,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POS
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -754,7 +754,7 @@ As we mentioned before, you cannot remove your ownership on a file or directory 
 
 #!bash
 $ files-pems-list -V nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -769,10 +769,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" https:
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/nryan"
+        "href" : "https://agave.iplantc.org/profiles/v2/nryan"
       }
     }
   } ]
@@ -790,7 +790,7 @@ Let's make our `picksumipsum.txt` file public and test the public download.
 ```
 #!bash
 $ files-pems-update -V -U public -P read nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=public&permission=read" https://agave.iplantc.org/files/2.0/pems/nryan/foodir/picksumipsum.txt?pretty=true
+Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POST -d "username=public&permission=read" https://agave.iplantc.org/files/v2/pems/nryan/foodir/picksumipsum.txt?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -805,10 +805,10 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POS
     },
     "_links" : {
       "parent" : {
-        "href" : "https://agave.iplantc.org/files/2.0/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/pems/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt"
       },
       "profile" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/public"
+        "href" : "https://agave.iplantc.org/profiles/v2/public"
       }
     }
   } ]
@@ -816,7 +816,7 @@ Calling curl -sk -H "Authorization: Bearer 6c97f07db3bbcf21f169db6352871" -X POS
 ```
 ```
 #!bash
-$ curl -sk https://agave.iplantc.org/files/2.0/download/system/data.iplantcollaborative.org/nryan/nryan/foodir/picksumipsum.txt
+$ curl -sk https://agave.iplantc.org/files/v2/download/system/data.iplantcollaborative.org/nryan/nryan/foodir/picksumipsum.txt
 ```
 
 ### Publishing data with PostIts
@@ -826,8 +826,8 @@ In situations where you want to share data with others, but do not want to make 
 ```
 
 #!bash
-$ postits-create -V https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "method=GET" -d "url=https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt" https://agave.iplantc.org/postits/2.0/?pretty=true
+$ postits-create -V https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt
+Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "method=GET" -d "url=https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt" https://agave.iplantc.org/postits/v2/?pretty=true
 {
 	"status": "success",
 	"message": "",
@@ -839,14 +839,14 @@ Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X P
 		"expires": "2014-02-04T16:09:17-06:00",
 		"remainingUses": 1,
 		"postit": "35dbe086d31b2ea940f5818d68797f6f",
-		"url": "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt",
+		"url": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/foodir/picksumipsum.txt",
 		"method": "GET",
 		"_link": {
 			"self": {
-				"href": "https://agave.iplantc.org/postits/2.0/35dbe086d31b2ea940f5818d68797f6f"
+				"href": "https://agave.iplantc.org/postits/v2/35dbe086d31b2ea940f5818d68797f6f"
 			},
 			"profile": {
-				"href": "https://agave.iplantc.org/profiles/2.0//nryan"
+				"href": "https://agave.iplantc.org/profiles/v2//nryan"
 			}
 		}
 	},
@@ -858,7 +858,7 @@ Let's validate that the PostIt works.
 ```
 
 #!bash
-$ curl -sk -o picksumipsum.txt https://agave.iplantc.org/postits/2.0/1ba188b74c34916401aa08010a3db2a2
+$ curl -sk -o picksumipsum.txt https://agave.iplantc.org/postits/v2/1ba188b74c34916401aa08010a3db2a2
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  3235  100  3235    0     0   2108      0  0:00:01  0:00:01 --:--:--  2108```
@@ -869,7 +869,7 @@ And that it expired immediately after use.
 ```
 
 #!bash
-$ curl -sk https://agave.iplantc.org/postits/2.0/1ba188b74c34916401aa08010a3db2a2 | python -mjson.tool
+$ curl -sk https://agave.iplantc.org/postits/v2/1ba188b74c34916401aa08010a3db2a2 | python -mjson.tool
 {
     "message": "Postit key has already been redeemed.",
     "result": "",

@@ -1,0 +1,14 @@
+{
+	"target" : "data.iplantcollaborative.org",
+	"frequency": 120,
+	"active" : true,
+	"updateSystemStatus" : false,
+	"persistent": false,
+	"notifications": [
+		{
+			"url": "nryan@example.com",
+			"event": "STATUS_CHANGE",
+			"persistent": true
+		}
+	]
+}

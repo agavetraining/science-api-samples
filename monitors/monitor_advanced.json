@@ -1,0 +1,14 @@
+{
+	"target" : "data.iplantcollaborative.org",
+	"frequency": 120,
+	"active" : true,
+	"updateSystemStatus" : false,
+	"persistent": false,
+	"notifications": [
+		{
+			"url": "http://requestb.in/1jr71yi1?system=${TARGET}&status=${EVENT}",
+			"event": "FAILED",
+			"persistent": true
+		}
+	]
+}

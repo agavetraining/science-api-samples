@@ -1,0 +1,76 @@
+{
+   "name":"wc-demo",
+   "parallelism":"SERIAL",
+   "version":"1.00",
+   "helpURI":"http://www.gnu.org/s/coreutils/manual/html_node/wc-invocation.html",
+   "label":"Word Count",
+   "shortDescription":"Count words in a file",
+   "longDescription":"",
+   "tags":[
+      "textutils",
+      "gnu"
+   ],
+   "ontology":[
+      "http://sswapmeet.sswap.info/algorithms/wc"
+   ],
+   "defaultMemory": 1,
+   "defaultProcessors": 1,
+   "defaultQueue": "debug",
+   "deploymentPath":"apps/wc-1.00",
+   "deploymentSystem":"demo.storage.example.com",
+   "executionSystem":"demo.execute.example.com",
+   "executionType":"HPC",
+   "templatePath":"wrapper.sh",
+   "testPath":"wrapper.sh",
+   "checkpointable":false,
+   "modules":[
+      "purge",
+      "load TACC"
+   ],
+   "inputs":[
+      {
+         "id":"query1",
+         "value":{
+            "default":"agave://demo.storage.example.com/apps/wc-1.00/picksumipsum.txt",
+            "validator":"",
+            "required":true,
+            "visible":true
+         },
+         "details":{
+            "label":"File to count words in:",
+            "description":""
+         },
+         "semantics":{
+            "ontology":[
+               "http://sswapmeet.sswap.info/util/TextDocument"
+            ],
+            "minCardinality":1,
+            "maxCardinality":1,
+            "fileTypes":[
+               "text-0"
+            ]
+         }
+      }
+   ],
+   "parameters":[
+      {
+         "id":"printLongestLine",
+         "value":{
+            "default":false,
+            "type":"string",
+            "validator":"",
+            "visible":true,
+            "required":false
+         },
+         "details":{
+            "label":"Print the length of the longest line",
+            "description":"Command option -L"
+         },
+         "semantics":{
+            "ontology":[
+               "xs:boolean"
+            ]
+         }
+      }
+   ]
+}

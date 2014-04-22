@@ -64,7 +64,7 @@ Job `0001388554605053-b0b0b0bb0b-0001-007` is still queued up, so let's subscrib
 
 #!bash
 $ notifications-addupdate -V -F notifications/email_notif.json
-Calling curl -sk -H "Authorization: Bearer d143e138ab04ed9c32a5a608121ec8" -X POST -F "fileToUpload=@notifications/email_notif.json" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer d143e138ab04ed9c32a5a608121ec8" -X POST -F "fileToUpload=@notifications/email_notif.json" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -83,10 +83,10 @@ Calling curl -sk -H "Authorization: Bearer d143e138ab04ed9c32a5a608121ec8" -X PO
     "created" : "2014-01-06T22:00:07.091-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389067207091-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }
@@ -99,7 +99,7 @@ In the above example we use a JSON definition to tell the service what notificat
 
 #!bash
 $ notifications-addupdate -V -U "nyran@mlb.com" -E "FINISHED" -P false -A 0001388895607302-5056a550b8-0001-002
-Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388554605053-b0b0b0bb0b-0001-007&url=nyran@mlb.com" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388554605053-b0b0b0bb0b-0001-007&url=nyran@mlb.com" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -118,10 +118,10 @@ Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X P
     "created" : "2014-01-05T17:08:34.803-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001388963314803-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001388963314803-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }
@@ -135,7 +135,7 @@ Often times it's not you, but your application that wants notifications of job s
 
 #!bash
 $ notifications-addupdate -V -U "http://requestb.in/14p4qg31" -E "FINISHED" -P false -A 0001388895607302-5056a550b8-0001-002
-Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -154,10 +154,10 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
     "created" : "2014-01-06T22:28:29.915-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389068909915-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }
@@ -170,7 +170,7 @@ The above subscription will result in Agave making a POST request to `http://req
 
 #!bash
 $ notifications-addupdate -V -U 'http://requestb.in/14p4qg31?job_id=${JOB_ID}' -E "FINISHED" -P false -A 0001388895607302-5056a550b8-0001-002
-Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31?job_id=${JOB_ID}&status=${JOB_STATUS}" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=FINISHED&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31?job_id=${JOB_ID}&status=${JOB_STATUS}" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -189,10 +189,10 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
     "created" : "2014-01-06T22:40:59.307-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389069659307-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }
@@ -205,7 +205,7 @@ Now the same endpoint will be called, but the job ID will be sent as a url varia
 
 #!bash
 $ notifications-addupdate -V -U 'http://requestb.in/14p4qg31?job_id=${JOB_ID}&status=${JOB_STATUS}' -E "*" -P false -A 0001388895607302-5056a550b8-0001-002
-Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=*&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31?job_id=${JOB_ID}&status=${JOB_STATUS}" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=*&persistent=false&associatedUuid=0001388895607302-5056a550b8-0001-002&url=http://requestb.in/14p4qg31?job_id=${JOB_ID}&status=${JOB_STATUS}" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -224,10 +224,10 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
     "created" : "2014-01-06T22:57:47.170-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389070667170-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }
@@ -242,7 +242,7 @@ Up until now we have created events that expired immediately after they fired on
 
 #!bash
 $ notifications-addupdate -V -U 'http://requestb.in/14p4qg31?app_id=${SYSTEM_ID}' -E "UPDATED" -P false -A 0001388740888728-5056a550b8-0001-006
-Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=UPDATED&persistent=false&associatedUuid=0001388740888728-5056a550b8-0001-006&url=http://requestb.in/14p4qg31?app_id=${SYSTEM_ID}" https://agave.iplantc.org/notifications/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X POST -d "event=UPDATED&persistent=false&associatedUuid=0001388740888728-5056a550b8-0001-006&url=http://requestb.in/14p4qg31?app_id=${SYSTEM_ID}" https://agave.iplantc.org/notifications/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -261,10 +261,10 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
     "created" : "2014-01-07T00:39:18.754-06:00",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389076758754-b0b0b0bb0b-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389076758754-b0b0b0bb0b-0001-011"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       }
     }
   }
@@ -291,7 +291,7 @@ You can list all notifications you have made by calling a HTTP GET on the notifi
 
 #!bash
 $ notifications-list -V
-Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" https://agave.iplantc.org/notifications/2.0?pretty=true
+Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" https://agave.iplantc.org/notifications/v2?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -302,10 +302,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "*",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389070667170-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -314,10 +314,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "FINISHED",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389069659307-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -326,10 +326,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "FINISHED",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389068909915-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -338,10 +338,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "*",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389067207091-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   } ]
@@ -354,7 +354,7 @@ If you are looking for the notifications for a specific resource, add the assoca
 
 #!bash
 $ notifications-list -V -U 0001388895607302-5056a550b8-0001-002
-Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" https://agave.iplantc.org/notifications/2.0/?associatedUuid=0001388895607302-5056a550b8-0001-002&pretty=true
+Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" https://agave.iplantc.org/notifications/v2/?associatedUuid=0001388895607302-5056a550b8-0001-002&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -365,10 +365,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "*",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389070667170-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -377,10 +377,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "FINISHED",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389069659307-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -389,10 +389,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "FINISHED",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389068909915-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -401,10 +401,10 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
     "event" : "*",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/notifications/2.0/0001389067207091-5056a550b8-0001-011"
+        "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/2.0/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
       }
     }
   } ]
@@ -419,7 +419,7 @@ If you need to cancel a notification, you can do so by simply calling a HTTP DEL
 
 #!bash
 $ notifications-delete -V 0001389067207091-5056a550b8-0001-011
-Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" -X DELETE https://agave.iplantc.org/notifications/2.0/0001389067207091-5056a550b8-0001-011?pretty=true
+Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" -X DELETE https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011?pretty=true
 {
   "status" : "success",
   "message" : null,

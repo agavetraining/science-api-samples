@@ -56,7 +56,7 @@ By default, iPlant provides a shared account on two execution systems at [Texas 
 #!bash
 
 $ systems-list -V
-Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https://agave.iplantc.org/systems/2.0?pretty=true
+Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https://agave.iplantc.org/systems/v2?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -71,7 +71,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/lonestar4.tacc.teragrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/lonestar4.tacc.teragrid.org"
       }
     }
   }, {
@@ -84,7 +84,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede.tacc.utexas.edu"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu"
       }
     }
   }, {
@@ -97,7 +97,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     "default" : true,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       }
     }
   }, {
@@ -110,7 +110,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org"
       }
     }
   }
@@ -121,7 +121,7 @@ The response above contains summary information on each system. You can obtain t
 #!bash
 
 $ systems-list -V condor.opensciencegrid.org
-Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org?pretty=true
+Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -178,16 +178,16 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/condor.opensciencegrid.org/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org/credentials"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001384806792914-5056a550b8-0001-006\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001384806792914-5056a550b8-0001-006\"}"
       }
     }
   }
@@ -207,7 +207,7 @@ The system above was an execution system. The other type of system is a storage 
 #!bash
 
 $ systems-list -V data.iplantcollaborative.org
-Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org?pretty=true
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -240,16 +240,16 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" htt
     },
     "_links" : {
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org/credentials"
       },
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001384260598633-5056a550b8-0001-006\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001384260598633-5056a550b8-0001-006\"}"
       }
     }
   }
@@ -265,7 +265,7 @@ You can also narrow your search by specifying a system type, whether it is a you
 
 #!bash
 $ systems-list -V -E
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/?type=execution&pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/?type=execution&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -280,7 +280,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/lonestar4.tacc.teragrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/lonestar4.tacc.teragrid.org"
       }
     }
   }, {
@@ -293,7 +293,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede.tacc.utexas.edu"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu"
       }
     }
   } ]
@@ -305,7 +305,7 @@ This returns all execution systems.
 
 #!bash
 $ systems-list -V -S
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/?type=storage&pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/?type=storage&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -320,7 +320,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : true,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       }
     }
   } ]
@@ -332,7 +332,7 @@ This returns all storage systems.
 
 #!bash
 $ systems-list -V -P
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/?public=true&pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/?public=true&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -347,7 +347,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/lonestar4.tacc.teragrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/lonestar4.tacc.teragrid.org"
       }
     }
   }, {
@@ -360,7 +360,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede.tacc.utexas.edu"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu"
       }
     }
   }, {
@@ -373,7 +373,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : true,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       }
     }
   } ]
@@ -385,7 +385,7 @@ This returns all public systems.
 
 #!bash
 $ systems-list -V -D
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/?default=true&pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/?default=true&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -400,7 +400,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : true,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       }
     }
   } ]
@@ -420,7 +420,7 @@ The fastest way to add a system is to copy an existing system and rename it for 
 #!bash
 
 $ systems-clone -V stampede.tacc.utexas.edu
-Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X PUT -d "action=clone&id=stampede-nryan" https://agave.iplantc.org/systems/2.0/stampede.tacc.utexas.edu?pretty=true
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X PUT -d "action=clone&id=stampede-nryan" https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu?pretty=true
 
 {
   "status" : "success",
@@ -472,16 +472,16 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/stampede-nryan/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan/credentials"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388520343225-b0b0b0bb0b-0001\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388520343225-b0b0b0bb0b-0001\"}"
       }
     }
   }
@@ -498,7 +498,7 @@ If the system we want to use isn't already present in your list of systems, you 
 #!bash
 
 $ systems-addupdate -V -F systems/storage/sftp-password.json
-Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@systems/storage/sftp-password.json" https://agave.iplantc.org/systems/2.0/?pretty=true
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@systems/storage/sftp-password.json" https://agave.iplantc.org/systems/v2/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -528,16 +528,16 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
+        "href" : "https://agave.iplantc.org/systems/v2/demo.storage.example.com"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/demo.storage.example.com/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/demo.storage.example.com/credentials"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388520565047-b0b0b0bb0b-0001-006\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388520565047-b0b0b0bb0b-0001-006\"}"
       }
     }
   }
@@ -563,7 +563,7 @@ Setting a default system can be done with a single command.
 
 #!bash
 $ systems-setdefault -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X PUT -d "action=setDefault" https://agave.iplantc.org/systems/2.0/systest-stampede?pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X PUT -d "action=setDefault" https://agave.iplantc.org/systems/v2/systest-stampede?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -641,16 +641,16 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/credentials"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/data/?q={\"associationIds\":\"0001388740888728-5056a550b8-0001-006\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388740888728-5056a550b8-0001-006\"}"
       }
     }
   }
@@ -662,7 +662,7 @@ Now if we again query for our default systems, we see that our private system nr
 
 #!bash
 $ systems-list -V -D
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/?default=true&pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/?default=true&pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -677,7 +677,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       }
     }
   }, {
@@ -690,7 +690,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : true,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       }
     }
   } ]
@@ -711,7 +711,7 @@ Let's see what roles are currently on our private system `stampede-nryan`.
 
 #!bash
 $ systems-roles-list -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/systest-stampede/roles/?pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/systest-stampede/roles/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -721,13 +721,13 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "role" : "ADMIN",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/roles/systest"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/systest"
+        "href" : "https://agave.iplantc.org/profiles/v2/systest"
       }
     }
   } ]
@@ -743,7 +743,7 @@ Now let's grant another user access to our system.
 
 #!bash
 $ systems-roles-addupdate -V -u mock -r user systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=user" https://agave.iplantc.org/systems/2.0/systest-stampede/roles/systest?pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=user" https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -753,13 +753,13 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     "role" : "USER",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/roles/mock"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/mock"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -775,7 +775,7 @@ Removing a role is just as you might expect.
 
 #!bash
 $ systems-roles-addupdate -V -u mock -r none systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=none" https://agave.iplantc.org/systems/2.0/systest-stampede/roles/systest?pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=none" https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -785,13 +785,13 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     "role" : "NONE",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/roles/mock"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/mock"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/mock"
+        "href" : "https://agave.iplantc.org/profiles/v2/mock"
       }
     }
   } ]
@@ -805,7 +805,7 @@ The response gives the permissions of the user after the update. Listing the sys
 
 #!bash
 $ systems-roles-list -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/2.0/systest-stampede/roles/?pretty=true
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/systest-stampede/roles/?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -815,13 +815,13 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "role" : "ADMIN",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede/roles/systest"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/2.0/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/systest"
+        "href" : "https://agave.iplantc.org/profiles/v2/systest"
       }
     }
   } ]

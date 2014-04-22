@@ -36,5 +36,6 @@ systems/execution/lonestar4.tacc.teragrid.org.json
 systems/execution/stampede.tacc.utexas.edu.json
 systems/live-execution
 systems/live-storage
+credentials
 api_sample_user
 
