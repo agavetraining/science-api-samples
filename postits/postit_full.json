@@ -1,0 +1,7 @@
+{
+	"url": "https://agave.iplantc.org/files/v2/media/system/demo.storage.example.com/wc-1.00/picksumipsum.txt",
+	"method": "GET",
+	"maxUses": 25,
+	"lifetime": 3600,
+	"noauth": false
+}
