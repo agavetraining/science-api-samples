@@ -1,7 +1,6 @@
 {
 	"target" : "data.iplantcollaborative.org",
-	"frequency": 120,
-	"active" : true,
-	"updateSystemStatus" : false,
-	"persistent": false
+	"frequency": 60,
+	"active" : false,
+	"updateSystemStatus" : false
 }
