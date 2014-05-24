@@ -2,17 +2,16 @@
 	"target" : "data.iplantcollaborative.org",
 	"frequency": 120,
 	"active" : true,
-	"updateSystemStatus" : false,
-	"persistent": false,
+	"updateSystemStatus" : false
 	"notifications": [
 		{
 			"url": "nryan@mlb.com",
-			"event": "FAILED",
+			"event": "STATUS_CHANGED",
 			"persistent": true
 		},
 		{
 			"url": "http://requestb.in/1jr71yi1?system=${TARGET}&status=${EVENT}",
-			"event": "STATUS_CHANGED",
+			"event": "FAILED",
 			"persistent": true
 		}
 	]
