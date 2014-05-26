@@ -1,98 +1,209 @@
 {
-  "name": "dockerapp",
-  "version": "0.8.2",
-  "helpURI": "http://docker.io",
-  "label": "Canonical Docker app",
-  "defaultNodeCount": 1,
-  "defaultRequestedTime": "48:00:00",
-  "shortDescription": "Generic template for running a Docker container through Agave.",
-  "longDescription": "Generic template for running a Docker container through Agave. This app should be the default extension point for running any Docker containers through Agave.",
-  "executionSystem": "dooley-docker",
-  "executionType": "CLI",
-  "parallelism": "SERIAL",
-  "deploymentPath": "dooley/applications/2.0/docker/generic",
-  "deploymentSystem": "data.iplantcollaborative.org",
-  "templatePath": "wrapper.sh",
-  "testPath": "test/test.sh",
-  "tags": [
-    "docker", "demo"
-  ],
-  "modules": [],
-  "inputs": [
-    {
-      "id": "dockerFile",
-      "details": {
-      	"defaut": null,
-        "label": "Dockerfile",
-        "description": "Dockerfile to build the container that will be run as the executable. This is optional. Only include it if you need to build your container.",
-        "argument": null,
-        "showArgument": false
+   "name":"dockerapp",
+   "version":"0.8.2",
+   "helpURI":"http://docker.io",
+   "label":"Canonical Docker app",
+   "defaultMemory":1,
+   "defaultProcessors":1,
+   "defaultQueue":"debug",
+   "defaultNodeCount":1,
+   "defaultRequestedTime":"48:00:00",
+   "shortDescription":"Generic template for running a Docker container through Agave.",
+   "longDescription":"Generic template for running a Docker container through Agave. This app should be the default extension point for running any Docker containers through Agave.",
+   "executionSystem":"dooley-docker",
+   "executionType":"CLI",
+   "parallelism":"SERIAL",
+   "deploymentPath":"dooley/applications/2.0/docker/generic",
+   "deploymentSystem":"data.iplantcollaborative.org",
+   "templatePath":"wrapper.sh",
+   "testPath":"test/test.sh",
+   "tags":[
+      "docker",
+   ],
+   "modules":[],
+   "inputs":[
+      {
+         "id":"dockerFile",
+         "details":{
+            "defaut":null,
+            "label":"Dockerfile",
+            "description":"Dockerfile to build the container that will be run as the executable. This is optional. Only include it if you need to build your container.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
       },
-      "semantics": {
-        "minCardinality": 1,
-        "ontology": []
+      {
+         "id":"input1",
+         "details":{
+            "defaut":null,
+            "label":"Unused first input",
+            "description":"Placeholder for something relevant for an app.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
       },
-      "value": {
-        "required": false,
-        "visible": true
+      {
+         "id":"input2",
+         "details":{
+            "defaut":null,
+            "label":"Unused second input",
+            "description":"Placeholder for something relevant for an app.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
+      },
+      {
+         "id":"input3",
+         "details":{
+            "defaut":null,
+            "label":"Unused third input",
+            "description":"Placeholder for something relevant for an app.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
+      },
+      {
+         "id":"input4",
+         "details":{
+            "defaut":null,
+            "label":"Unused fourth input",
+            "description":"Placeholder for something relevant for an app.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
+      },
+      {
+         "id":"input5",
+         "details":{
+            "defaut":null,
+            "label":"Unused fifth input",
+            "description":"Placeholder for something relevant for an app.",
+            "argument":null,
+            "showArgument":false
+         },
+         "semantics":{
+            "minCardinality":1,
+            "ontology":[
+
+            ]
+         },
+         "value":{
+            "required":false,
+            "visible":true
+         }
       }
-    }
-  ],
-  "parameters": [
-    {
-      "id": "dockerImage",
-      "details": {
-        "label": "Image name",
-        "description": "Container image from the Docker central repo or name of the image created by building the dockerFile",
-        "argument": null,
-        "showArgument": false
+   ],
+   "parameters":[
+      {
+         "id":"dockerImage",
+         "details":{
+            "label":"Image name",
+            "description":"Container image from the Docker central repo or name of the image created by building the dockerFile",
+            "argument":null,
+            "showArgument":false
+         },
+         "value":{
+            "default":"centos",
+            "type":"string",
+            "visible":true,
+            "required":true
+         },
+         "semantics":{
+            "ontology":[
+
+            ]
+         }
       },
-      "value": {
-      	"default": "centos",
-        "type": "string",
-        "visible": true,
-        "required": true
+      {
+         "id":"command",
+         "details":{
+            "label":"Command to run.",
+            "description":"Command that should be run within the container when it is started. This is the first argument to docker run ",
+            "argument":null,
+            "showArgument":false
+         },
+         "value":{
+            "default":"/bin/date",
+            "type":"string",
+            "required":false,
+            "visible":true
+         },
+         "semantics":{
+            "ontology":[
+
+            ]
+         }
       },
-      "semantics": {
-        "ontology": []
+      {
+         "id":"commandArgs",
+         "details":{
+            "label":"Arguments to the command",
+            "description":"Arguments to the docker run command. This should be a string containing any values you want passed directly into the command line. Avoid redirecting output as this rarely works as expected.",
+            "argument":null,
+            "showArgument":false
+         },
+         "value":{
+            "default":"-u",
+            "type":"string",
+            "required":false,
+            "visible":true
+         },
+         "semantics":{
+            "ontology":[
+
+            ]
+         }
       }
-    },
-    {
-      "id": "param1",
-      "details": {
-        "label": "Unused first parameter",
-        "description": "Placeholder for something relevant for an app",
-        "argument": null,
-        "showArgument": false
-      },
-      "value": {
-        "default": "",
-        "type": "string",
-        "required": false,
-        "visible": true
-      },
-      "semantics": {
-        "ontology": []
-      }
-    },
-    {
-      "id": "param2",
-      "details": {
-        "label": "Unused second parameter",
-        "description": "Placeholder for something relevant for an app",
-        "argument": null,
-        "showArgument": false
-      },
-      "value": {
-        "default": 5,
-        "type": "number",
-        "required": false,
-        "visible": true
-      },
-      "semantics": {
-        "ontology": []
-      }
-    }
-  ],
-  "checkpointable": false
+   ],
+   "checkpointable":false
 }

@@ -2,15 +2,15 @@
     "name": "dockerapp-demo-date",
     "appId": "dockerapp-0.8.2",
     "notifications": [
-    	{ 
-    		"url" : "nryan@mlb.com",
-    		"event": "FINISHED"
-    	},
-    	{ 
-    		"url" : "nryan@mlb.com",
-    		"event": "FAILED"
-    	}
-    ],		
+      {
+        "url" : "nryan@mlb.com",
+        "event": "FINISHED"
+      },
+      {
+        "url" : "nryan@mlb.com",
+        "event": "FAILED"
+      }
+    ],
     "parameters": {
         "dockerImage": "centos",
         "command": "/bin/date",

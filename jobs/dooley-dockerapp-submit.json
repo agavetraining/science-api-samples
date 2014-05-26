@@ -1,0 +1,24 @@
+{
+    "name": "dooley-runner",
+    "appId": "dooley-dockerapp-0.8.2",
+    "notifications": [
+      {
+        "url" : "dooley@tacc.utexas.edu",
+        "event": "FINISHED"
+      },
+      {
+        "url" : "dooley@tacc.utexas.edu",
+        "event": "FAILED"
+      }
+    ],
+    "inputs": {
+      "appBundle": "dooley/inputs/dooley-runner.tgz"
+    },
+    "parameters": {
+        "unpackInputs": true,
+        "dockerImage": "scivm/r-project-3.0",
+        "command": "Rscript",
+        "commandArgs": "main.r"
+    },
+    "archive": false
+}

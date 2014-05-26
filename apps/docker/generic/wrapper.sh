@@ -7,52 +7,52 @@
 
 DOCKER_IMAGE=${dockerImage}
 
-# In the follow section, you would enter application specific parameters.
+# In the follow section, you would enter application specific parameters. For this
+# generic example, we take two parameters, the command to run within the container
+# and any other arguments for that command as a single string.
 
-PARAM1=${param1}
-PARAM2=${param2}
+BINARY_COMMAND="${command}"
+BINARY_ARGS="${commandArgs}"
 
 # In addition to the common parameter, all docker apps take a single 
 # optional common input file, `dockerFile`. If given, the docker file will
-# be used to build the app. It is important not to include the binary's 
+# be used to build the container. It is important not to include the binary's 
 # execution as a RUN step in the Dockerfile as this will cause it to be run
 # twice.
 
 DOCKER_FILE=${dockerFile}
 
-if [[ -n $DOCKER_FILE ]]; then
+if [[ -n "$DOCKER_FILE" ]]; then
 	docker build -rm -t "$DOCKER_IMAGE" "$DOCKER_FILE"
 fi
 
 # In the follow section, you would enter application specific input files.
-# As with native apps, the input files will be present in the job directory
-# when this script is run.
+# As with native apps, the input files will already be present in the job directory
+# when this script is run. Here we generically specify a single input file to 
+# give you a placeholder for staging a file for your app. Note that in this example
+# the input file is simply staged and present in the container's /scratch directory,
+# it is not passed into the actual docker run command.
 
-INPUT1=${input1}
+IN1="${input1}"
+IN2="${input3}"
+IN3="${input2}"
+IN4="${input4}"	
+IN5="${input5}"
 
-
-# Build up the arguments string
-ARGS=""
-
-if [ ${PARAM1} -ne 0 ]; then
-	# do something
-	ARGS='-a'
-fi
-
-if [ -n ${PARAM2} ]; then
-	ARGS="$ARGS -l"
-fi
-	
 # Run the container in docker, mounting the current job directory as /scratch in the container
-# Note that here the docker container image must exist for the container to run. If it was
+# Note that the docker container image must exist for the container to run. If it was
 # not built using a passed in Dockerfile, then it will be downloaded here prior to 
-# invocation. Also note that all output is written to the mounted directory. This allows
-# Agave to stage out the data after running.
+# invocation. THIS CAN TAKE SOME TIME. Also note that any output not written to the 
+# mounted directory during execution will be lost once the process completes. Any 
+# data present in the job directory after execution will (optionally) be staged out 
+# for you as part of the archiving process.
 
-sudo docker run -i -t -v `pwd`:/scratch:ro $DOCKER_IMAGE "/bin/env ls ${ARGS} input/${INPUT1} > /scratch/output"
+sudo docker run -v `pwd`:/scratch:rw ${DOCKER_IMAGE} ${BINARY_COMMAND} ${BINARY_ARGS}
 
-# Good practice would suggest that you clean up your image after running. For throughput
-# you may want to leave it in place. iPlant's docker servers will clean up after themselves
-# using a purge policy based on size, demand, and utilization.
+# Good practice would suggest that you clean up your image after running. For better
+# throughput, you may want to leave it in place. This will prevent the server from
+# having to download the (potentially large) image for every run. If you do nothing 
+# here and are running on iPlant servers, they will clean up after themselves using 
+# 	a purge policy based on size, demand, and utilization.
 
 #sudo docker rmi $DOCKER_IMAGE
