@@ -1,9 +1,9 @@
 {
    "id":"demo.execute.example.com",
-   "name":"Demo SGE + GSISSH + MyProxy Execution System",
+   "name":"Demo SGE + GSISSH + MyProxy Gateway Execution System",
    "status":"UP",
    "type":"EXECUTION",
-   "description":"My example system using GSISSH, GridFTP, and a MyProxy server to submit jobs used for testing.",
+   "description":"My example system using GSISSH, GridFTP, and a MyProxy Gatway server to submit jobs used for testing.",
    "site":"example.com",
    "executionType":"HPC",
    "queues":[
@@ -25,14 +25,13 @@
       "protocol":"GSISSH",
       "auth":{
          "username":"systest",
-         "password":"changeit",
          "credential":"",
          "type":"X509",
          "server":{
             "name":"IRODS MyProxy Server",
             "endpoint":"myproxy.example.com",
             "port":7512,
-            "protocol":"MYPROXY"
+            "protocol":"MPG"
          }
       }
    },
@@ -44,14 +43,13 @@
       "homeDir":"/home/systest",
       "auth":{
          "username":"systest",
-         "password":"changeit",
          "credential":"",
          "type":"X509",
          "server":{
             "name":"IRODS MyProxy Server",
             "endpoint":"myproxy.example.com",
             "port":7512,
-            "protocol":"MYPROXY"
+            "protocol":"MPG"
          }
       }
    },

@@ -1,9 +1,9 @@
 {
 	"id": "demo.execute.example.com",
-	"name": "Demo PBS + SSH demo vm",
+	"name": "Demo PBS + SSH Execution System",
 	"status": "UP",
 	"type": "EXECUTION",
-	"description": "My example system using tunneling ssh to submit jobs used for testing.",
+	"description": "My example system using tunneling SSH to submit PBS jobs used for testing.",
 	"site": "example.com",
 	"executionType": "HPC",
 	"queues": [
@@ -23,12 +23,9 @@
 		"host": "ssh.example.com",
 		"port": 22,
 		"protocol": "SSH",
-		"scratchDir": "/scratch",
-		"workDir": "/work",
 		"auth": {
-			"username": "demo",
-			"password": "demo",
-			"credential": "",
+			"username": "systest",
+			"password": "changeit",
 			"type": "PASSWORD"
 		},
 		"proxy": {
@@ -41,12 +38,11 @@
 		"host": "ssh.example.com",
 		"port": 22,
 		"protocol": "SFTP",
-		"rootDir": "/home/demo",
-		"homeDir": "/",
+		"rootDir": "/",
+		"homeDir": "/home/systest",
 		"auth": {
-			"username": "demo",
-			"password": "demo",
-			"credential": "",
+			"username": "systest",
+			"password": "changeit",
 			"type": "PASSWORD"
 		},
 		"proxy": {
@@ -55,6 +51,8 @@
 			"port": 22
 		}
 	},
+	"scratchDir": "/scratch",
+	"workDir": "/work",
 	"maxSystemJobs": 100,
 	"maxSystemJobsPerUser": 10,
 	"scheduler": "PBS",

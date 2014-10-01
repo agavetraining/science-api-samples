@@ -13,13 +13,12 @@
     "homeDir": "/home/systest",
     "auth": {
       "username": "systest",
-      "password": "changeit",
       "type": "X509",
       "server": {
-        "name": "XSEDE MyProxy Server",
-        "endpoint": "myproxy.example.com",
-        "port": 7512,
-        "protocol": "MYPROXY"
+        "name": "My Trusted MPG Server",
+        "endpoint": "https://api.example.com/myproxy/v2/",
+        "port": 443,
+        "protocol": "MPG"
       }
     }
   }

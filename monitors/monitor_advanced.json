@@ -2,7 +2,7 @@
 	"target" : "data.iplantcollaborative.org",
 	"frequency": 120,
 	"active" : true,
-	"updateSystemStatus" : false
+	"updateSystemStatus" : false,
 	"notifications": [
 		{
 			"url": "nryan@mlb.com",

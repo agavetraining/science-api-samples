@@ -1,0 +1,15 @@
+{  
+   "name":"wordcount demo",
+   "appId":"wc-osg-1.00u1",
+   "inputs":{  
+      "query1":"agave://data.iplantcollaborative.org/systest/picksumipsum.txt"
+   },
+   "parameters": {},
+   "notifications":[  
+      {  
+         "url":"http://agaveapi.co/postbin/ad3a9dz?job_status=${JOB_STATUS}&job_id=${JOB_ID}",
+         "event":"*",
+         "persistent":true
+      }
+   ]
+}

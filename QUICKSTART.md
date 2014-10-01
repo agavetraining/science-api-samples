@@ -1,16 +1,19 @@
-# Agave Samples Quickstart Tutorial
-*******
+Agave Samples Quickstart Tutorial
+=================================
+
+---
 
 > This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co). For more in-depth coverage of individual topics, please consult the tutorials found in the subfolders of the Agave Samples project. Each of those tutorials provides more detailed examples of interacting with a specific Agave service along with working sample data.
-> 
 
-## Introduction  
+Introduction
+------------
 
-Welcome to the Agave Samples Quickstart Tutorial. In this tutorial we will cover the basic steps needed to get an account, create your own virutal data center, move data into, out of, and between storage systems within your data center, run and track jobs, and share those results with other people. 
+Welcome to the Agave Samples Quickstart Tutorial. In this tutorial we will cover the basic steps needed to get an account, create your own virutal data center, move data into, out of, and between storage systems within your data center, run and track jobs, and share those results with other people.
 
-## Prerequisites  
+Prerequisites
+-------------
 
-This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash. 
+This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash.
 
 All examples in this tutorial utilize the Agave Command Line Interface ([Agave CLI](https://bitbucket.org/taccaci/foundation-cli)). The Agave CLI is a set of bash scripts that fully exercise the entire Agave API. You can download the latest version of the Agave CLI from Bitbucket using Git. The following commands will download the code and add the commands to your $PATH so you don't need to prefix them with their full path on your file system.
 
@@ -23,46 +26,64 @@ $ export PATH=$PATH:`pwd`/foundation-cli/bin
 
 Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line. They will also be available via Bash completion.
 
-## Get an account
+Get an account
+--------------
+
 Before we do anything else, you will need to get a user account for your Agave API. Agave is multi-tenant, so there are multiple organizations that use it. This tutorial assumes you are using the [iPlant Collaborative](http://iplantcollaborative.org) tenant and, as such would need to get an iPlant account. If you are using another tenant, you would first need to obtain an account from the organization managing your tenant of Agave. If you don't knows who your tenant provider is, ask the people who told you about Agave or just create an iPlant account and use that. It's free, takes just a couple minutes to set up, comes with free storage and cycles, and will let you walk through this tutorial right away.
 
 To get an iPlant account, visit the [iPlant User Management Portal](https://user.iplantcollaborative.org/register/), fill out the registration form, and click on the link in the registration email. Please note that it can take a couple minutes for the registration email to arrive. This is the longest part of the process, so if you don't see it right away, go check your [Facebook](http://facebook.com/profile.php?=7332236) page. By the time you're done, your account will be ready.
 
-## Get your client credentials
-In the last section you created a user account. Your user account identifies you to the web applications you interact with. A username and password is sufficient for interacting with an application because the application has a user interface, so it knows that the authenticated user is the same  one interacting with it. The Agave API is not driven by a web interface, however, so simply providing it a username and password is not sufficient. Agave needs to know both the user on whose behalf it is acting as well as the application or service that is making the call. Whereas every person has a single iPlant user account, they may leverage multiple services to do their daily work. They may start out using the [Discovery Environment](https://de.iplantcollaborative.org) to kick of an analysis, then switch to [MyPlant](https://my-plant.org/) to discuss some results, then receive an email that new data has been shared with them, click a shortened url that allows them to download that directly to their desktop, edit the file locally, and save it in a local folder that syncs with their iPlant [cloud storage](http://www.iplantcollaborative.org/discover/data-store) in the background. 
+Get your client credentials
+---------------------------
 
-In each of the above interactions, the user is the same, but the context with which they are interacting with the iPlant infrastructure is different. The situation is further complicated when 3rd party applications are used to leverage the infrastructure. As the fundamental integration point for external applications with the iPlant cyberinfrastructure, Agave needs to track both the users and client applications  with whom it interacts. It does this through the issuance of client credentials.
+In the last section you created a user account. Your user account identifies you to the web applications you interact with. A username and password is sufficient for interacting with an application because the application has a user interface, so it knows that the authenticated user is the same one interacting with it. The Agave API is not driven by a web interface, however, so simply providing it a username and password is not sufficient. Agave needs to know both the user on whose behalf it is acting as well as the application or service that is making the call. Whereas every person has a single iPlant user account, they may leverage multiple services to do their daily work. They may start out using the [Discovery Environment](https://de.iplantcollaborative.org) to kick of an analysis, then switch to [MyPlant](https://my-plant.org/) to discuss some results, then receive an email that new data has been shared with them, click a shortened url that allows them to download that directly to their desktop, edit the file locally, and save it in a local folder that syncs with their iPlant [cloud storage](http://www.iplantcollaborative.org/discover/data-store) in the background.
+
+In each of the above interactions, the user is the same, but the context with which they are interacting with the iPlant infrastructure is different. The situation is further complicated when 3rd party applications are used to leverage the infrastructure. As the fundamental integration point for external applications with the iPlant cyberinfrastructure, Agave needs to track both the users and client applications with whom it interacts. It does this through the issuance of client credentials.
 
 Agave uses [OAuth2](http://oauth.net/2) to authenticate the client applications that call it and make authorization decisions about what protected resources they have permission to access. A discussion of OAuth is out of the context of this tutorial. You can read more about it on the [OAuth2](http://oauth.net/2) website or from the websites of any of the many other service providers using it today. In this section, we will walk you through getting your client credentials so we can stay focused on learning how to interact with the Agave's services.
 
-In order to interact with any of the Agave services, you will need to first get a set of client credentials so you can authenticate. You can get your client credentials from the [Agave API Store](https://agave.iplantc.org/store). 
-
-1. In a browser, visit [https://agave.iplantc.org/store](https://agave.iplantc.org/store).
-1. Login to the site using your iPlant username and password.
-1. Register a new client application by clicking on the *My Applications* tab and filling out the form.
-1. Subscribe to all the APIs you want to use(all of them for this tutorial).
-	a. Click on the *APIs* tab at the top of the page.
-	a. For each API listed on the page, clicking on the name to open up that API's details page.
-	a. Select the name of the application you just created from the *Applications* dropdown box on the right side of the page.
-	a. Select the unlimited tier from the *Tiers* dropdown box on the right side of the page.
-	a. Click the *Subscribe* button to subscribe for that API.
-	a. Return to the APIs page and repeat the process for the rest of the APIs.
-1. Click on the *My Subscriptions* tab at the top of the page to visit your subscriptions page.
-2. Select the application you created in step 3 from the *Applications With Subscriptions* dropdown box.
-3. Click the *Generate* button in the Production section to generate your client credentials.
-4. Copy your client secret and client key. These are your client credentials. You will need them in the next section.
-
-## Authenticate and get an access token
-Now that you have an account and your client credentials, you can start interacting with Agave. First up, let's trade your client credentials for an access token (also known as a bearer token). The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave. 
+In order to interact with any of the Agave services, you will need to first get a set of [API keys](http://agaveapi.co/client-registration). This is a one-time action. If you already have your API keys, skip to the next section. If not, you can create your keys using the Clients service.
 
 ```
 #!bash
 
-$ auth-tokens-create -S -V
+$ clients-create -S -v -u $API_USERNAME -p $API_PASSWORD -N my_cli_app -D "Client app used for scripting up cool stuff"
+{
+    "callbackUrl": "",
+    "consumerKey": "gTgpCecqtOc6Ao3GmZ_FecVSSV8a",
+    "consumerSecret": "hZ_z3f4Hf3CcgvGoMix0aksN4BOD6",
+    "description": "Client app used for scripting up cool stuff",
+    "name": "my_cli_app",
+    "tier": "Unlimited",
+    "_links": {
+        "self": {
+            "href": "https://agave.iplantc.org/clients/v2/my_cli_app"
+        },
+        "subscriber": {
+            "href": "https://agave.iplantc.org/profiles/v2/nryan"
+        },
+        "subscriptions": {
+            "href": "https://agave.iplantc.org/clients/v2/my_cli_app/subscriptions/"
+        }
+    }
+}
+```
+
+Creating your API keys is pretty straightforward and, as mentioned above, a one-time action. The one thing you should note from the above example is that, unlike the rest of the APIs, the Clients service requires HTTP BASIC authentication with your API username and password rather than an Authorization header with an access token. This discrepancy is intentional. Until you create your API keys, you cannot obtain an access token. By using BASIC auth, we avoid a chicken and egg problem.
+
+Authenticate and get an access token
+------------------------------------
+
+Now that you have an account and your client credentials, you can start interacting with Agave. First up, let's trade your client credentials for an access token (also known as a bearer token). The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave.
+
+```
+#!bash
+
+$ auth-tokens-create -S -V -u $IPLANT_USERNAME -p $IPLANT_PASSWORD
 Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
-Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa 
-Agave tenant username []: nryan
-Agave tenant password: 
+Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa
+Agave tenant username []:
+Agave tenant password:
 Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=nryan&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
 Token successfully refreshed and cached for 3600 seconds
 {
@@ -78,7 +99,8 @@ The second convention is the use of the `-V` option. This tells the CLI to print
 
 The third convention is simply the use of the CLI. Agave provides [client SDK](http://agaveapi.co/client-sdk/) in multiple languages. Providing code equivalents to every tutorial in every SDK is out of scope of this tutorial, which is meant to quickly show you conceptually and procedurally how to use Agave. While language specific versions would no doubt be instructive, for clarity and brevity, we focus here on the pure REST API to Agave and delegate the language-specific versions of this tutorial to the individual client SDK projects.
 
-## Finding and managing systems
+Finding and managing systems
+----------------------------
 
 By default, iPlant provides a shared account on two execution systems at [Texas Advanced Computing Center](http://tacc.utexas.edu) and one on the [Open Science Grid](http://opensciencegrid.org) that you can use freely to run applications. iPlant also provides you a free account on one storage system, the [iPlant Data Store](http://www.iplantcollaborative.org/discover/data-store), which gives you 1 TB of space by default. You can see these systems by querying the systems service.
 
@@ -145,6 +167,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     }
   }
 ```
+
 The response above contains summary information on each system. You can obtain the full detailed description of any system by calling the systems service with the system id. Let's look at OSG's Condor execution system as an example.
 
 ```
@@ -224,10 +247,10 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
 }
 ```
 
-The detailed system description above contains 4 areas you should note.  
+The detailed system description above contains 4 areas you should note.
 
 1. `queues`: this is a list of the queues available on the system. Each queue definition allows you to provide quota information that will be enforced as part of app registration and job submission. In this example, all queue information is provided. The only required information is the queue name.
-2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service.   Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
+2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service. Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
 3. `storage`: this is the connectivity information that Agave needs to move data to and from the system. As with the Login stanza, several protocols are supported: SFTP, SFTP with tunneling, GridFTP, IRODS, FTP, and LOCAL. Again, LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/storage directory.
 4. `_links`: Agave is, for the most part, a [hypermedia](http://en.wikipedia.org/wiki/Hypermedia) API. The every response that it gives provides references to the other resources associated with the response object. In the example above, you see references to the object itself and separeate references to the collections of roles, credentials, and metadata associated with the object. This gives you a basic discovery mechanism for navigating the API without need for a separate discovery service.
 
@@ -288,14 +311,14 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" htt
 
 Unlike the OSG Condor system, the description of the iPlant Data Store does not have stanzas for queue or login information. Storage systems are just that, strictly used for storage. Something common to both system descriptions you should notice, however, is the storage stanza. Here, as in the OSG Condor system description, we find a defintion of the `rootDir` and `homeDir`. These fields are important to the utilization of a storage system. They specify the virtual `/` (root) and `~` (home) directories on the remote system. While each storage system has its own root and home directories, you may not want to expose those to the people accessing the system through Agave. You may, instead, want to limit access to a specific user folder or mounted directory. That is the purpose of these accounts. All data requests made to a registered system through Agave are first resolved against the virtual root and home directories given in that system's storage stanza. If you have every configured a FTP server or used the `chroot` command on Linux, this concept should be familiar to you.
 
-
-## Adding systems for private use
+Adding systems for private use
+------------------------------
 
 While iPlant does provide you with several systems you can use, you may want to augment these systems with your own systems or access the iPlant systems, but using your own account. There are two ways to add systems to Agave: cloning and regsitering.
 
 ### Cloning a system
 
-The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality. 
+The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality.
 
 ```
 #!bash
@@ -430,11 +453,10 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
 
 Now that you have a system registered, it is available to you and you alone. To see how to share your system with one or more other users and grant them various roles on that system, see the [System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md).
 
-
-## Moving and managing data
+Moving and managing data
+------------------------
 
 The Agave Files service gives you a consistent interface for managing data across multiple storage systems. Let's look at a couple examples of how this works. We will start out by doing a simple directory listing to see what is in our home folder. The iPlant Data Store is a public, shared storage system. Because of this, the registered `rootDir` and `homeDir` are both the folder containing all the individual user home folders. In the following examples, this is why we specify the username in the path.
-
 
 ```
 #!bash
@@ -595,7 +617,7 @@ And make sure it's there as well.
 ```
 #!bash
 
-$ files-list -V -S demo.storage.example.com picksumipsum.txt 
+$ files-list -V -S demo.storage.example.com picksumipsum.txt
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/v2/listings/system/demo.storage.example.com/picksumipsum.txt?pretty=true
 {
     "message": null,
@@ -634,7 +656,7 @@ How about importing data from the web. Pretty much the same thing. We'll tell Ag
 ```
 #!bash
 
-$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt 
+$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/v2/media/system/demo.storage.example.com/?pretty=true
 {
   "status" : "success",
@@ -841,7 +863,8 @@ curl -O https://agave.iplantc.org/files/v2/download/nryan/system/demo.storage.ex
 100 19332  100 19332    0     0   3635      0  0:00:05  0:00:05 --:--:--  5833
 ```
 
-## Finding app
+Finding app
+-----------
 
 Agave's Apps service provides a way for you to discover and manage app. An app can be any executable code from a shell script to a complex workflow. The Apps service gives you a uniform way to describe, discover, and share apps as simple REST services. Let's see what apps are available to us right now.
 
@@ -983,12 +1006,12 @@ The detailed app description above contains 3 areas you should note.
 
 iPlant provided a growing catalog of actively curated apps that run on their public system which are available for use by anyone with an iPlant account. It is also possible for you to register and share your own apps. The process of doing this is covered in depth in the [App Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/apps/README.md). We refer you there for more information.
 
-
-## Runing a job
+Runing a job
+------------
 
 So far we have learned about how to find and create storage and executions systems. We learned how to move data around. We discovered how to find apps we can run. Now it's time to do some work.
 
-Agave handles all the details of orchestrating an app execution for you. You just need to provide it the id of the app you want to run, give the job a name, and specify the inputs and parameters the app needs to run. Optionally, you can tell Agave if and where you want the job results to be archived and subscribe to notifications ()in the form of emails or webhooks) to specific job events. 
+Agave handles all the details of orchestrating an app execution for you. You just need to provide it the id of the app you want to run, give the job a name, and specify the inputs and parameters the app needs to run. Optionally, you can tell Agave if and where you want the job results to be archived and subscribe to notifications ()in the form of emails or webhooks) to specific job events.
 
 Two sample job submissions are included in the jobs folder. Let's go ahead and submit one and see what happens.
 
@@ -1153,18 +1176,18 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
 
 ### Receiving job notifications
 
-Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `head-5.97-submit.json` job submission example illustrates this. 
+Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `head-5.97-submit.json` job submission example illustrates this.
 
 ```
 #!JSON
 
 "notifications": [
-   	{ 
+   	{
    		"url" : "http://requestb.in/11pbi6m1?job_id=${JOB_ID}&status=${JOB_STATUS}",
    		"event": "*",
    		"persistent": true
    	},
-   	{ 
+   	{
    		"url" : "nryan@mlb.com",
    		"event": "FINISHED"
    	}
@@ -1370,12 +1393,12 @@ Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -o "tr
 100 3154k    0 3154k    0     0   100k      0 --:--:--  0:00:31 --:--:--  100k
 ```
 
-## Sharing your work with the world
+Sharing your work with the world
+--------------------------------
 
 Often times you will want to share your data, jobs, metadata, etc. with a third party person, service, or application. The sharing permissions built into every Agave service are helpful when the third party has API access as well, but they're less useful when the third party cannot authenticate to Agave and you're not comfortable making your data public to the world. This is why the PostIts service exists.
 
 PostIts are preauthenticated, disposable URLs. Similar to [tinyurl](http://tinyurl.com) or [bit.ly](http://bit.ly), they provide a way for you to create an obfuscated url that references an Agave resource. What differentiates the PostIt service is the ability for you to pre-authenticate the URLS you generate so you gave give external users access to a specific resource using a specific HTTP method (GET, PUT, POST, DELETE) for a fixed number of requests or amount of time without them having to authentiated. Once the PostIt reaches its limits, it expires and is no longer valid. Let's create a postit to the file we uploaded earlier.
-
 
 ```
 #!BASH

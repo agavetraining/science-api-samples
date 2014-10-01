@@ -1,15 +1,15 @@
 {
 	"id": "demo.execute.example.com",
-	"name": "Demo Condor + SSH Execution System",
+	"name": "Demo LOCAL Execution System",
 	"status": "UP",
 	"type": "EXECUTION",
-	"description": "My example system using SSH and Condor to submit jobs used for testing.",
+	"description": "My example system locally submitting jobs used for testing.",
 	"site": "example.com",
-	"executionType": "CONDOR",
+	"executionType": "CLI",
 	"default": false,
 	"queues": [
     {
-        "name": "condorqueue",
+        "name": "default",
         "maxJobs": 50,
         "maxUserJobs": 5,
 				"maxNodes": -1,
@@ -21,32 +21,26 @@
     }
   ],
 	"login": {
-		"host": "condor.example.com",
-		"port": 22,
-		"protocol": "SSH",
+		"host": "localhost",
+		"protocol": "LOCAL",
 		"auth": {
-			"username": "demo",
-			"password": "demo",
-			"type": "PASSWORD"
+			"type": "LOCAL"
 		}
 	},
 	"storage": {
-		"host": "condor.example.com",
-		"port": 22,
-		"protocol": "SFTP",
+		"host": "localhost",
+		"protocol": "LOCAL",
 		"rootDir": "/",
 		"homeDir": "/home/systest",
 		"auth": {
-			"username": "systest",
-			"password": "changeit",
-			"type": "PASSWORD"
+			"type": "LOCAL"
 		}
 	},
 	"maxSystemJobs": 50,
 	"maxSystemJobsPerUser": 5,
 	"scratchDir": "/scratch",
 	"workDir": "/work",
-	"scheduler": "CONDOR",
+	"scheduler": "FORK",
 	"environment": "",
 	"startupScript": "./bashrc"
 }

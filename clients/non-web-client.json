@@ -1,0 +1,6 @@
+{
+   "clientName":"my_cli_app",
+   "tier":"UNLIMITED",
+   "description":"Client app used for kicking the tires on Agave.",
+   "callbackUrl":""
+}

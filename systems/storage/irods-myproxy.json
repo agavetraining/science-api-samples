@@ -6,11 +6,11 @@
   "description": "My example storage system using GridFTP with MyProxy to store data for testing",
   "site": "example.com",
   "storage": {
-    "host": "gridftp.example.com",
-    "port": 2811,
-    "protocol": "GRIDFTP",
-    "rootDir": "/",
-    "homeDir": "/home/systest",
+    "host": "storage.example.com",
+    "port": 1247,
+    "protocol": "IRODS",
+    "homeDir":"/systest",
+    "rootDir":"/demoZone/home",
     "auth": {
       "username": "systest",
       "password": "changeit",
@@ -21,6 +21,8 @@
         "port": 7512,
         "protocol": "MYPROXY"
       }
-    }
+    },
+    "resource":"demoResc",
+    "zone":"demoZone"
   }
 }

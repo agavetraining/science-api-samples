@@ -1,0 +1,17 @@
+{
+	"username": "rclemens",
+	"email": "rclemens@mlb.com",
+	"country": "US",
+	"department": null,
+	"fax": null,
+	"firstName": "Roger",
+	"lastName": "Clemens",
+	"gender": "MALE",
+	"institution": null,
+	"phone": "(818) 460-7477",
+	"position": "Pitcher",
+	"researchArea": "Making hitters look silly",
+	"city": "Houston",
+	"state": "TX",
+	"status": "retired"
+}

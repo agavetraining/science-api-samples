@@ -1,0 +1,11 @@
+{
+  "name":"bugaboo-cli-test",
+  "appId": "dooley-bugaboo-fork-head-1.00",
+  "parameters": {
+    "numberOfLines":"2"
+  },
+  "inputs": {
+    "inputFile":"agave://bugaboo-storage-bcorrie-pw/bcorrie/iReceptor/iReceptor/apps/head/1.00/input/picksumipsum.txt"
+  },
+  "archive": false
+}

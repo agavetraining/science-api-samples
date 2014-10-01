@@ -1,26 +1,25 @@
 {
-	"id": "demo.storage.example.com",
-	"name": "Demo sftp tunnel server",
-	"status": "UP",
-	"type": "STORAGE",
-	"description": "My example system using tunneling sftp to move data.",
-	"site": "example.com",
-	"storage": {
-		"host": "ssh.example.com",
-		"port": 22,
-		"protocol": "SFTP",
-		"rootDir": "/home/demo",
-		"homeDir": "/",
-		"auth": {
-			"username": "demo",
-			"password": "demo",
-			"credential": "",
-			"type": "PASSWORD"
-		},
-		"proxy": {
-			"name": "gateway node",
-			"host": "proxy.example.com",
-			"port": 22
-		}
-	}
+   "id":"sftp.storage.example.com",
+   "name":"Example SFTP Tunnel Storage Host",
+   "status":"UP",
+   "type":"STORAGE",
+   "description":"My example storage system using SFTP via an ssh tunnel to store data for testing",
+   "site":"example.com",
+   "storage":{
+      "host":"storage.example.com",
+      "port":22,
+      "protocol":"SFTP",
+      "rootDir":"/",
+      "homeDir":"/home/nryan",
+      "auth":{
+         "username":"systest",
+         "password":"changeit",
+         "type":"PASSWORD"
+      },
+      "proxy":{
+         "name":"My gateway proxy server",
+         "host":"proxy.example.com",
+         "port":22
+      }
+   }
 }
