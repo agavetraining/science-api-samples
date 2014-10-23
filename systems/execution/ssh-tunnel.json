@@ -20,12 +20,12 @@
 		}
 	],
 	"login": {
-		"host": "ssh.example.com",
+		"host": "execute.example.com",
 		"port": 22,
 		"protocol": "SSH",
 		"auth": {
-			"username": "systest",
-			"password": "changeit",
+			"username": "testuser",
+			"password": "testuser",
 			"type": "PASSWORD"
 		},
 		"proxy": {
@@ -35,14 +35,14 @@
 		}
 	},
 	"storage": {
-		"host": "ssh.example.com",
+		"host": "execute.example.com",
 		"port": 22,
 		"protocol": "SFTP",
 		"rootDir": "/",
-		"homeDir": "/home/systest",
+		"homeDir": "/home/testuser",
 		"auth": {
-			"username": "systest",
-			"password": "changeit",
+			"username": "testuser",
+			"password": "testuser",
 			"type": "PASSWORD"
 		},
 		"proxy": {

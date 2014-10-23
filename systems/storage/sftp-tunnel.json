@@ -1,5 +1,5 @@
 {
-   "id":"sftp.storage.example.com",
+   "id":"demo.storage.example.com",
    "name":"Example SFTP Tunnel Storage Host",
    "status":"UP",
    "type":"STORAGE",
@@ -12,8 +12,8 @@
       "rootDir":"/",
       "homeDir":"/home/nryan",
       "auth":{
-         "username":"systest",
-         "password":"changeit",
+         "username":"testuser",
+         "password":"testuser",
          "type":"PASSWORD"
       },
       "proxy":{

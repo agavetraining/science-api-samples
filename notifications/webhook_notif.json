@@ -1,5 +1,5 @@
 {
-	"url" : "http://requestb.in/1jj4jnz1?username=systest&status=hateos",
+	"url" : "http://requestb.in/1jj4jnz1?username=testuser&status=hateos",
 	"event" : "*",
 	"associatedUuid" : "<insert uuid here>",
 	"persistent": true

@@ -6,9 +6,9 @@
 $> auth-tokens-create -V -S
 Consumer secret []: my_client_secret
 Consumer key []: my_client_key
-Agave tenant username []: dooley
+Agave tenant username []: testuser
 Agave tenant password: 
-Calling curl -sku "my_client_secret:XXXXXX" -X POST -d "grant_type=client_credentials&username=dooley&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://129.114.60.211/token
+Calling curl -sku "my_client_secret:XXXXXX" -X POST -d "grant_type=client_credentials&username=testuser&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://129.114.60.211/token
 Token successfully stored
 {
     "access_token": "56e13e12abd0eb8f776b18513622cc", 
@@ -36,7 +36,7 @@ wc-demo-1.00
 # find details about an app
 # Q: we should probably allow admins to see all apps when they do a general listing
 $> apps-list -V wc-demo-1.00
-Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/apps/2.0/wc-demo-1.00?pretty=true
+Calling curl -sku "testuser:XXXXXX" https://agave.iplantc.org/apps/2.0/wc-demo-1.00?pretty=true
 {
   "status" : "success",
   "message" : "",
@@ -163,7 +163,7 @@ $> files-history
 
 # see it is there
 $> files-list -V -S demo.storage.example.com inputs/fastq/example.fq
-Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/files/2.0/listings/system/demo.storage.example.com/inputs/fastq/example.fq?pretty=true
+Calling curl -sku "testuser:XXXXXX" https://agave.iplantc.org/files/2.0/listings/system/demo.storage.example.com/inputs/fastq/example.fq?pretty=true
 {
   "status" : "success",
   "message" : "",
@@ -192,8 +192,8 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/files/2.0/listings/s
 
 
 # my bad. copy to other system
-files-import -V -U "agave://demo.storage.example.com/inputs/fastq/example.fq" dooley/inputs/fasta/
-Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToIngest=agave://demo.storage.example.com/slurm.submit" https://129.114.60.211/io-V1/files/media/dooley?pretty=true
+files-import -V -U "agave://demo.storage.example.com/inputs/fastq/example.fq" testuser/inputs/fasta/
+Calling curl -ku "testuser:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToIngest=agave://demo.storage.example.com/slurm.submit" https://129.114.60.211/io-V1/files/media/testuser?pretty=true
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   821  100   764  100    57    182     13  0:00:04  0:00:04 --:--:--   182
@@ -203,7 +203,7 @@ Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToInge
   "version" : "2.0.0-SNAPSHOT-rf64a967",
   "result" : {
     "name" : "slurm.submit",
-    "path" : "dooley",
+    "path" : "testuser",
     "lastModified" : "2013-07-09T14:19:49.000-05:00",
     "length" : -1,
     "permisssions" : "ALL",
@@ -211,20 +211,20 @@ Calling curl -ku "dooley:63725d6b16d35940232b4b136a234a0c" -X POST -d "urlToInge
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://129.114.60.211/v2/io/system/demo.storage.example.com/dooley"
+        "href" : "https://129.114.60.211/v2/io/system/demo.storage.example.com/testuser"
       },
       "system" : {
         "href" : "https://agave.iplantc.org/systems/2.0/demo.storage.example.com"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/2.0/search/?query=rel:https://129.114.60.211/v2/io/system/demo.storage.example.com/dooley"
+        "href" : "https://agave.iplantc.org/meta/2.0/search/?query=rel:https://129.114.60.211/v2/io/system/demo.storage.example.com/testuser"
       }
     }
   }
 }
 
 # see the file in the other location
-files-list dooley/inputs/fasta
+files-list testuser/inputs/fasta
 .
 example.fq
 
@@ -237,7 +237,7 @@ example.fq
 
 # run a job
 $> jobs-submit -V -F submit.json 
-Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
+Calling curl -sku "testuser:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
 {
   "status" : "success",
   "message" : "",
@@ -245,7 +245,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
   "result" : {
     "id" : "0001379854320857-5056831b44-0001-job",
     "name" : "demo-1",
-    "owner" : "dooley",
+    "owner" : "testuser",
     "executionSystem" : "condor.opensciencegrid.org",
     "appId" : "wc-demo-1.00",
     "processors" : 1,
@@ -255,7 +255,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
     "archive" : true,
     "retries" : 0,
     "localId" : "114",
-    "archivePath" : "/dooley/archive/acm-bcb/demo-1",
+    "archivePath" : "/testuser/archive/acm-bcb/demo-1",
     "archiveSystem" : "demo.storage.example.com",
     "outputPath" : null,
     "status" : "QUEUED",
@@ -263,7 +263,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
     "startTime" : null,
     "endTime" : null,
     "inputs" : [ {
-      "query1" : "dooley/inputs/fasta/example.fq"
+      "query1" : "testuser/inputs/fasta/example.fq"
     } ],
     "parameters" : [ ],
     "_links" : {
@@ -283,7 +283,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
         "href" : "https://agave.iplantc.org/jobs/2.0/136/outputs/listings"
       },
       "owner" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/dooley"
+        "href" : "https://agave.iplantc.org/profiles/2.0/testuser"
       },
       "permissions" : {
         "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/pems"
@@ -298,7 +298,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
 
 # monitor the job
 $> jobs-list -V 0001379854320857-5056831b44-0001-job
-Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
+Calling curl -sku "testuser:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job?pretty=true
 {
   "status" : "success",
   "message" : "",
@@ -306,7 +306,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
   "result" : {
     "id" : "0001379854320857-5056831b44-0001-job",
     "name" : "demo-1",
-    "owner" : "dooley",
+    "owner" : "testuser",
     "executionSystem" : "condor.opensciencegrid.org",
     "appId" : "wc-demo-1.00",
     "processors" : 1,
@@ -316,7 +316,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
     "archive" : true,
     "retries" : 0,
     "localId" : "114",
-    "archivePath" : "/dooley/archive/acm-bcb/demo-1",
+    "archivePath" : "/testuser/archive/acm-bcb/demo-1",
     "archiveSystem" : "demo.storage.example.com",
     "outputPath" : null,
     "status" : "QUEUED",
@@ -324,7 +324,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
     "startTime" : null,
     "endTime" : null,
     "inputs" : [ {
-      "query1" : "dooley/inputs/fasta/example.fq"
+      "query1" : "testuser/inputs/fasta/example.fq"
     } ],
     "parameters" : [ ],
     "_links" : {
@@ -344,7 +344,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
         "href" : "https://agave.iplantc.org/jobs/2.0/136/outputs/listings"
       },
       "owner" : {
-        "href" : "https://agave.iplantc.org/profiles/2.0/dooley"
+        "href" : "https://agave.iplantc.org/profiles/2.0/testuser"
       },
       "permissions" : {
         "href" : "https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/pems"
@@ -361,7 +361,7 @@ $> jobs-history 0001379854320857-5056831b44-0001-job
 Job accepted and queued for submission.
 Attempt 1 to stage job inputs
 Identifying input files for staging
-Staging dooley/inputs/fasta/example.fq to execution system
+Staging testuser/inputs/fasta/example.fq to execution system
 Copy in progress
 Job inputs staged to execution system
 Attempt [1] Preparing job for execution and staging binaries to execution system
@@ -369,13 +369,13 @@ Condor job successfully placed into queue
 Job started running
 Job completed execution
 Beginning to archive output.
-Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//dooley/archive/acm-bcb/demo-1
+Archiving agave://condor.opensciencegrid.org//condor/scratch/testuser/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//testuser/archive/acm-bcb/demo-1
 Job output archiving completed successfully.
 Job completed.
 
 # really stalk the job
 $> jobs-history -V 0001379854320857-5056831b44-0001-job
-Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/history?pretty=true
+Calling curl -sku "testuser:XXXXXX" https://agave.iplantc.org/jobs/2.0/0001379854320857-5056831b44-0001-job/history?pretty=true
 {
   "status" : "success",
   "message" : "",
@@ -395,12 +395,12 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
   }, {
     "created" : "2013-09-22T07:52:09.000-05:00",
     "status" : "STAGING_INPUTS",
-    "description" : "Staging dooley/inputs/fasta/example.fq to execution system"
+    "description" : "Staging testuser/inputs/fasta/example.fq to execution system"
   }, {
     "progress" : {
       "averageRate" : 0,
       "totalFiles" : 1,
-      "source" : "dooley/inputs/fasta/example.fq",
+      "source" : "testuser/inputs/fasta/example.fq",
       "totalActiveTransfers" : 0,
       "totalBytes" : 132,
       "totalBytesTransferred" : 132
@@ -436,14 +436,14 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
     "progress" : {
       "averageRate" : 0,
       "totalFiles" : 8,
-      "source" : "agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00",
+      "source" : "agave://condor.opensciencegrid.org//condor/scratch/testuser/job-136-demo-1/wc-demo-1.00",
       "totalActiveTransfers" : 1,
       "totalBytes" : 4010,
       "totalBytesTransferred" : 4010
     },
     "created" : "2013-09-22T07:53:35.000-05:00",
     "status" : "ARCHIVING",
-    "description" : "Archiving agave://condor.opensciencegrid.org//condor/scratch/dooley/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//dooley/archive/acm-bcb/demo-1"
+    "description" : "Archiving agave://condor.opensciencegrid.org//condor/scratch/testuser/job-136-demo-1/wc-demo-1.00 to agave://demo.storage.example.com//testuser/archive/acm-bcb/demo-1"
   }, {
     "created" : "2013-09-22T07:53:48.000-05:00",
     "status" : "ARCHIVING_FINISHED",
@@ -456,7 +456,7 @@ Calling curl -sku "dooley:XXXXXX" https://agave.iplantc.org/jobs/2.0/00013798543
 }
 
 # view job output
-$> files-list dooley/archive/acm-bcb/demo-1
+$> files-list testuser/archive/acm-bcb/demo-1
 .
 condorSubmit
 example.fq
@@ -468,7 +468,7 @@ transfer.tar.gz
 
 
 # download job output
-$> files-get dooley/archive/acm-bcb/demo-1/output.tar.gz
+$> files-get testuser/archive/acm-bcb/demo-1/output.tar.gz
 .
 condorSubmit
 example.fq
@@ -487,23 +487,23 @@ transfer.tar.gz
 
 
 # download piece of job output with files service
-$> files-get dooley/archive/acm-bcb/demo-1/job.out
+$> files-get testuser/archive/acm-bcb/demo-1/job.out
 
 # share file/folder with public
-$> files-pems-update -U public -P READ dooley/archive/acm-bcb/demo-1/job.out
+$> files-pems-update -U public -P READ testuser/archive/acm-bcb/demo-1/job.out
 
 # test public download
-$> curl -sk "curl -k https://129.114.60.211/files/download/dooley/system/demo.storage.example.com/dooley/archive/acm-bcb/demo-1/job.out"
+$> curl -sk "curl -k https://129.114.60.211/files/download/testuser/system/demo.storage.example.com/testuser/archive/acm-bcb/demo-1/job.out"
 
 # unshare file/folder with public
-$> files-pems-update -U public -P NONE dooley/archive/acm-bcb/demo-1/job.out
+$> files-pems-update -U public -P NONE testuser/archive/acm-bcb/demo-1/job.out
 
 # 404 on public download
-$> curl -k https://129.114.60.211/io-V1/files/download/dooley/system/demo.storage.example.com/dooley/archive/acm-bcb/demo-1/job.out
+$> curl -k https://129.114.60.211/io-V1/files/download/testuser/system/demo.storage.example.com/testuser/archive/acm-bcb/demo-1/job.out
 {"status":"error","message":"User does not have access to view the requested resource","version":"2.0.0-SNAPSHOT-rf64a967","result":null}
 
 # create posit
-$> postits-create -s dooley -m 1 https://agave.iplantc.org/files/2.0/media/dooley/archive/acm-bcb/demo-1/job.out
+$> postits-create -s testuser -m 1 https://agave.iplantc.org/files/2.0/media/testuser/archive/acm-bcb/demo-1/job.out
 API key for authenticating, its recommended to insert : 
 https://agave.iplantc.org/postits/2.0/b399e223fcc3581145a7affd136fd232
 

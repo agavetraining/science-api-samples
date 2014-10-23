@@ -1,0 +1,21 @@
+{
+  "name":"pyplot-demo test",
+  "appId": "demo-pyplot-demo-advanced-0.1.0",
+  "inputs": {
+    "dataset":"agave://demo.storage.example.com/apps/pyplot-demo-advanced-0.1.0/test/testdata.csv"
+  },
+  "archive": false,
+  "parameters": {
+    "unpackInputs": false,
+    "chartType": "bar line",
+    "width": 1024,
+    "height": 512,
+    "background": "#d96727",
+    "showYLabel": true,
+    "ylabel": "The Y Axis Label",
+    "showXLabel": true,
+    "xlabel": "The X Axis Label",
+    "showLegend": true,
+    "separateCharts": false
+  }
+}

@@ -17,57 +17,20 @@ if [ -n "${unpackInputs}" ]; then
 	app_bundle_extension="${APP_BUNDLE##*.}"
 
 	if [ "$app_bundle_extension" == 'zip' ]; then
-	  unzip "$APP_BUNDLE"
+		unzip "$APP_BUNDLE"
 	elif [ "$app_bundle_extension" == 'tar' ]; then
-	  tar xf "$APP_BUNDLE"
+		tar xf "$APP_BUNDLE"
 	elif [ "$app_bundle_extension" == 'gz' ] || [ "$app_bundle_extension" == 'tgz' ]; then
-	  tar xzf "$APP_BUNDLE"
+		tar xzf "$APP_BUNDLE"
 	elif [ "$app_bundle_extension" == 'bz2' ]; then
-	  bunzip "$APP_BUNDLE"
+		bunzip "$APP_BUNDLE"
 	elif [ "$app_bundle_extension" == 'rar' ]; then
-	  unrar "$APP_BUNDLE"
+		unrar "$APP_BUNDLE"
 	else
 		echo "Unable to unpack application bundle due to unknown compression extension .${extension}. Terminating job ${AGAVE_JOB_ID}" >&2
-	  ${AGAVE_JOB_CALLBACK_FAILURE}
-		exit
-	fi
-fi
-
-# This is the command inside the container to invoke when running the job
-# for example,
-#COMMAND='Rscript'
-COMMAND="${command}"
-
-# This is the arguments to the container command. For example,
-#COMMAND_ARGS='main.r'
-COMMAND_ARGS="${commandArgs}"
-
-# If a Dockerfile is included in the app bundle, it will be built prior
-# to execution. Additonally, the `dockerFile` input variable could be
-# provided which will result in the same behavior. If given, the docker file will
-# be used to build the app. It is important not to include the binary's
-# execution as a RUN step in the Dockerfile as this will cause it to be run
-# twice.
-
-if [ -n "${dockerFile}" ]; then
-	DOCKER_FILE="${dockerFile}"
-else
-	DOCKER_FILE="Dockerfile"
-fi
-
-if [ -e "$DOCKER_FILE" ]; then
-	time -p sudo docker build -rm -t "$DOCKER_IMAGE" "$DOCKER_FILE"
-
-	# Fail the job if the build fails
-	if [ ! $? ]; then
-		echo "Failed to build Dockerfile. Terminating job ${AGAVE_JOB_ID}" >&2
 		${AGAVE_JOB_CALLBACK_FAILURE}
 		exit
 	fi
-
-	# replace the given image with the job id so we know we execute the correct container
-	DOCKER_IMAGE=${AGAVE_JOB_ID}
-
 fi
 
 # Fail the job if the build fails
@@ -83,7 +46,7 @@ fi
 # invocation. Also note that all output is written to the mounted directory. This allows
 # Agave to stage out the data after running.
 
-sudo docker run -i -t -v `pwd`:/scratch -w /scratch $DOCKER_IMAGE ${COMMAND} ${COMMAND_ARGS} 2>> ${AGAVE_JOB_NAME}.err
+sudo docker run -i -t -v `pwd`:/home/ubuntu/scratch -w /home/ubuntu/scratch $DOCKER_IMAGE 2>> ${AGAVE_JOB_NAME}.err
 
 if [ ! $? ]; then
 	echo "Docker process exited with an error status." >&2

@@ -71,7 +71,7 @@ Calling curl -sk -H "Authorization: Bearer d143e138ab04ed9c32a5a608121ec8" -X PO
   "version" : "2.0.0-SNAPSHOT-r84d28",
   "result" : {
     "id" : "0001389067207091-5056a550b8-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "nryan@mlb.com",
     "associatedUuid" : "0001388554605053-b0b0b0bb0b-0001-007",
     "event" : "FINISHED",
@@ -86,7 +86,7 @@ Calling curl -sk -H "Authorization: Bearer d143e138ab04ed9c32a5a608121ec8" -X PO
         "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }
@@ -106,7 +106,7 @@ Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X P
   "version" : "2.0.0-SNAPSHOT-r84d28",
   "result" : {
     "id" : "0001388963314803-5056a550b8-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "nyran@mlb.com",
     "associatedUuid" : "0001388554605053-b0b0b0bb0b-0001-007",
     "event" : "FINISHED",
@@ -121,7 +121,7 @@ Calling curl -sk -H "Authorization: Bearer 1925eb84e2502c1a917ef393d8688de" -X P
         "href" : "https://agave.iplantc.org/notifications/v2/0001388963314803-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }
@@ -142,7 +142,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
   "version" : "2.0.0-SNAPSHOT-r84d28",
   "result" : {
     "id" : "0001389068909915-5056a550b8-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "http://requestb.in/14p4qg31",
     "associatedUuid" : "0001388895607302-5056a550b8-0001-002",
     "event" : "FINISHED",
@@ -157,7 +157,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
         "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }
@@ -177,7 +177,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
   "version" : "2.0.0-SNAPSHOT-r84d28",
   "result" : {
     "id" : "0001389069659307-5056a550b8-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "http://requestb.in/14p4qg31?job_id=${JOB_ID}",
     "associatedUuid" : "0001388895607302-5056a550b8-0001-002",
     "event" : "FINISHED",
@@ -192,7 +192,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
         "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }
@@ -212,7 +212,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
   "version" : "2.0.0-SNAPSHOT-r84d28",
   "result" : {
     "id" : "0001389070667170-5056a550b8-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "http://requestb.in/14p4qg31?job_id=${JOB_ID}",
     "associatedUuid" : "0001388895607302-5056a550b8-0001-002",
     "event" : "*",
@@ -227,7 +227,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
         "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }
@@ -249,7 +249,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
   "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
   "result" : {
     "id" : "0001389076758754-b0b0b0bb0b-0001-011",
-    "owner" : "systest",
+    "owner" : "testuser",
     "url" : "http://requestb.in/14p4qg31?app_id=${APP_ID}",
     "associatedUuid" : "0001388740888728-5056a550b8-0001-006",
     "event" : "UPDATED",
@@ -264,7 +264,7 @@ Calling curl -sk -H "Authorization: Bearer a25aa5482984249454ad5bfd65778746" -X 
         "href" : "https://agave.iplantc.org/notifications/v2/0001389076758754-b0b0b0bb0b-0001-011"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       }
     }
   }
@@ -305,7 +305,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -317,7 +317,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -329,7 +329,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -341,7 +341,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   } ]
@@ -368,7 +368,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389070667170-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -380,7 +380,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389069659307-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -392,7 +392,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389068909915-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   }, {
@@ -404,7 +404,7 @@ Calling curl -sk -H "Authorization: Bearer 560ecbd79c1e8f773afae7229e054d4" http
         "href" : "https://agave.iplantc.org/notifications/v2/0001389067207091-5056a550b8-0001-011"
       },
       "file" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/systest/foodir/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/foodir/picksumipsum.txt"
       }
     }
   } ]

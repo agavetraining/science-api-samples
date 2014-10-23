@@ -24,8 +24,8 @@
       "port":2222,
       "protocol":"GSISSH",
       "auth":{
-         "username":"systest",
-         "password":"changeit",
+         "username":"testuser",
+         "password":"testuser",
          "credential":"",
          "type":"X509",
          "server":{
@@ -37,14 +37,14 @@
       }
    },
    "storage":{
-      "host":"gridftp.example.com",
+      "host":"execute.example.com",
       "port":2811,
       "protocol":"GRIDFTP",
       "rootDir":"/",
-      "homeDir":"/home/systest",
+      "homeDir":"/home/testuser",
       "auth":{
-         "username":"systest",
-         "password":"changeit",
+         "username":"testuser",
+         "password":"testuser",
          "credential":"",
          "type":"X509",
          "server":{

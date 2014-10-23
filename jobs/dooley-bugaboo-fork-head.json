@@ -1,6 +1,6 @@
 {
   "name":"bugaboo-cli-test",
-  "appId": "dooley-bugaboo-fork-head-1.00",
+  "appId": "testuser-bugaboo-fork-head-1.00",
   "parameters": {
     "numberOfLines":"2"
   },

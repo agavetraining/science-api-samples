@@ -6,7 +6,7 @@
 	"description": "My example system using ftp to move data.",
 	"site": "example.com",
 	"storage": {
-		"host": "condor.example.com",
+		"host": "storage.example.com",
 		"port": 22,
 		"protocol": "SFTP",
 		"rootDir": "/home/demo",

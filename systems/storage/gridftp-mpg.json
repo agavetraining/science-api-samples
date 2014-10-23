@@ -6,13 +6,13 @@
   "description": "My example storage system using GridFTP with MyProxy to store data for testing",
   "site": "example.com",
   "storage": {
-    "host": "gridftp.example.com",
+    "host": "storage.example.com",
     "port": 2811,
     "protocol": "GRIDFTP",
     "rootDir": "/",
-    "homeDir": "/home/systest",
+    "homeDir": "/home/testuser",
     "auth": {
-      "username": "systest",
+      "username": "testuser",
       "type": "X509",
       "server": {
         "name": "My Trusted MPG Server",

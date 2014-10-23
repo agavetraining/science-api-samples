@@ -2,7 +2,7 @@
    "name":"wordcount demo",
    "appId":"wc-osg-1.00u1",
    "inputs":{  
-      "query1":"agave://data.iplantcollaborative.org/systest/picksumipsum.txt"
+      "query1":"agave://data.iplantcollaborative.org/testuser/picksumipsum.txt"
    },
    "parameters": {},
    "notifications":[  

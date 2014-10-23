@@ -1,15 +1,14 @@
 {
-   "name":"head-demo",
+   "name":"demo-pyplot-demo-basic",
    "parallelism":"SERIAL",
-   "version":"1.00",
-   "helpURI":"http://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html#head-invocation",
-   "label":"Head",
-   "shortDescription":"Extract first lines or bytes from a file",
-   "longDescription":"This is an application you can use to inspect the beginning of a file.",
+   "version":"0.1.0",
+   "label":"PyPlot Demo Basic",
+   "shortDescription":"Simple demo app to create a graph using Python",
+   "longDescription":"Simple demo app to create a graph using Python",
    "defaultMemory": 1,
    "defaultProcessors": 1,
    "defaultQueue": "normal",
-   "deploymentPath":"apps/head-1.00",
+   "deploymentPath":"apps/pyplot-demo-basic-0.1.0",
    "deploymentSystem":"demo.storage.example.com",
    "executionSystem":"demo.execute.example.com",
    "executionType":"HPC",
@@ -18,28 +17,29 @@
    "checkpointable":false,
    "modules":[],
    "tags":[
-      "file",
-      "coreutils",
-      "gnu"
+      "demo",
+      "python",
+      "tutorial",
+      "plotting"
    ],
    "ontology":[],
    "inputs":[
-	  {
-         "id":"inputFile",
+    {
+         "id":"dataset",
          "value": {
-         	"default":"agave://demo.storage.example.com/apps/head-1.00/inputs/picksumipsum.txt",
+           "default":"agave://demo.storage.example.com/inputs/pyplot/dataset.csv",
             "type":"string",
             "validator":"",
             "visible":true,
             "required":true
          },
          "details":{
-            "label":"Target File",
-            "description":"Select an input file",
+            "label":"Dataset",
+            "description":"The dataset to plot",
          },
          "semantics":{
            "ontology":[
-               "http://sswapmeet.sswap.info/util/TextDocument"
+               "http://sswapmeet.sswap.info/mime/text/Csv"
             ],
             "minCardinality":1,
             "maxCardinality":1,

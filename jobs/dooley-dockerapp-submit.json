@@ -1,18 +1,18 @@
 {
-    "name": "dooley-runner",
-    "appId": "dooley-dockerapp-0.8.2",
+    "name": "testuser-runner",
+    "appId": "testuser-dockerapp-0.8.2",
     "notifications": [
       {
-        "url" : "dooley@tacc.utexas.edu",
+        "url" : "testuser@tacc.utexas.edu",
         "event": "FINISHED"
       },
       {
-        "url" : "dooley@tacc.utexas.edu",
+        "url" : "testuser@tacc.utexas.edu",
         "event": "FAILED"
       }
     ],
     "inputs": {
-      "appBundle": "dooley/inputs/dooley-runner.tgz"
+      "appBundle": "testuser/inputs/testuser-runner.tgz"
     },
     "parameters": {
         "unpackInputs": true,

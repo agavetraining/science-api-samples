@@ -1,21 +1,23 @@
-# Agave System Management Tutorial
-*******
+Agave System Management Tutorial
+================================
+
+---
 
 > This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co) Systems Service. Prior to beginning this tutorial, you should have obtained a valid set of client application credentials. If you have not yet done so, please stop here and walk through the [Agave Authentication Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/auth/README.md) before going any further.
 
+Introduction
+------------
 
-## Introduction  
+Welcome to the Agave System Management Tutorial. In this tutorial we will cover how to register, manage, and share systems in the Agave API. This tutorial covers the various data, submission, and authentication protocols supported by Agave. In order to fully test out the systems service and all its implications, you would need to have access to servers with every permutation of supported protocols. Chances are that this is is not the case, so we have written this tutorial in such a way that you can follow along with the concepts, substituting your own protocols and auth scenarios where applicable.
 
-Welcome to the Agave System Management Tutorial. In this tutorial we will cover how to register, manage, and share systems in the Agave API. This tutorial covers the various data, submission, and authentication protocols supported by Agave. In order to fully test out the systems service and all its implications, you would need to have access to servers with every permutation of supported protocols. Chances are that this is is not the case, so we have written this tutorial in such a way that you can follow along with the concepts, substituting your own protocols and auth scenarios where applicable. 
-
-We provide several sample system descriptions in this folder which you can use as templates for describing your own systems. Simply adding your own authentication information and adding a unique system id is enough to make any of the execution or storage system descriptions valid. 
+We provide several sample system descriptions in this folder which you can use as templates for describing your own systems. Simply adding your own authentication information and adding a unique system id is enough to make any of the execution or storage system descriptions valid.
 
 Once you complete the tutorial you will want do something with your registered systems. Please see the [Agave Data Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/files/README.md), [Agave App Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/apps/README.md), and [Agave Job Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/jobs/README.md) for further information.
 
+Prerequisites
+-------------
 
-## Prerequisites  
-
-This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash. 
+This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash.
 
 All examples in this tutorial utilize the Agave Command Line Interface ([Agave CLI](https://bitbucket.org/taccaci/foundation-cli)). The Agave CLI is a set of bash scripts that fully exercise the entire Agave API. You can download the latest version of the Agave CLI from Bitbucket using Git. The following commands will download the code and add the commands to your $PATH so you don't need to prefix them with their full path on your file system.
 
@@ -28,17 +30,19 @@ $ export PATH=$PATH:`pwd`/foundation-cli/bin
 
 Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line. They will also be available via Bash completion.
 
-## Authenticate and get an access token
-Lets start out by authenticating to Agave. We do this by retriving an access token (also known as a bearer token) from the Agave OAuth service. The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave. 
+Authenticate and get an access token
+------------------------------------
+
+Lets start out by authenticating to Agave. We do this by retriving an access token (also known as a bearer token) from the Agave OAuth service. The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave.
 
 ```
 #!bash
 
 $ auth-tokens-create -S -V
 Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
-Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa 
+Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa
 Agave tenant username []: nryan
-Agave tenant password: 
+Agave tenant password:
 Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=nryan&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
 Token successfully refreshed and cached for 3600 seconds
 {
@@ -48,7 +52,8 @@ Token successfully refreshed and cached for 3600 seconds
 }
 ```
 
-## Finding and managing systems
+Finding and managing systems
+----------------------------
 
 By default, iPlant provides a shared account on two execution systems at [Texas Advanced Computing Center](http://tacc.utexas.edu) and one on the [Open Science Grid](http://opensciencegrid.org) that you can use freely to run applications. iPlant also provides you a free account on one storage system, the [iPlant Data Store](http://www.iplantcollaborative.org/discover/data-store), which gives you 1 TB of space by default. You can see these systems by querying the systems service.
 
@@ -115,6 +120,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     }
   }
 ```
+
 The response above contains summary information on each system. You can obtain the full detailed description of any system by calling the systems service with the system id. Let's look at OSG's Condor execution system as an example.
 
 ```
@@ -194,10 +200,10 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
 }
 ```
 
-The detailed system description above contains 4 areas you should note.  
+The detailed system description above contains 4 areas you should note.
 
 1. `queues`: this is a list of the queues available on the system. Each queue definition allows you to provide quota information that will be enforced as part of app registration and job submission. In this example, all queue information is provided. The only required information is the queue name.
-2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service.   Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
+2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service. Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
 3. `storage`: this is the connectivity information that Agave needs to move data to and from the system. As with the Login stanza, several protocols are supported: SFTP, SFTP with tunneling, GridFTP, IRODS, FTP, and LOCAL. Again, LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/storage directory.
 4. `_links`: Agave is, for the most part, a [hypermedia](http://en.wikipedia.org/wiki/Hypermedia) API. The every response that it gives provides references to the other resources associated with the response object. In the example above, you see references to the object itself and separeate references to the collections of roles, credentials, and metadata associated with the object. This gives you a basic discovery mechanism for navigating the API without need for a separate discovery service.
 
@@ -260,7 +266,6 @@ Unlike the OSG Condor system, the description of the iPlant Data Store does not 
 
 You can also narrow your search by specifying a system type, whether it is a your default system, and whether or not it is a public or private system in the url query. The following examples show each scenario.
 
-
 ```
 
 #!bash
@@ -299,6 +304,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
   } ]
 }
 ```
+
 This returns all execution systems.
 
 ```
@@ -326,6 +332,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
   } ]
 }
 ```
+
 This returns all storage systems.
 
 ```
@@ -379,6 +386,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
   } ]
 }
 ```
+
 This returns all public systems.
 
 ```
@@ -406,15 +414,17 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
   } ]
 }
 ```
+
 This returns the system(s) you have set as your default.
 
-## Adding systems for private use
+Adding systems for private use
+------------------------------
 
 While iPlant does provide you with several systems you can use, you may want to augment these systems with your own systems or access the iPlant systems, but using your own account. There are two ways to add systems to Agave: cloning and regsitering.
 
 ### Cloning a system
 
-The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality. 
+The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality.
 
 ```
 #!bash
@@ -518,8 +528,8 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
       "host" : "ssh.example.com",
       "port" : 22,
       "protocol" : "SFTP",
-      "rootDir" : "/home/demo",
-      "homeDir" : "/",
+      "rootDir" : "/",
+      "homeDir" : "/home/testuser",
       "mirror" : true,
       "proxy" : null,
       "auth" : {
@@ -549,7 +559,8 @@ Now that you have a system registered, it is available to you and you alone. To 
 
 At this point, take some time testing out the various settings available in the system description such as batch queues, quotas, schedulers, and storage root and home directories.
 
-## Default systems
+Default systems
+---------------
 
 At the beginning of this tutorial we showed you how to search for systems a variety of ways. One of which was listing only your default systems. Your default systems are what Agave uses when you don't explicitly specify a system when interacting with the other services. For example, when you don't specify a system in the URL for the Files service, Agave assumes you mean your default system and uses that connectivity information and context. When you register an application with the Apps service and don't specify a `deploymentSystem` value, Agave uses your default storage system.
 
@@ -562,14 +573,14 @@ Setting a default system can be done with a single command.
 ```
 
 #!bash
-$ systems-setdefault -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X PUT -d "action=setDefault" https://agave.iplantc.org/systems/v2/systest-stampede?pretty=true
+$ systems-setdefault -V testuser-stampede
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X PUT -d "action=setDefault" https://agave.iplantc.org/systems/v2/testuser-stampede?pretty=true
 {
   "status" : "success",
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r1aa8c",
   "result" : {
-    "id" : "systest-stampede",
+    "id" : "testuser-stampede",
     "uuid" : "0001388740888728-5056a550b8-0001-006",
     "name" : "TACC Stampede",
     "status" : "UP",
@@ -625,7 +636,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
       "host" : "gridftp.stampede.tacc.xsede.org",
       "port" : 2811,
       "protocol" : "GRIDFTP",
-      "rootDir" : "/home1/00475/dooley",
+      "rootDir" : "/home1/00475/testuser",
       "homeDir" : null,
       "mirror" : true,
       "proxy" : null,
@@ -641,13 +652,13 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/credentials"
       },
       "metadata" : {
         "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388740888728-5056a550b8-0001-006\"}"
@@ -656,6 +667,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
   }
 }
 ```
+
 Now if we again query for our default systems, we see that our private system nryan-stampede is listed.
 
 ```
@@ -668,7 +680,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r1aa8c",
   "result" : [ {
-    "id" : "systest-stampede",
+    "id" : "testuser-stampede",
     "name" : "TACC Stampede",
     "type" : "EXECUTION",
     "description" : "Stampede is intended primarily for parallel applications scalable to tens of thousands of cores.  Normal batch queues will enable users to run simulations up to 24 hours.  Jobs requiring run times and more cores than allowed by the normal queues will be r...",
@@ -677,7 +689,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
     "default" : false,
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       }
     }
   }, {
@@ -697,7 +709,8 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" http
 }
 ```
 
-## System Roles
+System Roles
+------------
 
 Collaborating with others and sharing data is a fundamental concern for Agave. As such, every file, directory, system, job, metadata, schema, etc have access controls built in. By adding and removing access controls on a user-by-user basis, you can control who has access to resources.
 
@@ -710,24 +723,24 @@ Let's see what roles are currently on our private system `stampede-nryan`.
 ```
 
 #!bash
-$ systems-roles-list -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/systest-stampede/roles/?pretty=true
+$ systems-roles-list -V testuser-stampede
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/testuser-stampede/roles/?pretty=true
 {
   "status" : "success",
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r1aa8c",
   "result" : [ {
-    "username" : "systest",
+    "username" : "testuser",
     "role" : "ADMIN",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/roles/testuser"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/v2/systest"
+        "href" : "https://agave.iplantc.org/profiles/v2/testuser"
       }
     }
   } ]
@@ -742,8 +755,8 @@ Now let's grant another user access to our system.
 ```
 
 #!bash
-$ systems-roles-addupdate -V -u mock -r user systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=user" https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest?pretty=true
+$ systems-roles-addupdate -V -u mock -r user testuser-stampede
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=user" https://agave.iplantc.org/systems/v2/testuser-stampede/roles/testuser?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -753,10 +766,10 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     "role" : "USER",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/mock"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/roles/mock"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       },
       "credentials" : {
         "href" : "https://agave.iplantc.org/profiles/v2/mock"
@@ -765,6 +778,7 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
   } ]
 }
 ```
+
 Now user `mock` has `user` role on the system. This allows him to browse files and run jobs.
 
 > Notice that no new authentication credentials were added when we granted someone a role on our system. Granting the user a role does not physically create an account on the remote system, it simply allows them to use an existing system using whatever authentication credentials were used to register the system. If you need to add multiple user credentials to a system, consider creating internal user accounts and assigning individual credentials for each internal user on each system they need access to.
@@ -774,8 +788,8 @@ Removing a role is just as you might expect.
 ```
 
 #!bash
-$ systems-roles-addupdate -V -u mock -r none systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=none" https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest?pretty=true
+$ systems-roles-addupdate -V -u mock -r none testuser-stampede
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X POST -d "role=none" https://agave.iplantc.org/systems/v2/testuser-stampede/roles/testuser?pretty=true
 {
   "status" : "success",
   "message" : null,
@@ -785,10 +799,10 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
     "role" : "NONE",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/mock"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/roles/mock"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       },
       "credentials" : {
         "href" : "https://agave.iplantc.org/profiles/v2/mock"
@@ -800,28 +814,27 @@ Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" -X P
 
 The response gives the permissions of the user after the update. Listing the system permissions no longer lists user `mock`.
 
-
 ```
 
 #!bash
-$ systems-roles-list -V systest-stampede
-Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/systest-stampede/roles/?pretty=true
+$ systems-roles-list -V testuser-stampede
+Calling curl -sk -H "Authorization: Bearer ffd795119c43af953f8b43ebb14839a" https://agave.iplantc.org/systems/v2/testuser-stampede/roles/?pretty=true
 {
   "status" : "success",
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r1aa8c",
   "result" : [ {
-    "username" : "systest",
+    "username" : "testuser",
     "role" : "ADMIN",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede/roles/systest"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede/roles/testuser"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/systems/v2/systest-stampede"
+        "href" : "https://agave.iplantc.org/systems/v2/testuser-stampede"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/profiles/v2/systest"
+        "href" : "https://agave.iplantc.org/profiles/v2/testuser"
       }
     }
   } ]

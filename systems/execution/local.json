@@ -31,7 +31,7 @@
 		"host": "localhost",
 		"protocol": "LOCAL",
 		"rootDir": "/",
-		"homeDir": "/home/systest",
+		"homeDir": "/home/testuser",
 		"auth": {
 			"type": "LOCAL"
 		}

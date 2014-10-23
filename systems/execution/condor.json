@@ -21,24 +21,24 @@
     }
   ],
 	"login": {
-		"host": "condor.example.com",
+		"host": "execute.example.com",
 		"port": 22,
 		"protocol": "SSH",
 		"auth": {
-			"username": "demo",
-			"password": "demo",
+			"username": "testuser",
+			"password": "testuser",
 			"type": "PASSWORD"
 		}
 	},
 	"storage": {
-		"host": "condor.example.com",
+		"host": "execute.example.com",
 		"port": 22,
 		"protocol": "SFTP",
 		"rootDir": "/",
-		"homeDir": "/home/systest",
+		"homeDir": "/home/testuser",
 		"auth": {
-			"username": "systest",
-			"password": "changeit",
+			"username": "testuser",
+			"password": "testuser",
 			"type": "PASSWORD"
 		}
 	},

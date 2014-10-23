@@ -928,7 +928,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
     "ontology" : [ "\"http://sswapmeet.sswap.info/algorithms/wc" ],
     "executionType" : "CONDOR",
     "executionSystem" : "condor.opensciencegrid.org",
-    "deploymentPath" : "/dooley/applications/wc-1.00",
+    "deploymentPath" : "/testuser/applications/wc-1.00",
     "deploymentSystem" : "data.iplantcollaborative.org",
     "templatePath" : "/wrapper.sh",
     "testPath" : "/wrapper.sh",
@@ -984,7 +984,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
         "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "owner" : {
-        "href" : "https://agave.iplantc.org/profiles/v2/dooley"
+        "href" : "https://agave.iplantc.org/profiles/v2/testuser"
       },
       "permissions" : {
         "href" : "https://agave.iplantc.org/apps/v2/wc-1.00/pems"

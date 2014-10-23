@@ -1,18 +1,21 @@
-# Agave App Management Tutorial
-*******
+Agave App Management Tutorial
+=============================
+
+---
 
 > This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co) Apps service. Prior to beginning this tutorial, you should have obtained a valid set of client application credentials. If you have not yet done so, please stop here and walk through the [Agave Authentication Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/auth/README.md) before going any further.
 
-
-## Introduction  
+Introduction
+------------
 
 Welcome to the Agave App Management Tutorial. In this tutorial we will cover how to register, publish, share, and execute your binary applications using the Agave API. This tutorial utilizes both public and private systems accessible through Agave. Publishing apps into the public space require admin privileges, so feel free to skip that section if you do not have admin privileges on your tenant.
 
 If you have not registered any systems of your own, please walk through the [Agave System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md) before continuing this tutorial. We will be using the systems you register in this tutorial.
 
-## Prerequisites  
+Prerequisites
+-------------
 
-This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash. 
+This tutorial assumes you have no prior experience with iPlant, system administration, or the Agave API. It assumes you have a basic linux competency and are familiar with things such as your $PATH, cp, ssh, and curl. If you are working on a Windows platform, you should be able to follow along using Git Bash, Cygwin, or win-bash.
 
 All examples in this tutorial utilize the Agave Command Line Interface ([Agave CLI](https://bitbucket.org/taccaci/foundation-cli)). The Agave CLI is a set of bash scripts that fully exercise the entire Agave API. You can download the latest version of the Agave CLI from Bitbucket using Git. The following commands will download the code and add the commands to your $PATH so you don't need to prefix them with their full path on your file system.
 
@@ -25,17 +28,19 @@ $ export PATH=$PATH:`pwd`/foundation-cli/bin
 
 Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line. They will also be available via Bash completion.
 
-## Authenticate and get an access token
-Lets start out by authenticating to Agave. We do this by retriving an access token (also known as a bearer token) from the Agave OAuth service. The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave. 
+Authenticate and get an access token
+------------------------------------
+
+Lets start out by authenticating to Agave. We do this by retriving an access token (also known as a bearer token) from the Agave OAuth service. The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave.
 
 ```
 #!bash
 
 $ auth-tokens-create -S -V
 Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
-Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa 
+Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa
 Agave tenant username []: nryan
-Agave tenant password: 
+Agave tenant password:
 Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=nryan&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
 Token successfully refreshed and cached for 3600 seconds
 {
@@ -45,35 +50,26 @@ Token successfully refreshed and cached for 3600 seconds
 }
 ```
 
-## Before we begin...
+Before we begin...
+------------------
 
 Before we dig into our app tutorial, let's cover a few assumptions Agave makes about your app and its execution that may not hold in other execution services and environments.
 
 ### Assumptions Agave makes about your app
 
-1. Your code works on the execution system or you are able to detect when it does not. 
-	> Agave handles the setup, execution, and teardown of your app. It does not attempt to figure out what the resulting logs or output means. Executing an app, to Agave, is fulfilling a takeout order. It does not need to know why the customer wants the food, nor does it really care. It is just there to fill the orders for the people that do want food. Once it leaves the window, its up to the customer to make use of it however they choose.
-
-2. Your code is already built to run on the execution system, or you will handle building an executable as part of the execution of your app.
-	> 'uff said.
-
-3. The default environment of the account used to login to the execution system is what the app will run with unless you tell it differently. 
-	> Many of Agave's users come to us with codes they have been running manually and simply want an easier way to share the app with others, manage data, and leverage the tools provided by the iPlant Discovery Environment or another science gateway. It would be cruel of us to wipe their meticulously crafted environment, so we don't. We assume that whatever you have in place is sufficent and, if not, that you or the consumers of your app will provided the information needed to make it so.
+1. Your code works on the execution system or you are able to detect when it does not. > Agave handles the setup, execution, and teardown of your app. It does not attempt to figure out what the resulting logs or output means. Executing an app, to Agave, is fulfilling a takeout order. It does not need to know why the customer wants the food, nor does it really care. It is just there to fill the orders for the people that do want food. Once it leaves the window, its up to the customer to make use of it however they choose.
+2. Your code is already built to run on the execution system, or you will handle building an executable as part of the execution of your app. > 'uff said.
+3. The default environment of the account used to login to the execution system is what the app will run with unless you tell it differently. > Many of Agave's users come to us with codes they have been running manually and simply want an easier way to share the app with others, manage data, and leverage the tools provided by the iPlant Discovery Environment or another science gateway. It would be cruel of us to wipe their meticulously crafted environment, so we don't. We assume that whatever you have in place is sufficent and, if not, that you or the consumers of your app will provided the information needed to make it so.
 
 ### Notable differences between Agave and other execution services
 
-1. Your code can live anywhere
-	> Agave will stage in all your app's assets prior to execution, so, provided your binaries are compatible, or your code is in an interpreted language, you can build once and run anywhere.
-2. *You* probably care about the scheduler and execution system when you are getting things running, but the users of your app probably don't.
-	> You know your app as well as anyone else, and you want to see it used as effectively as possible. That's why, when you're getting it running, you may want to know about the execution system, environment, scheduler, data protocols, file system(s), etc that all impact how your app runs. Once you have it running, those things are no longer variables, and the end users of your app probably don't need or want to think about them. You can hide as much or as little of this information from the user as you want. You can also require some or all of this information to be provided by the user when desired.
-3. You have better things to do with your time that sit at your computer...well, sit at your computer and wait data to transfer, your app to start running, your app to finish running, and data to move back somewhere.
-	> Agave just assumes that's all part of what it means to execute an app, so it handles it all out of the box. When we talk about science-as-a-service, that means handling the setup, execution, and cleanup of a computational experiment as well as the long-term management of its derived data as a basic unit of functionality. Agave assumes you want to think about the science that moves you, rather than the silicon that moves your data, so to that end, app execution is something you can fire and forget about.
-4. 
-`
+1. Your code can live anywhere > Agave will stage in all your app's assets prior to execution, so, provided your binaries are compatible, or your code is in an interpreted language, you can build once and run anywhere.
+2. *You* probably care about the scheduler and execution system when you are getting things running, but the users of your app probably don't. > You know your app as well as anyone else, and you want to see it used as effectively as possible. That's why, when you're getting it running, you may want to know about the execution system, environment, scheduler, data protocols, file system(s), etc that all impact how your app runs. Once you have it running, those things are no longer variables, and the end users of your app probably don't need or want to think about them. You can hide as much or as little of this information from the user as you want. You can also require some or all of this information to be provided by the user when desired.
+3. You have better things to do with your time that sit at your computer...well, sit at your computer and wait data to transfer, your app to start running, your app to finish running, and data to move back somewhere. > Agave just assumes that's all part of what it means to execute an app, so it handles it all out of the box. When we talk about science-as-a-service, that means handling the setup, execution, and cleanup of a computational experiment as well as the long-term management of its derived data as a basic unit of functionality. Agave assumes you want to think about the science that moves you, rather than the silicon that moves your data, so to that end, app execution is something you can fire and forget about.
+4. `
 
-## Finding and managing apps
-
-
+Finding and managing apps
+-------------------------
 
 By default, iPlant provides a collection of public apps that run on systems at [Texas Advanced Computing Center](http://tacc.utexas.edu) and the [Open Science Grid](http://opensciencegrid.org) that you can use freely to run applications. iPlant also provides you a free account on one storage system, the [iPlant Data Store](http://www.iplantcollaborative.org/discover/data-store), which gives you 1 TB of space by default. You can see these systems by querying the systems service.
 
@@ -140,6 +136,7 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     }
   }
 ```
+
 The response above contains summary information on each system. You can obtain the full detailed description of any system by calling the systems service with the system id. Let's look at OSG's Condor execution system as an example.
 
 ```
@@ -219,10 +216,10 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
 }
 ```
 
-The detailed system description above contains 4 areas you should note.  
+The detailed system description above contains 4 areas you should note.
 
 1. `queues`: this is a list of the queues available on the system. Each queue definition allows you to provide quota information that will be enforced as part of app registration and job submission. In this example, all queue information is provided. The only required information is the queue name.
-2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service.   Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
+2. `login`: this is the connectivity information that Agave needs to submit jobs to the execution system. Notice that the actual credentials are not returned from the service. Agave supports several authentication protocols: SSH, SSH with tunneling, GSISSH, and LOCAL. LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/execution directory.
 3. `storage`: this is the connectivity information that Agave needs to move data to and from the system. As with the Login stanza, several protocols are supported: SFTP, SFTP with tunneling, GridFTP, IRODS, FTP, and LOCAL. Again, LOCAL connectivity is only used in conjunction with an Agave On-Premise setup. You do not need to worry about that in this tutuorial. See examples of each configuration in the systems/storage directory.
 4. `_links`: Agave is, for the most part, a [hypermedia](http://en.wikipedia.org/wiki/Hypermedia) API. The every response that it gives provides references to the other resources associated with the response object. In the example above, you see references to the object itself and separeate references to the collections of roles, credentials, and metadata associated with the object. This gives you a basic discovery mechanism for navigating the API without need for a separate discovery service.
 
@@ -283,14 +280,14 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" htt
 
 Unlike the OSG Condor system, the description of the iPlant Data Store does not have stanzas for queue or login information. Storage systems are just that, strictly used for storage. Something common to both system descriptions you should notice, however, is the storage stanza. Here, as in the OSG Condor system description, we find a defintion of the `rootDir` and `homeDir`. These fields are important to the utilization of a storage system. They specify the virtual `/` (root) and `~` (home) directories on the remote system. While each storage system has its own root and home directories, you may not want to expose those to the people accessing the system through Agave. You may, instead, want to limit access to a specific user folder or mounted directory. That is the purpose of these accounts. All data requests made to a registered system through Agave are first resolved against the virtual root and home directories given in that system's storage stanza. If you have every configured a FTP server or used the `chroot` command on Linux, this concept should be familiar to you.
 
-
-## Adding systems for private use
+Adding systems for private use
+------------------------------
 
 While iPlant does provide you with several systems you can use, you may want to augment these systems with your own systems or access the iPlant systems, but using your own account. There are two ways to add systems to Agave: cloning and regsitering.
 
 ### Cloning a system
 
-The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality. 
+The fastest way to add a system is to copy an existing system and rename it for your own personal use. This is the purpose of the clone functionality.
 
 ```
 #!bash
@@ -396,7 +393,7 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
       "host" : "ssh.example.com",
       "port" : 22,
       "protocol" : "SFTP",
-      "rootDir" : "/home/demo",
+      "rootDir" : "/home/testuser",
       "homeDir" : "/",
       "mirror" : true,
       "proxy" : null,
@@ -425,11 +422,10 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
 
 Now that you have a system registered, it is available to you and you alone. To see how to share your system with one or more other users and grant them various roles on that system, see the [System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md).
 
-
-## Moving and managing data
+Moving and managing data
+------------------------
 
 The Agave Files service gives you a consistent interface for managing data across multiple storage systems. Let's look at a couple examples of how this works. We will start out by doing a simple directory listing to see what is in our home folder. The iPlant Data Store is a public, shared storage system. Because of this, the registered `rootDir` and `homeDir` are both the folder containing all the individual user home folders. In the following examples, this is why we specify the username in the path.
-
 
 ```
 #!bash
@@ -590,7 +586,7 @@ And make sure it's there as well.
 ```
 #!bash
 
-$ files-list -V -S demo.storage.example.com picksumipsum.txt 
+$ files-list -V -S demo.storage.example.com picksumipsum.txt
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/v2/listings/system/demo.storage.example.com/picksumipsum.txt?pretty=true
 {
     "message": null,
@@ -629,7 +625,7 @@ How about importing data from the web. Pretty much the same thing. We'll tell Ag
 ```
 #!bash
 
-$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt 
+$ files-import -V -S demo.storage.example.com -U "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -N GSM313800.txt
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800&targ=self&view=full&form=text" -d "fileName=GSM313800.txt&" https://agave.iplantc.org/files/v2/media/system/demo.storage.example.com/?pretty=true
 {
   "status" : "success",
@@ -836,7 +832,8 @@ curl -O https://agave.iplantc.org/files/v2/download/nryan/system/demo.storage.ex
 100 19332  100 19332    0     0   3635      0  0:00:05  0:00:05 --:--:--  5833
 ```
 
-## Finding app
+Finding app
+-----------
 
 Agave's Apps service provides a way for you to discover and manage app. An app can be any executable code from a shell script to a complex workflow. The Apps service gives you a uniform way to describe, discover, and share apps as simple REST services. Let's see what apps are available to us right now.
 
@@ -900,7 +897,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
     "ontology" : [ "\"http://sswapmeet.sswap.info/algorithms/wc" ],
     "executionType" : "CONDOR",
     "executionSystem" : "condor.opensciencegrid.org",
-    "deploymentPath" : "/dooley/applications/wc-1.00",
+    "deploymentPath" : "/testuser/applications/wc-1.00",
     "deploymentSystem" : "data.iplantcollaborative.org",
     "templatePath" : "/wrapper.sh",
     "testPath" : "/wrapper.sh",
@@ -956,7 +953,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
         "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
       },
       "owner" : {
-        "href" : "https://agave.iplantc.org/profiles/v2/dooley"
+        "href" : "https://agave.iplantc.org/profiles/v2/testuser"
       },
       "permissions" : {
         "href" : "https://agave.iplantc.org/apps/v2/wc-1.00/pems"
@@ -978,12 +975,12 @@ The detailed app description above contains 3 areas you should note.
 
 iPlant provided a growing catalog of actively curated apps that run on their public system which are available for use by anyone with an iPlant account. It is also possible for you to register and share your own apps. The process of doing this is covered in depth in the [App Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/apps/README.md). We refer you there for more information.
 
-
-## Runing a job
+Runing a job
+------------
 
 So far we have learned about how to find and create storage and executions systems. We learned how to move data around. We discovered how to find apps we can run. Now it's time to do some work.
 
-Agave handles all the details of orchestrating an app execution for you. You just need to provide it the id of the app you want to run, give the job a name, and specify the inputs and parameters the app needs to run. Optionally, you can tell Agave if and where you want the job results to be archived and subscribe to notifications ()in the form of emails or webhooks) to specific job events. 
+Agave handles all the details of orchestrating an app execution for you. You just need to provide it the id of the app you want to run, give the job a name, and specify the inputs and parameters the app needs to run. Optionally, you can tell Agave if and where you want the job results to be archived and subscribe to notifications ()in the form of emails or webhooks) to specific job events.
 
 Two sample job submissions are included in the jobs folder. Let's go ahead and submit one and see what happens.
 
@@ -1148,18 +1145,18 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
 
 ### Receiving job notifications
 
-Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `head-5.97-submit.json` job submission example illustrates this. 
+Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `head-5.97-submit.json` job submission example illustrates this.
 
 ```
 #!JSON
 
 "notifications": [
-   	{ 
+   	{
    		"url" : "http://requestb.in/11pbi6m1?job_id=${JOB_ID}&status=${JOB_STATUS}",
    		"event": "*",
    		"persistent": true
    	},
-   	{ 
+   	{
    		"url" : "nryan@mlb.com",
    		"event": "FINISHED"
    	}
@@ -1365,12 +1362,12 @@ Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -o "tr
 100 3154k    0 3154k    0     0   100k      0 --:--:--  0:00:31 --:--:--  100k
 ```
 
-## Sharing your work with the world
+Sharing your work with the world
+--------------------------------
 
 Often times you will want to share your data, jobs, metadata, etc. with a third party person, service, or application. The sharing permissions built into every Agave service are helpful when the third party has API access as well, but they're less useful when the third party cannot authenticate to Agave and you're not comfortable making your data public to the world. This is why the PostIts service exists.
 
 PostIts are preauthenticated, disposable URLs. Similar to [tinyurl](http://tinyurl.com) or [bit.ly](http://bit.ly), they provide a way for you to create an obfuscated url that references an Agave resource. What differentiates the PostIt service is the ability for you to pre-authenticate the URLS you generate so you gave give external users access to a specific resource using a specific HTTP method (GET, PUT, POST, DELETE) for a fixed number of requests or amount of time without them having to authentiated. Once the PostIt reaches its limits, it expires and is no longer valid. Let's create a postit to the file we uploaded earlier.
-
 
 ```
 #!BASH
@@ -1417,14 +1414,14 @@ $ curl -sk https://agave.iplantc.org/postits/v2/<POSTIT_NONCE>
 
 PostIts are great to use to email links around, pass to third party services, or use as a convenient way to work securely with third parties you don't trust.
 
-* list systems
-* clone app
-* edit app json
-* register app
-* run job
-* edit wrapper script
-* run job
-* clone app
-* run job
-* share app
-* add notifications
+- list systems
+- clone app
+- edit app json
+- register app
+- run job
+- edit wrapper script
+- run job
+- clone app
+- run job
+- share app
+- add notifications
