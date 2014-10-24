@@ -37,6 +37,12 @@ systems/execution/stampede.tacc.utexas.edu.json
 systems/live-execution
 systems/live-storage
 api_sample_user
-apps/docker-demo
+apps/docker-demo/archive
+apps/docker-demo/custom-images
+apps/docker-demo/docker-runner-1.1.2
+apps/docker-demo/generic-runtimes
+apps/docker-demo/run-from-github
+apps/docker-demo/science-app-images
+
 apps/pyplot-demo/archive
 apps/docker-runner-1.1.2

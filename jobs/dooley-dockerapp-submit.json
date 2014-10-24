@@ -1,24 +1,21 @@
 {
-    "name": "testuser-runner",
-    "appId": "testuser-dockerapp-0.8.2",
-    "notifications": [
-      {
-        "url" : "testuser@tacc.utexas.edu",
-        "event": "FINISHED"
-      },
-      {
-        "url" : "testuser@tacc.utexas.edu",
-        "event": "FAILED"
-      }
-    ],
-    "inputs": {
-      "appBundle": "testuser/inputs/testuser-runner.tgz"
-    },
-    "parameters": {
-        "unpackInputs": true,
-        "dockerImage": "scivm/r-project-3.0",
-        "command": "Rscript",
-        "commandArgs": "main.r"
-    },
-    "archive": false
+  "name": "cloud-runner-0.1.0",
+  "appId": "cloud-runner-0.1.0",
+  "notifications": [{
+    "url": "testuser@example.com",
+    "event": "FINISHED"
+  }, {
+    "url": "testuser@example.com",
+    "event": "FAILED"
+  }],
+  "inputs": {
+    "appBundle": "agave://data.iplantcollaborative.org/dooley/inputs/testdata.tgz"
+  },
+  "parameters": {
+    "unpackInputs": true,
+    "dockerImage": "scivm/r-project-3.0",
+    "command": "Rscript",
+    "commandArgs": "main.r"
+  },
+  "archive": true
 }
