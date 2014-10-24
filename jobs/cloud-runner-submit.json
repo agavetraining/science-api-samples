@@ -1,0 +1,32 @@
+{
+  "name": "cloud-runner test-1414148559",
+  "appId": "cloud-runner-0.1.0",
+  "batchQueue": "debug",
+  "executionSystem": "docker.iplantcollaborative.org",
+  "maxRunTime": "01:00:00",
+  "memoryPerNode": "1GB",
+  "nodeCount": 1,
+  "processorsPerNode": 1,
+  "archive": true,
+  "archiveSystem": "data.iplantcollaborative.org",
+  "archivePath": null,
+  "inputs": {
+    "dockerFile": null,
+    "appBundle": "agave://data.iplantcollaborative.org/dooley/apps/cloud-runner-0.1.0/test/testdata.tgz"
+  },
+  "parameters": {
+    "command": "python",
+    "commandArgs": "main.py",
+    "dockerImage": "agaveapi/scipy-matplot-2.7",
+    "unpackInputs": true
+  },
+  "notifications": [{
+    "url": "dooley@tacc.utexas.edu",
+    "event": "FINISHED",
+    "persistent": false
+  }, {
+    "url": "dooley@tacc.utexas.edu",
+    "event": "FAILED",
+    "persistent": false
+  }]
+}
