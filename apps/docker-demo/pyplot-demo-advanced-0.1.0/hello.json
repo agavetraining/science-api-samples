@@ -1,0 +1,35 @@
+{
+  "name":"dockerapp test-1414088905",
+  "appId": "cloud-runner-0.1.0u1",
+  "batchQueue": "debug",
+  "executionSystem": "docker.iplantcollaborative.org",
+  "maxRunTime": "01:00:00",
+  "memoryPerNode": "1GB",
+  "nodeCount": 1,
+  "processorsPerNode": 1,
+  "archive": true,
+  "inputs": {
+  },
+  "parameters": {
+    "command": "/bin/date",
+    "commandArgs": " ",
+    "dockerImage": "busybox"
+  },
+  "notifications": [
+    {
+      "url":"dooley@tacc.utexas.edu",
+      "event":"FINISHED",
+      "persistent":false
+    },
+    {
+      "url":"dooley@tacc.utexas.edu",
+      "event":"FAILED",
+      "persistent":false
+    },
+    {
+      "url":"http://requestbin.agaveapi.co/1cl87yo1?job=${JOB_ID}&event=${EVENT}",
+      "event":"*",
+      "persistent":true
+    }
+  ]
+}

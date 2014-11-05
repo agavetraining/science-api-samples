@@ -1,4 +1,4 @@
-set -x
+#set -x
 
 # This is a generic wrapper script for running docker containers.
 # All docker apps take one required common parameter, `dockerImage`. This is the
@@ -49,14 +49,8 @@ COMMAND_ARGS="${commandArgs}"
 # execution as a RUN step in the Dockerfile as this will cause it to be run
 # twice.
 
-if [ -n "${dockerFile}" ]; then
-	DOCKER_FILE="${dockerFile}"
-else
-	DOCKER_FILE="Dockerfile"
-fi
-
-if [ -e "$DOCKER_FILE" ]; then
-	time -p sudo docker build -rm -t "$DOCKER_IMAGE" "$DOCKER_FILE"
+if [ -e Dockerfile ]; then
+	time -p docker build -rm -t "$DOCKER_IMAGE" .
 
 	# Fail the job if the build fails
 	if [ ! $? ]; then
@@ -83,7 +77,7 @@ fi
 # invocation. Also note that all output is written to the mounted directory. This allows
 # Agave to stage out the data after running.
 
-docker run -i --rm -t -v `pwd`:/scratch -w /scratch $DOCKER_IMAGE ${COMMAND} ${COMMAND_ARGS} 2>> ${AGAVE_JOB_NAME}.err
+docker run -i --rm -v `pwd`:/scratch -w /scratch $DOCKER_IMAGE ${COMMAND} ${COMMAND_ARGS} 2>> ${AGAVE_JOB_NAME}.err 1>> ${AGAVE_JOB_NAME}.out
 
 if [ ! $? ]; then
 	echo "Docker process exited with an error status." >&2

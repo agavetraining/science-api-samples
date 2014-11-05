@@ -24,4 +24,5 @@ ADD lib/main.py /data/main.py
 WORKDIR /scratch
 
 VOLUME /scratch
-ENTRYPOINT [ "python", "/data/main.py", "--chart-type=line", "/data/testdata.csv"]
+
+CMD [ "python", "/data/main.py", "--chart-type=bar", "--background=#FFFFFF", "/data/testdata.csv"]

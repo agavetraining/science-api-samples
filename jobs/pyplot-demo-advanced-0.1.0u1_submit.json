@@ -1,8 +1,8 @@
 {
   "name": "pyplot-demo test",
-  "appId": "demo-pyplot-demo-advanced-0.1.0",
+  "appId": "demo-pyplot-demo-advanced-0.1.0u1",
   "inputs": {
-    "dataset": "agave://demo.storage.example.com/apps/pyplot-demo-advanced-0.1.0/test/testdata.csv"
+    "dataset": "agave://data.iplantcollaborative.org/dooley/inputs/pyplot/testdata.csv"
   },
   "notifications": [{
     "url": "testuser@example.com",

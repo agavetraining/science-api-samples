@@ -1,0 +1,12 @@
+{
+  "target": "dooley-stampede-gsi",
+  "frequency": 120,
+  "active": true,
+  "updateSystemStatus": false,
+  "persistent": true,
+  "notifications": [{
+    "url": "dooley@tacc.utexas.edu",
+    "event": "STATUS_CHANGE",
+    "persistent": true
+  }]
+}

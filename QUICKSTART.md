@@ -1,14 +1,16 @@
-Agave Samples Quickstart Tutorial
-=================================
+Agave App Management Tutorial
+=============================
 
 ---
 
-> This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co). For more in-depth coverage of individual topics, please consult the tutorials found in the subfolders of the Agave Samples project. Each of those tutorials provides more detailed examples of interacting with a specific Agave service along with working sample data.
+> This tutorial provides a brief overview of how to use several of the most commonly used features of the [Agave API](http://agaveapi.co) Apps service. Prior to beginning this tutorial, you should have obtained a valid set of client application credentials. If you have not yet done so, please stop here and walk through the [Agave Authentication Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/auth/README.md) before going any further.
 
 Introduction
 ------------
 
-Welcome to the Agave Samples Quickstart Tutorial. In this tutorial we will cover the basic steps needed to get an account, create your own virutal data center, move data into, out of, and between storage systems within your data center, run and track jobs, and share those results with other people.
+Welcome to the Agave App Management Tutorial. In this tutorial we will cover how to register, publish, share, and execute your binary applications using the Agave API. This tutorial utilizes both public and private systems accessible through Agave. Publishing apps into the public space require admin privileges, so feel free to skip that section if you do not have admin privileges on your tenant.
+
+If you have not registered any systems of your own, please walk through the [Agave System Management Tutorial](https://bitbucket.org/taccaci/agave-samples/src/master/systems/README.md) before continuing this tutorial. We will be using the systems you register in this tutorial.
 
 Prerequisites
 -------------
@@ -20,71 +22,26 @@ All examples in this tutorial utilize the Agave Command Line Interface ([Agave C
 ```
 #!bash
 
-$ git clone https://bitbucket.org/taccaci/foundation-cli.git
-$ export PATH=$PATH:`pwd`/foundation-cli/bin
+$ git clone https://bitbucket.org/taccaci/foundation-cli.git agave-cli
+$ export PATH=$PATH:`pwd`/agave-cli/bin
 ```
 
-Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line. They will also be available via Bash completion.
-
-Get an account
---------------
-
-Before we do anything else, you will need to get a user account for your Agave API. Agave is multi-tenant, so there are multiple organizations that use it. This tutorial assumes you are using the [iPlant Collaborative](http://iplantcollaborative.org) tenant and, as such would need to get an iPlant account. If you are using another tenant, you would first need to obtain an account from the organization managing your tenant of Agave. If you don't knows who your tenant provider is, ask the people who told you about Agave or just create an iPlant account and use that. It's free, takes just a couple minutes to set up, comes with free storage and cycles, and will let you walk through this tutorial right away.
-
-To get an iPlant account, visit the [iPlant User Management Portal](https://user.iplantcollaborative.org/register/), fill out the registration form, and click on the link in the registration email. Please note that it can take a couple minutes for the registration email to arrive. This is the longest part of the process, so if you don't see it right away, go check your [Facebook](http://facebook.com/profile.php?=7332236) page. By the time you're done, your account will be ready.
-
-Get your client credentials
----------------------------
-
-In the last section you created a user account. Your user account identifies you to the web applications you interact with. A username and password is sufficient for interacting with an application because the application has a user interface, so it knows that the authenticated user is the same one interacting with it. The Agave API is not driven by a web interface, however, so simply providing it a username and password is not sufficient. Agave needs to know both the user on whose behalf it is acting as well as the application or service that is making the call. Whereas every person has a single iPlant user account, they may leverage multiple services to do their daily work. They may start out using the [Discovery Environment](https://de.iplantcollaborative.org) to kick of an analysis, then switch to [MyPlant](https://my-plant.org/) to discuss some results, then receive an email that new data has been shared with them, click a shortened url that allows them to download that directly to their desktop, edit the file locally, and save it in a local folder that syncs with their iPlant [cloud storage](http://www.iplantcollaborative.org/discover/data-store) in the background.
-
-In each of the above interactions, the user is the same, but the context with which they are interacting with the iPlant infrastructure is different. The situation is further complicated when 3rd party applications are used to leverage the infrastructure. As the fundamental integration point for external applications with the iPlant cyberinfrastructure, Agave needs to track both the users and client applications with whom it interacts. It does this through the issuance of client credentials.
-
-Agave uses [OAuth2](http://oauth.net/2) to authenticate the client applications that call it and make authorization decisions about what protected resources they have permission to access. A discussion of OAuth is out of the context of this tutorial. You can read more about it on the [OAuth2](http://oauth.net/2) website or from the websites of any of the many other service providers using it today. In this section, we will walk you through getting your client credentials so we can stay focused on learning how to interact with the Agave's services.
-
-In order to interact with any of the Agave services, you will need to first get a set of [API keys](http://agaveapi.co/client-registration). This is a one-time action. If you already have your API keys, skip to the next section. If not, you can create your keys using the Clients service.
-
-```
-#!bash
-
-$ clients-create -S -v -u $API_USERNAME -p $API_PASSWORD -N my_cli_app -D "Client app used for scripting up cool stuff"
-{
-    "callbackUrl": "",
-    "consumerKey": "gTgpCecqtOc6Ao3GmZ_FecVSSV8a",
-    "consumerSecret": "hZ_z3f4Hf3CcgvGoMix0aksN4BOD6",
-    "description": "Client app used for scripting up cool stuff",
-    "name": "my_cli_app",
-    "tier": "Unlimited",
-    "_links": {
-        "self": {
-            "href": "https://agave.iplantc.org/clients/v2/my_cli_app"
-        },
-        "subscriber": {
-            "href": "https://agave.iplantc.org/profiles/v2/nryan"
-        },
-        "subscriptions": {
-            "href": "https://agave.iplantc.org/clients/v2/my_cli_app/subscriptions/"
-        }
-    }
-}
-```
-
-Creating your API keys is pretty straightforward and, as mentioned above, a one-time action. The one thing you should note from the above example is that, unlike the rest of the APIs, the Clients service requires HTTP BASIC authentication with your API username and password rather than an Authorization header with an access token. This discrepancy is intentional. Until you create your API keys, you cannot obtain an access token. By using BASIC auth, we avoid a chicken and egg problem.
+Once you download the Agave CLI and add it to your $PATH, the commands will be available to use from any directory simply by typing the name at the command line.
 
 Authenticate and get an access token
 ------------------------------------
 
-Now that you have an account and your client credentials, you can start interacting with Agave. First up, let's trade your client credentials for an access token (also known as a bearer token). The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave.
+Lets start out by authenticating to Agave. We do this by retriving an access token (also known as a bearer token) from the Agave OAuth service. The access token will be added to the header of every call you make to Agave. It identifies both your individual identity as well as your client's identity to Agave.
 
 ```
 #!bash
 
-$ auth-tokens-create -S -V -u $IPLANT_USERNAME -p $IPLANT_PASSWORD
+$ auth-tokens-create -S -V
 Consumer secret []: sdfaYISIDFU213123Qasd556azxcva
 Consumer key []: pzfMa8EPgh8z4filrKcBscjMuDXAQa
-Agave tenant username []:
+Agave tenant username []: testuser
 Agave tenant password:
-Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=nryan&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
+Calling curl -sku "pzfMa8EPgh8z4filrKcBscjMuDXAQa:XXXXXX" -X POST -d "grant_type=client_credentials&username=testuser&password=XXXXXX&scope=PRODUCTION" -H "Content-Type:application/x-www-form-urlencoded" https://agave.iplantc.org/token
 Token successfully refreshed and cached for 3600 seconds
 {
     "access_token": "bg1f2f732db7842ccm847b15edt5f0",
@@ -93,16 +50,42 @@ Token successfully refreshed and cached for 3600 seconds
 }
 ```
 
-The command above illustrates three conventions we will use throughout the rest of this tutorial. First, the `-S` option tells the command to cache the access token locally. The access token will be written to a file (`~/.agave`) in your home directory and reused on subsequent calls to Agave. This means that in the remainder of the tutorials, authentication will be automatically handled for us because we already have a token to use.
+Before we begin...
+------------------
 
-The second convention is the use of the `-V` option. This tells the CLI to print *very verbose* output. With this option, the CLI will show the curl command used to call the API as well as the full response including metadata.
+Before we dig into our app tutorial, let's cover a few assumptions Agave makes about your app and its execution that may not hold in other execution services and environments.
 
-The third convention is simply the use of the CLI. Agave provides [client SDK](http://agaveapi.co/client-sdk/) in multiple languages. Providing code equivalents to every tutorial in every SDK is out of scope of this tutorial, which is meant to quickly show you conceptually and procedurally how to use Agave. While language specific versions would no doubt be instructive, for clarity and brevity, we focus here on the pure REST API to Agave and delegate the language-specific versions of this tutorial to the individual client SDK projects.
+### Assumptions Agave makes about your app
 
-Finding and managing systems
-----------------------------
+> Your code works on the execution system or you are able to detect when it does not. 
+	
+Agave handles the setup, execution, and teardown of your app. It does not attempt to figure out what the resulting logs or output means. Executing an app, to Agave, is fulfilling a takeout order. It does not need to know why the customer wants the food, nor does it really care. It is just there to fill the orders for the people that do want food. Once it leaves the window, its up to the customer to make use of it however they choose.
+	
+> Your code is already built to run on the execution system, or you will handle building an executable as part of the execution of your app. > 'uff said.
 
-By default, iPlant provides a shared account on two execution systems at [Texas Advanced Computing Center](http://tacc.utexas.edu) and one on the [Open Science Grid](http://opensciencegrid.org) that you can use freely to run applications. iPlant also provides you a free account on one storage system, the [iPlant Data Store](http://www.iplantcollaborative.org/discover/data-store), which gives you 1 TB of space by default. You can see these systems by querying the systems service.
+> The default environment of the account used to login to the execution system is what the app will run with unless you tell it differently. 
+
+Many of Agave's users come to us with codes they have been running manually and simply want an easier way to share the app with others, manage data, and leverage the tools provided by the iPlant Discovery Environment or another science gateway. It would be cruel of us to wipe their meticulously crafted environment, so we don't. We assume that whatever you have in place is sufficent and, if not, that you or the consumers of your app will provided the information needed to make it so.
+
+### Notable differences between Agave and other execution services
+
+> Your code can live anywhere 
+
+Agave will stage in all your app's assets prior to execution, so, provided your binaries are compatible, or your code is in an interpreted language, you can build once and run anywhere.
+		
+> *You* probably care about the scheduler and execution system when you are getting things running, but the users of your app probably don't. 
+
+You know your app as well as anyone else, and you want to see it used as effectively as possible. That's why, when you're getting it running, you may want to know about the execution system, environment, scheduler, data protocols, file system(s), etc that all impact how your app runs. Once you have it running, those things are no longer variables, and the end users of your app probably don't need or want to think about them. You can hide as much or as little of this information from the user as you want. You can also require some or all of this information to be provided by the user when desired.
+
+> You have better things to do with your time that sit at your computer...well, sit at your computer and wait data to transfer, your app to start running, your app to finish running, and data to move back somewhere.
+
+Agave just assumes that's all part of what it means to execute an app, so it handles it all out of the box. When we talk about science-as-a-service, that means handling the setup, execution, and cleanup of a computational experiment as well as the long-term management of its derived data as a basic unit of functionality. Agave assumes you want to think about the science that moves you, rather than the silicon that moves your data, so to that end, app execution is something you can fire and forget about.
+
+
+Finding and managing apps
+-------------------------
+
+By default, iPlant provides a collection of public apps that run on systems at [Texas Advanced Computing Center](http://tacc.utexas.edu) and the [Open Science Grid](http://opensciencegrid.org) that you can use freely to run applications. iPlant also provides you a free account on one storage system, the [iPlant Data Store](http://www.iplantcollaborative.org/discover/data-store), which gives you 1 TB of space by default. You can see these systems by querying the systems service.
 
 ```
 #!bash
@@ -112,12 +95,25 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
 {
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-r7f460",
+  "version" : "2.0.0-SNAPSHOT-r4081e",
   "result" : [ {
-    "id" : "lonestar4.tacc.teragrid.org",
-    "name" : "TACC Lonestar",
+    "id" : "docker.iplantcollaborative.org",
+    "name" : "Demo Docker VM",
     "type" : "EXECUTION",
-    "description" : "The TACC Dell Linux Cluster (Lonestar) is a powerful, multi-use cyberinfrastructure HPC and remote visualization resource.\\n\\nLonestar contains 22,656 cores within 1,888 Dell PowerEdgeM610 compute blades (nodes), 16 PowerEdge R610 compute-I/Oserver-nodes,...",
+    "description" : "Rodeo VM used for Docker demonstrations and tutorials.",
+    "status" : "UP",
+    "public" : true,
+    "default" : false,
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
+      }
+    }
+  }, {
+    "id" : "lonestar4.tacc.teragrid.org",
+    "name" : "TACC Lonestar (Public)",
+    "type" : "EXECUTION",
+    "description" : "The TACC Dell Linux Cluster (Lonestar) is a powerful, multi-use cyberinfrastructure HPC and remote visualization resource. Lonestar contains 22,656 cores within 1,888 Dell PowerEdgeM610 compute blades (nodes), 16 PowerEdge R610 compute-I/Oserver-nodes, an...",
     "status" : "UP",
     "public" : true,
     "default" : false,
@@ -128,15 +124,28 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     }
   }, {
     "id" : "stampede.tacc.utexas.edu",
-    "name" : "TACC Stampede",
+    "name" : "TACC Stampede (Public)",
     "type" : "EXECUTION",
-    "description" : "Stampede is intended primarily for parallel applications scalable to tens of thousands of cores.  Normal batch queues will enable users to run simulations up to 24 hours.  Jobs requiring run times and more cores than allowed by the normal queues will be r...",
+    "description" : "Stampede is intended primarily for parallel applications scalable to tens of thousands of cores. Normal batch queues will enable users to run simulations up to 24 hours. Jobs requiring run times and more cores than allowed by the normal queues will be run...",
     "status" : "UP",
     "public" : true,
     "default" : false,
     "_links" : {
       "self" : {
         "href" : "https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu"
+      }
+    }
+  }, {
+    "id" : "rodeo.storage.demo",
+    "name" : "Demo Storage VM",
+    "type" : "STORAGE",
+    "description" : "Rodeo VM used for storage demos.",
+    "status" : "UP",
+    "public" : true,
+    "default" : false,
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/systems/v2/rodeo.storage.demo"
       }
     }
   }, {
@@ -158,14 +167,15 @@ Calling curl -sk -H "Authorization: Bearer b64f2f718db7842ddb847b15ed35f0" https
     "type" : "EXECUTION",
     "description" : "The Open Science Grid (OSG) advances science through open distributed computing. The OSG is a multi-disciplinary partnership to federate local, regional, community and national cyberinfrastructures to meet the needs of research and academic communities at...",
     "status" : "UP",
-    "public" : false,
+    "public" : true,
     "default" : false,
     "_links" : {
       "self" : {
         "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org"
       }
     }
-  }
+  } ]
+}
 ```
 
 The response above contains summary information on each system. You can obtain the full detailed description of any system by calling the systems service with the system id. Let's look at OSG's Condor execution system as an example.
@@ -324,14 +334,14 @@ The fastest way to add a system is to copy an existing system and rename it for 
 #!bash
 
 $ systems-clone -V stampede.tacc.utexas.edu
-Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X PUT -d "action=clone&id=stampede-nryan" https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu?pretty=true
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X PUT -d "action=clone&id=stampede-testuser" https://agave.iplantc.org/systems/v2/stampede.tacc.utexas.edu?pretty=true
 
 {
   "status" : "success",
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
   "result" : {
-    "id" : "stampede-nryan",
+    "id" : "stampede-testuser",
     "uuid" : "0001388520343225-b0b0b0bb0b-0001",
     "name" : "TACC Stampede",
     "status" : "UP",
@@ -376,13 +386,13 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
     },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-testuser"
       },
       "roles" : {
-        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan/roles"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-testuser/roles"
       },
       "credentials" : {
-        "href" : "https://agave.iplantc.org/systems/v2/stampede-nryan/credentials"
+        "href" : "https://agave.iplantc.org/systems/v2/stampede-testuser/credentials"
       },
       "metadata" : {
         "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388520343225-b0b0b0bb0b-0001\"}"
@@ -394,7 +404,7 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
 
 ```
 
-In the example above you the existing Stampede system was cloned for our own use and given the name *stampede-nryan*. System name is arbitrary, but it must be unique. Once it is cloned, we can add our own login and storage credentials to it to login.
+In the example above you the existing Stampede system was cloned for our own use and given the name *stampede-testuser*. System name is arbitrary, but it must be unique. Once it is cloned, we can add our own login and storage credentials to it to login.
 
 ### Registering a system
 
@@ -424,7 +434,7 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X 
       "host" : "ssh.example.com",
       "port" : 22,
       "protocol" : "SFTP",
-      "rootDir" : "/home/demo",
+      "rootDir" : "/home/testuser",
       "homeDir" : "/",
       "mirror" : true,
       "proxy" : null,
@@ -461,15 +471,15 @@ The Agave Files service gives you a consistent interface for managing data acros
 ```
 #!bash
 
-$ files-list -V -S data.iplantcollaborative.org nryan
-Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/nryan?pretty=true
+$ files-list -V -S data.iplantcollaborative.org testuser
+Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/testuser?pretty=true
 {
     "message": null,
     "result": [
         {
             "_links": {
                 "self": {
-                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser"
                 },
                 "system": {
                     "href": "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
@@ -479,7 +489,7 @@ Calling curl -sk -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" htt
             "lastModified": "2012-08-03T10:06:08.000-05:00",
             "length": 0,
             "name": ".",
-            "path": "nryan",
+            "path": "testuser",
             "permisssions": "READ",
             "type": "file"
         }
@@ -495,8 +505,8 @@ Now let's upload a file.
 ```
 #!bash
 
-$ files-upload -V -S data.iplantcollaborative.org -F files/picksumipsum.txt nryan
-Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@files/picksumipsum.txt" https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan?pretty=true
+$ files-upload -V -S data.iplantcollaborative.org -F files/picksumipsum.txt testuser
+Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X POST -F "fileToUpload=@files/picksumipsum.txt" https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser?pretty=true
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  4383  100   946  100  3437    136    495  0:00:06  0:00:06 --:--:--     0
@@ -506,7 +516,7 @@ Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X P
   "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
   "result" : {
     "name" : "picksumipsum.txt",
-    "path" : "nryan/picksumipsum.txt",
+    "path" : "testuser/picksumipsum.txt",
     "lastModified" : "2012-08-03T10:06:08.000-05:00",
     "length" : 0,
     "permisssions" : "READ",
@@ -514,7 +524,7 @@ Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X P
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/picksumipsum.txt"
       },
       "system" : {
         "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
@@ -523,7 +533,7 @@ Calling curl -k -H "Authorization: Bearer 13547fdf119926ca2b5753681a372249" -X P
         "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388523424806-b0b0b0bb0b-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/testuser/picksumipsum.txt"
       }
     }
   }
@@ -536,21 +546,21 @@ And make sure it's there.
 ```
 #!bash
 
-$ files-list -V -S data.iplantcollaborative.org nryan/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/nryan/picksumipsum.txt?pretty=true
+$ files-list -V -S data.iplantcollaborative.org testuser/picksumipsum.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/files/v2/listings/system/data.iplantcollaborative.org/testuser/picksumipsum.txt?pretty=true
 {
     "message": null,
     "result": [
         {
             "_links": {
                 "history": {
-                    "href": "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/picksumipsum.txt"
+                    "href": "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/testuser/picksumipsum.txt"
                 },
                 "metadata": {
                     "href": "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388523718882-b0b0b0bb0b-0001-002\"}"
                 },
                 "self": {
-                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt/picksumipsum.txt"
+                    "href": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/picksumipsum.txt/picksumipsum.txt"
                 },
                 "system": {
                     "href": "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
@@ -560,7 +570,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
             "lastModified": "2013-12-31T14:57:05.000-06:00",
             "length": 3235,
             "name": "picksumipsum.txt",
-            "path": "nryan/picksumipsum.txt",
+            "path": "testuser/picksumipsum.txt",
             "permisssions": "READ",
             "type": "file"
         }
@@ -744,7 +754,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https
         },
         {
             "created": "2013-12-31T15:22:40.000-06:00",
-            "description": "Your scheduled transfer of http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800 completed staging. You can access the raw file on Demo sftp server (demo.storage.example.com) SFTP at /home/nryan/GSM313800.txt or via the API at https://agave.iplantc.org/files/v2//media/system/demo.storage.example.com/GSM313800.txt.",
+            "description": "Your scheduled transfer of http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM313800 completed staging. You can access the raw file on Demo sftp server (demo.storage.example.com) SFTP at /home/testuser/GSM313800.txt or via the API at https://agave.iplantc.org/files/v2//media/system/demo.storage.example.com/GSM313800.txt.",
             "status": "TRANSFORMING_COMPLETED"
         }
     ],
@@ -758,15 +768,15 @@ Copying data between systems is just as easy. No need to worry about the fact th
 ```
 #!bash
 
-$ files-import -V -U "agave://demo.storage.example.com/GSM313800.txt" -S data.iplantcollaborative.org nryan
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=agave://demo.storage.example.com/GSM313800.txt" https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan?pretty=true
+$ files-import -V -U "agave://demo.storage.example.com/GSM313800.txt" -S data.iplantcollaborative.org testuser
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "urlToIngest=agave://demo.storage.example.com/GSM313800.txt" https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser?pretty=true
 {
   "status" : "success",
   "message" : null,
   "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
   "result" : {
     "name" : "GSM313800.txt",
-    "path" : "nryan",
+    "path" : "testuser",
     "lastModified" : "2012-08-03T10:06:08.000-05:00",
     "length" : -1,
     "permisssions" : "READ",
@@ -774,7 +784,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X PO
     "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/GSM313800.txt"
       },
       "system" : {
         "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
@@ -783,7 +793,7 @@ Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X PO
         "href" : "https://agave.iplantc.org/meta/v2/data?q={\"associationIds\":\"0001388525440624-b0b0b0bb0b-0001-002\"}"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/nryan/GSM313800.txt"
+        "href" : "https://agave.iplantc.org/files/v2/history/system/data.iplantcollaborative.org/testuser/GSM313800.txt"
       }
     }
   }
@@ -857,7 +867,7 @@ Your data will be available as a public url.
 ```
 #!bash
 
-curl -O https://agave.iplantc.org/files/v2/download/nryan/system/demo.storage.example.com/GSM313800.txt
+curl -O https://agave.iplantc.org/files/v2/download/testuser/system/demo.storage.example.com/GSM313800.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 19332  100 19332    0     0   3635      0  0:00:05  0:00:05 --:--:--  5833
@@ -871,7 +881,7 @@ Agave's Apps service provides a way for you to discover and manage app. An app c
 ```
 #!bash
 
-$  apps-list -d -V
+$  apps-list -V
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/apps/v2/?pretty=true
 {
   "status" : "success",
@@ -900,7 +910,7 @@ We see several apps are available to us right off the bat. Let's look at the wc-
 ```
 #!bash
 
-$ apps-list -d -V wc-1.00
+$ apps-list -V wc-1.00
 Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/apps/v2/wc-1.00?pretty=true
 {
   "status" : "success",
@@ -1018,7 +1028,7 @@ Two sample job submissions are included in the jobs folder. Let's go ahead and s
 ```
 #!bash
 
-$ jobs-submit -V -F jobs/wc-1.00-submit.json
+$ jobs-submit -V -F jobs/pyplot-demo-advanced_submit.json
 ```
 
 Running the above command returned a JSON description of the job. The job id is what we really care about now.
@@ -1030,62 +1040,74 @@ Once we submit a job, Agave will handle staging the input files, submitting the 
 ```
 #!bash
 
-$ jobs-submit -d -V -F jobs/wc-1.00-submit.json
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -F "fileToUpload=@jobs/wc-1.00-submit.json" https://agave.iplantc.org/jobs/v2/?pretty=true
-f{
+$ jobs-submit -V -F jobs/wc-1.00-submit.json
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -F "fileToUpload=@jobs/pyplot-demo-advanced_submit.json" https://agave.iplantc.org/jobs/v2/?pretty=true
+{
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "version" : "2.0.0-SNAPSHOT-r58f7c",
   "result" : {
-    "id" : "0001388557444695-b0b0b0bb0b-0001-007",
-    "name" : "wc-demo",
-    "owner" : "nryan",
-    "appId" : "wc-1.00",
-    "executionSystem" : "condor.opensciencegrid.org",
-    "batchQueue" : "condorqueue",
+    "id" : "0001415036208350-5056a550b8-0001-007",
+    "name" : "pyplot-demo test",
+    "owner" : "testuser",
+    "appId" : "demo-pyplot-demo-advanced-0.1.0u1",
+    "executionSystem" : "docker.iplantcollaborative.org",
+    "batchQueue" : "debug",
     "nodeCount" : 1,
     "processorsPerNode" : 1,
-    "memoryPerNode" : 1,
-    "maxRunTime" : "999:59:59",
+    "memoryPerNode" : 1.0,
+    "maxRunTime" : "24:00:00",
     "archive" : false,
     "retries" : 0,
     "localId" : null,
     "outputPath" : null,
     "status" : "PENDING",
-    "submitTime" : "2013-12-31T23:36:45.168-06:00",
+    "submitTime" : "2014-11-03T11:36:48.364-06:00",
     "startTime" : null,
     "endTime" : null,
     "inputs" : {
-      "query1" : "nryan/picksumipsum.txt"
+      "dataset" : "agave://data.iplantcollaborative.org/testuser/inputs/pyplot/testdata.csv"
     },
-    "parameters" : { },
+    "parameters" : {
+      "chartType" : "bar",
+      "height" : "512",
+      "showLegend" : "true",
+      "xlabel" : "The X Axis Label",
+      "background" : "#d96727",
+      "width" : "1024",
+      "unpackInputs" : "false",
+      "separateCharts" : "false",
+      "showXLabel" : "true",
+      "ylabel" : "The Y Axis Label",
+      "showYLabel" : "true"
+    },
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       },
       "app" : {
-        "href" : "https://agave.iplantc.org/apps/v2/wc-1.00"
+        "href" : "https://agave.iplantc.org/apps/v2/demo-pyplot-demo-advanced-0.1.0u1"
       },
       "executionSystem" : {
-        "href" : "https://agave.iplantc.org/systems/v2/condor.opensciencegrid.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "archiveData" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/193/outputs/listings"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/listings"
       },
       "owner" : {
-        "href" : "https://agave.iplantc.org/profiles/v2/nryan"
+        "href" : "https://agave.iplantc.org/profiles/v2/testuser"
       },
       "permissions" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/pems"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/pems"
       },
       "history" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/history"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/history"
       },
       "metadata" : {
-        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001388557444695-b0b0b0bb0b-0001-007\"}"
+        "href" : "https://agave.iplantc.org/meta/v2/data/?q={\"associationIds\":\"0001415036208350-5056a550b8-0001-007\"}"
       },
       "notifications" : {
-        "href" : "https://agave.iplantc.org/notifications/v2/?associatedUuid=0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/notifications/v2/?associatedUuid=0001415036208350-5056a550b8-0001-007"
       }
     }
   }
@@ -1097,20 +1119,20 @@ There is also a way to return just the job status if bandwidth is an issue.
 ```
 #!bash
 
-$ jobs-status -d -V 0001388557444695-b0b0b0bb0b-0001-007
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/status?pretty=true
+$ jobs-status -V 0001415036208350-5056a550b8-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/status?pretty=true
 {
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "version" : "2.0.0-SNAPSHOT-r58f7c",
   "result" : {
-    "_link" : {
+    "id" : "0001415036208350-5056a550b8-0001-007",
+    "status" : "FINISHED",
+    "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
-    },
-    "id" : "0001388557444695-b0b0b0bb0b-0001-007",
-    "status" : "FINISHED"
+    }
   }
 }
 ```
@@ -1120,63 +1142,78 @@ For even more detailed information, you can query for the job history. This trac
 ```
 #!bash
 
-$ jobs-history -d -V 0001388557444695-b0b0b0bb0b-0001-007
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/history?pretty=true
+$ jobs-history -V 0001415036208350-5056a550b8-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/history?pretty=true
 {
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "version" : "2.0.0-SNAPSHOT-r58f7c",
   "result" : [ {
-    "created" : "2013-12-31T23:36:45.000-06:00",
+    "created" : "2014-11-03T11:36:48.000-06:00",
     "status" : "PENDING",
     "description" : "Job accepted and queued for submission."
   }, {
-    "created" : "2013-12-31T23:36:47.000-06:00",
+    "created" : "2014-11-03T11:36:49.000-06:00",
     "status" : "PROCESSING_INPUTS",
     "description" : "Attempt 1 to stage job inputs"
   }, {
-    "created" : "2013-12-31T23:36:47.000-06:00",
+    "created" : "2014-11-03T11:36:49.000-06:00",
     "status" : "PROCESSING_INPUTS",
     "description" : "Identifying input files for staging"
   }, {
-    "created" : "2013-12-31T23:36:50.000-06:00",
+    "created" : "2014-11-03T11:36:50.000-06:00",
     "status" : "STAGING_INPUTS",
-    "description" : "Staging nryan/picksumipsum.txt to execution system"
+    "description" : "Staging agave://data.iplantcollaborative.org/dooley/inputs/pyplot/testdata.csv to remote job directory"
   }, {
     "progress" : {
-      "averageRate" : 0,
+      "averageRate" : 3212,
       "totalFiles" : 1,
-      "source" : "nryan/picksumipsum.txt",
+      "source" : "agave://data.iplantcollaborative.org/dooley/inputs/pyplot/testdata.csv",
       "totalActiveTransfers" : 0,
-      "totalBytes" : 3235,
-      "totalBytesTransferred" : 3235
+      "totalBytes" : 3212,
+      "totalBytesTransferred" : 3212
     },
-    "created" : "2013-12-31T23:36:50.000-06:00",
+    "created" : "2014-11-03T11:36:50.000-06:00",
     "status" : "STAGING_INPUTS",
     "description" : "Copy in progress"
   }, {
-    "created" : "2013-12-31T23:36:52.000-06:00",
+    "created" : "2014-11-03T11:36:51.000-06:00",
     "status" : "STAGED",
     "description" : "Job inputs staged to execution system"
   }, {
-    "created" : "2013-12-31T23:36:57.000-06:00",
+    "created" : "2014-11-03T11:36:55.000-06:00",
     "status" : "SUBMITTING",
-    "description" : "Attempt [1] Preparing job for execution and staging binaries to execution system"
+    "description" : "Preparing job for submission."
   }, {
-    "created" : "2013-12-31T23:39:33.000-06:00",
+    "created" : "2014-11-03T11:36:55.000-06:00",
+    "status" : "SUBMITTING",
+    "description" : "Attempt 1 to submit job"
+  }, {
+    "created" : "2014-11-03T11:37:03.000-06:00",
+    "status" : "RUNNING",
+    "description" : "Job started running"
+  }, {
+    "created" : "2014-11-03T11:37:08.000-06:00",
+    "status" : "CLEANING_UP"
+  }, {
+    "created" : "2014-11-03T11:37:08.000-06:00",
     "status" : "QUEUED",
-    "description" : "Condor job successfully placed into queue"
+    "description" : "HPC job successfully placed into queue"
   }, {
-    "created" : "2013-12-31T23:39:58.000-06:00",
+    "created" : "2014-11-03T11:37:46.000-06:00",
+    "status" : "CLEANING_UP",
+    "description" : "Job completion detected by process monitor."
+  }, {
+    "created" : "2014-11-03T11:37:47.000-06:00",
     "status" : "FINISHED",
-    "description" : "Job completed execution. Skipping archiving at user request."
+    "description" : "Job completed. Skipping archiving at user request."
   } ]
 }
 ```
 
 ### Receiving job notifications
 
-Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `head-5.97-submit.json` job submission example illustrates this.
+Often times, we don't have time to sit around waiting for a job to complete. There are also times when we want other applications (ours or other people's) to take action once our job completes. In these situations, notifications come in handy. Agave allows you to subscribe to notifications on any event anywhere in the API. The Jobs service has special support for notifications in that it allows you to include them as part of a job submission request. The `jobs/pyplot-demo-advanced_submit.json` job submission example illustrates this.
 
 ```
 #!JSON
@@ -1188,7 +1225,7 @@ Often times, we don't have time to sit around waiting for a job to complete. The
    		"persistent": true
    	},
    	{
-   		"url" : "nryan@mlb.com",
+   		"url" : "testuser@mlb.com",
    		"event": "FINISHED"
    	}
 ]
@@ -1203,178 +1240,250 @@ Agave handles the archiving and staging of your job data for you by default. Dep
 ```
 #!BASH
 
-$ jobs-output -d -V  0001388557444695-b0b0b0bb0b-0001-007
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/listings/?pretty=true
+$ jobs-output -V  0001415036208350-5056a550b8-0001-007
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/listings/?pretty=true
 {
   "status" : "success",
   "message" : null,
-  "version" : "2.0.0-SNAPSHOT-r${buildNumber}",
+  "version" : "2.0.0-SNAPSHOT-r58f7c",
   "result" : [ {
-    "name" : "condorSubmit",
-    "path" : "/condorSubmit",
-    "owner" : "ipcservices",
-    "length" : 308,
-    "lastModified" : "2014-01-01T00:28:01.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "name" : ".agave.archive",
+    "path" : "/.agave.archive",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 122,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/condorSubmit"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/.agave.archive"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "job.err",
-    "path" : "/job.err",
-    "owner" : "ipcservices",
-    "length" : 517,
-    "lastModified" : "2014-01-01T00:28:04.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "name" : "app.json",
+    "path" : "/app.json",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 7813,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/job.err"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/app.json"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "job.out",
-    "path" : "/job.out",
-    "owner" : "ipcservices",
-    "length" : 234,
-    "lastModified" : "2014-01-01T00:28:08.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
-    "format" : "unknown",
-    "permission" : "READ",
+    "name" : "lib",
+    "path" : "/lib",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 4096,
+    "permission" : "NONE",
+    "mimeType" : "text/directory",
+    "format" : "folder",
+    "type" : "dir",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/job.out"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/lib"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "output.tar.gz",
-    "path" : "/output.tar.gz",
-    "owner" : "ipcservices",
-    "length" : 121,
-    "lastModified" : "2014-01-01T00:28:11.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
-    "format" : "unknown",
-    "permission" : "READ",
+    "name" : "output",
+    "path" : "/output",
+    "lastModified" : "2014-11-03T11:37:01.000-06:00",
+    "length" : 4096,
+    "permission" : "NONE",
+    "mimeType" : "text/directory",
+    "format" : "folder",
+    "type" : "dir",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/output.tar.gz"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/output"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "picksumipsum.txt",
-    "path" : "/picksumipsum.txt",
-    "owner" : "ipcservices",
-    "length" : 3235,
-    "lastModified" : "2014-01-01T00:28:13.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "name" : "pyplot-demo-test.err",
+    "path" : "/pyplot-demo-test.err",
+    "lastModified" : "2014-11-03T11:37:06.000-06:00",
+    "length" : 478,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/picksumipsum.txt"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/pyplot-demo-test.err"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "runtime.log",
-    "path" : "/runtime.log",
-    "owner" : "ipcservices",
-    "length" : 1022,
-    "lastModified" : "2014-01-01T00:28:16.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "name" : "pyplot-demo-test.out",
+    "path" : "/pyplot-demo-test.out",
+    "lastModified" : "2014-11-03T11:37:05.000-06:00",
+    "length" : 6932,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/runtime.log"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/pyplot-demo-test.out"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "transfer.tar.gz",
-    "path" : "/transfer.tar.gz",
-    "owner" : "ipcservices",
-    "length" : 3230068,
-    "lastModified" : "2014-01-01T00:28:39.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "name" : "pyplot-demo-test.pid",
+    "path" : "/pyplot-demo-test.pid",
+    "lastModified" : "2014-11-03T11:36:58.000-06:00",
+    "length" : 5,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/transfer.tar.gz"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/pyplot-demo-test.pid"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   }, {
-    "name" : "wc_out.txt",
-    "path" : "/wc_out.txt",
-    "owner" : "ipcservices",
+    "name" : "pyplot-demo_test.ipcexe",
+    "path" : "/pyplot-demo_test.ipcexe",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 2804,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
+    "format" : "unknown",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/pyplot-demo_test.ipcexe"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
+      }
+    }
+  }, {
+    "name" : "README.txt",
+    "path" : "/README.txt",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
     "length" : 0,
-    "lastModified" : "2014-01-01T00:28:41.000-06:00",
-    "type" : "file",
-    "mimeType" : "application/binary",
+    "permission" : "NONE",
+    "mimeType" : "text/plain",
     "format" : "unknown",
-    "permission" : "READ",
+    "type" : "file",
     "_links" : {
       "self" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/wc_out.txt"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/README.txt"
       },
       "system" : {
-        "href" : "https://agave.iplantc.org/systems/v2/data.iplantcollaborative.org"
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
       },
       "parent" : {
-        "href" : "https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007"
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
+      }
+    }
+  }, {
+    "name" : "test",
+    "path" : "/test",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 4096,
+    "permission" : "NONE",
+    "mimeType" : "text/directory",
+    "format" : "folder",
+    "type" : "dir",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/test"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
+      }
+    }
+  }, {
+    "name" : "testdata.csv",
+    "path" : "/testdata.csv",
+    "lastModified" : "2014-11-03T11:36:49.000-06:00",
+    "length" : 3212,
+    "permission" : "NONE",
+    "mimeType" : "application/octet-stream",
+    "format" : "unknown",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/testdata.csv"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
+      }
+    }
+  }, {
+    "name" : "wrapper.sh",
+    "path" : "/wrapper.sh",
+    "lastModified" : "2014-11-03T11:36:55.000-06:00",
+    "length" : 1943,
+    "permission" : "NONE",
+    "mimeType" : "application/x-sh",
+    "format" : "unknown",
+    "type" : "file",
+    "_links" : {
+      "self" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/wrapper.sh"
+      },
+      "system" : {
+        "href" : "https://agave.iplantc.org/systems/v2/docker.iplantcollaborative.org"
+      },
+      "parent" : {
+        "href" : "https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007"
       }
     }
   } ]
@@ -1386,11 +1495,12 @@ Downloading the data is just as easy.
 ```
 #!BASH
 
-$ jobs-output -d -V -P transfer.tar.gz -D  0001388557444695-b0b0b0bb0b-0001-007
-Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -o "transfer.tar.gz" https://agave.iplantc.org/jobs/v2/0001388557444695-b0b0b0bb0b-0001-007/outputs/media/transfer.tar.gz
+$ jobs-output -V -P /output/testdata/bar.png -D  0001415036208350-5056a550b8-0001-007
+Calling curl -k -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -o "transfer.tar.gz" https://agave.iplantc.org/jobs/v2/0001415036208350-5056a550b8-0001-007/outputs/media/transfer.tar.gz
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 3154k    0 3154k    0     0   100k      0 --:--:--  0:00:31 --:--:--  100k
+100 43821    0 43821    0     0  58892      0 --:--:-- --:--:-- --:--:-- 58899
+Successfully downloaded /output/testdata/bar.png from job 0001415036208350-5056a550b8-0001-007 to bar.png
 ```
 
 Sharing your work with the world
@@ -1403,31 +1513,32 @@ PostIts are preauthenticated, disposable URLs. Similar to [tinyurl](http://tinyu
 ```
 #!BASH
 
-$ postits-create -d -V -m 2 https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt
-Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "method=GET" -d "url=https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt" https://agave.iplantc.org/postits/v2/?pretty=true
+$ postits-create -V -m 2 https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/picksumipsum.txt
+Calling curl -sk -H "Authorization: Bearer f650e12db120bab3c08e64257c0c99" -X POST -d "method=GET" -d "url=https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/picksumipsum.txt" https://agave.iplantc.org/postits/v2/?pretty=true
 {
 	"status": "success",
 	"message": "",
 	"result": {
-		"creator": "nryan",
+		"creator": "dooley",
 		"internalUsername": null,
 		"authenticated": true,
-		"created": "2014-01-01T01:52:11-06:00",
-		"expires": "2014-01-31T01:52:11-06:00",
-		"remainingUses": 1,
-		"postit": "3e6eab5f14ae48b0240815c068592f09",
-		"url": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/nryan/picksumipsum.txt",
+		"created": "2014-11-03T11:47:07-06:00",
+		"expires": "2014-12-03T11:47:07-06:00",
+		"remainingUses": 2,
+		"postit": "e95750f6968ca031bcfb43588dcc623b",
+		"noauth": false,
+		"url": "https://agave.iplantc.org/files/v2/media/system/data.iplantcollaborative.org/testuser/picksumipsum.txt",
 		"method": "GET",
-		"_link": {
+		"_links": {
 			"self": {
-				"href": "https://agave.iplantc.org/postits/v2/3e6eab5f14ae48b02409abc068592f09"
+				"href": "https://agave.iplantc.org/postits/v2/e95750f6968ca031bcfb43588dcc623b"
 			},
 			"profile": {
-				"href": "https://agave.iplantc.org/profiles/v2/nryan"
+				"href": "https://agave.iplantc.org/profiles/v2/dooley"
 			}
 		}
 	},
-	"version": "2.0.0-SNAPSHOT-r4c047"
+	"version": "2.0.0-SNAPSHOT-rb491f"
 }
 ```
 
@@ -1436,11 +1547,23 @@ This returns a PostIt that we can use 2 times before it expires. Let's test that
 ```
 #!BASH
 
-$ curl -sk https://agave.iplantc.org/postits/v2/<POSTIT_NONCE>
+$ curl -sk https://agave.iplantc.org/postits/v2/e95750f6968ca031bcfb43588dcc623b
 
-$ curl -sk https://agave.iplantc.org/postits/v2/<POSTIT_NONCE>
+$ curl -sk https://agave.iplantc.org/postits/v2/e95750f6968ca031bcfb43588dcc623b
 
-$ curl -sk https://agave.iplantc.org/postits/v2/<POSTIT_NONCE>
+$ curl -sk https://agave.iplantc.org/postits/v2/e95750f6968ca031bcfb43588dcc623b
 ```
 
 PostIts are great to use to email links around, pass to third party services, or use as a convenient way to work securely with third parties you don't trust.
+
+- list systems
+- clone app
+- edit app json
+- register app
+- run job
+- edit wrapper script
+- run job
+- clone app
+- run job
+- share app
+- add notifications
