@@ -1,0 +1,167 @@
+{
+  "name": "demo-pyplot-demo-intermediate",
+  "parallelism": "SERIAL",
+  "version": "0.1.0",
+  "label": "PyPlot Demo Basic",
+  "shortDescription": "Basic demo plotting app",
+  "longDescription": "Basic demo app to create a graph using Python",
+  "deploymentPath": "apps/pyplot-demo-intermediate-0.1.0",
+  "deploymentSystem": "demo.storage.example.com",
+  "executionSystem": "demo.execute.example.com",
+  "executionType": "CLI",
+  "templatePath": "wrapper.sh",
+  "testPath": "test/test.sh",
+  "tags": [
+    "demo",
+    "python",
+    "tutorial",
+    "plotting"
+  ],
+  "ontology": [],
+  "inputs": [{
+    "id": "dataset",
+    "value": {
+      "default": "agave://demo.storage.example.com/inputs/pyplot/dataset.csv",
+      "required": true,
+      "validator": "([^\\s]+(\\.(?i)(csv))$)",
+    },
+    "details": {
+      "label": "Dataset",
+      "description": "The dataset to plot. Datasets must be in CSV format."
+    }
+  }],
+  "parameters": [{
+    "id": "chartType",
+    "value": {
+      "default": "bar",
+      "type": "enumeration",
+      "enum_values": [
+        { "bar": "Bar Chart" },
+        { "line": "Line Chart" }
+      ],
+      "required": true
+    },
+    "details": {
+      "label": "Chart types",
+      "description": "Select the chart type to generate for the dataset"
+    }
+  }, {
+    "id": "xlabel",
+    "value": {
+      "default": "Time",
+      "type": "string",
+      "required": false
+    },
+    "details": {
+      "label": "X-axis label",
+      "description": "Label to display below the x-axis"
+    }
+  }, {
+    "id": "showXLabel",
+    "value": {
+      "default": true,
+      "type": "boolean",
+      "required": false
+    },
+    "details": {
+      "label": "Show x-axis label?",
+      "description": "Select whether a label will be shown on the x axis"
+    }
+  }, {
+    "id": "ylabel",
+    "value": {
+      "default": "Magnitude",
+      "type": "string",
+      "required": false
+    },
+    "details": {
+      "label": "Y-axis label",
+      "description": "Label to display below the y-axis"
+    }
+  }, {
+    "id": "showYLabel",
+    "value": {
+      "default": true,
+      "type": "boolean",
+      "required": false
+    },
+    "details": {
+      "label": "Show y-axis label?",
+      "description": "Select whether a label will be shown on the y axis"
+    }
+  }, {
+    "id": "showLegend",
+    "value": {
+      "default": false,
+      "type": "boolean",
+      "required": false
+    },
+    "details": {
+      "label": "Extract the first k bytes",
+      "description": "Select whether to include a legend in each chart"
+    }
+  }, {
+    "id": "separateCharts",
+    "value": {
+      "default": false,
+      "type": "boolean",
+      "required": false
+    },
+    "details": {
+      "label": "Extract the first k bytes",
+      "description": "Select whether to include a legend in each chart"
+    }
+  }, {
+    "id": "format",
+    "value": {
+      "default": "png",
+      "type": "enumeration",
+      "enum_values": [
+        "png",
+        "jpg",
+        "gif"
+      ],
+      "required": true
+    },
+    "details": {
+      "label": "Image format",
+      "description": "Select the image format of the output files"
+    }
+  }, {
+    "id": "height",
+    "value": {
+      "default": 512,
+      "type": "number",
+      "validator": "\\d+",
+      "required": false
+    },
+    "details": {
+      "label": "Chart height",
+      "description": "The height in pixels of each chart"
+    }
+  }, {
+    "id": "width",
+    "value": {
+      "default": 1024,
+      "type": "number",
+      "validator": "\\d+",
+      "required": false
+    },
+    "details": {
+      "label": "Chart width",
+      "description": "The width in pixels of each chart"
+    }
+  }, {
+    "id": "background",
+    "value": {
+      "default": "#FFFFFF",
+      "type": "string",
+      "validator": "^#(?:[0-9a-fA-F]{6}){1}$",
+      "required": false
+    },
+    "details": {
+      "label": "Background color",
+      "description": "The hexadecimal background color of the charts. White by default"
+    }
+  }]
+}
