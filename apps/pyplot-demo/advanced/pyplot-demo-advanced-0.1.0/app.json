@@ -1,283 +1,351 @@
 {
-  "name": "demo-pyplot-demo-advanced",
-  "parallelism": "SERIAL",
-  "version": "0.1.0",
-  "label": "PyPlot Demo Advanced",
-  "shortDescription": "Advanced demo plotting app",
-  "longDescription": "Advanced demo app to create a graph using Python",
-  "defaultMemory": 1,
-  "defaultProcessors": 1,
-  "defaultQueue": "debug",
-  "deploymentPath": "apps/pyplot-demo-advanced-0.1.0",
-  "deploymentSystem": "demo.storage.example.com",
-  "executionSystem": "demo.execute.example.com",
-  "executionType": "CLI",
-  "templatePath": "wrapper.sh",
-  "testPath": "test/test.sh",
-  "checkpointable": false,
-  "modules": [],
-  "tags": [
+  "name":"demo-pyplot-demo-advanced",
+  "parallelism":"SERIAL",
+  "version":"0.1.0",
+  "label":"PyPlot Demo Advanced",
+  "shortDescription":"Advanced demo plotting app",
+  "longDescription":"Advanced demo app to create a graph using Python",
+  "defaultMemory":1,
+  "defaultMemoryPerNode":1,
+  "defaultProcessors":1,
+  "defaultQueue":"debug",
+  "deploymentPath":"apps/pyplot-demo-advanced-0.1.0",
+  "deploymentSystem":"demo.storage.example.com",
+  "executionSystem":"demo.execute.example.com",
+  "executionType":"CLI",
+  "templatePath":"wrapper.sh",
+  "testPath":"test/test.sh",
+  "checkpointable":false,
+  "modules":[
+
+  ],
+  "tags":[
     "demo",
     "python",
     "tutorial",
     "plotting"
   ],
-  "ontology": [],
-  "inputs": [{
-    "id": "dataset",
-    "value": {
-      "default": "agave://demo.storage.example.com/inputs/pyplot/dataset.csv",
-      "type": "string",
-      "validator": "([^\\s]+(\\.(?i)(zip|gz|tgz|tar.gz|bz2|rar|csv))$)",
-      "visible": true,
-      "required": true
-    },
-    "details": {
-      "label": "Dataset",
-      "description": "The dataset to plot"
-    },
-    "semantics": {
-      "ontology": [
-        "http://sswapmeet.sswap.info/mime/text/Csv",
-        "http://sswapmeet.sswap.info/mime/text/Zip",
-        "http://sswapmeet.sswap.info/mime/text/Tar",
-        "http://sswapmeet.sswap.info/mime/text/Bzip",
-        "http://sswapmeet.sswap.info/mime/text/Rar"
-      ],
-      "minCardinality": 1,
-      "fileTypes": [
-        "csv-0",
-        "zip-0",
-        "tar-0",
-        "tgz-0",
-        "bz-2",
-        "rar-0"
-      ]
+  "ontology":[
+
+  ],
+  "inputs":[
+    {
+      "id":"dataset",
+      "value":{
+        "default":"agave://data.iplantcollaborative.org/dooley/inputs/pyplot/testdata.csv",
+        "type":"string",
+        "validator":"([^\\s]+(\\.(?i)(zip|gz|tgz|tar.gz|bz2|rar|csv))$)",
+        "visible":true,
+        "required":true,
+        "enquote":true
+      },
+      "details":{
+        "label":"Dataset",
+        "description":"The dataset to plot",
+        "argument":null,
+        "showArgument":false,
+        "repeatArgument":true
+      },
+      "semantics":{
+        "ontology":[
+          "http://sswapmeet.sswap.info/mime/text/Csv",
+          "http://sswapmeet.sswap.info/mime/text/Zip",
+          "http://sswapmeet.sswap.info/mime/text/Tar",
+          "http://sswapmeet.sswap.info/mime/text/Bzip",
+          "http://sswapmeet.sswap.info/mime/text/Rar"
+        ],
+        "minCardinality":1,
+        "maxCardinality":-1,
+        "fileTypes":[
+          "csv-0",
+          "zip-0",
+          "tar-0",
+          "tgz-0",
+          "bz-2",
+          "rar-0"
+        ]
+      }
     }
-  }],
-  "parameters": [{
-    "id": "unpackInputs",
-    "details": {
-      "label": "Unpack input(s)",
-      "description": "If true, any compressed input files will be expanded prior to execution on the remote system.",
-      "argument": "1",
-      "showArgument": true
+  ],
+  "parameters":[
+    {
+      "id":"unpackInputs",
+      "details":{
+        "label":"Unpack input(s)",
+        "description":"If true, any compressed input files will be expanded prior to execution on the remote system.",
+        "argument":"1",
+        "showArgument":true
+      },
+      "value":{
+        "default":false,
+        "type":"flag",
+        "visible":true,
+        "required":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:boolean"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
     },
-    "value": {
-      "default": false,
-      "type": "flag",
-      "visible": true,
-      "required": false
+    {
+      "id":"chartType",
+      "value":{
+        "default":"bar",
+        "type":"enumeration",
+        "enum_values":[
+          {
+            "bar":"Bar Chart"
+          },
+          {
+            "line":"Line Chart"
+          }
+        ],
+        "visible":true,
+        "required":true,
+        "enquote":false
+      },
+      "details":{
+        "label":"Chart types",
+        "description":"Select one or more chart types to generate for each dataset",
+        "argument":null,
+        "showArgument":false,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:enumeration",
+          "xs:string"
+        ],
+        "minCardinality":1,
+        "maxCardinality":2
+      }
     },
-    "semantics": {
-      "ontology": [
-        "xs:boolean"
-      ]
+    {
+      "id":"xlabel",
+      "value":{
+        "default":"Time",
+        "type":"string",
+        "validator":"",
+        "visible":true,
+        "required":false,
+        "enquote":true
+      },
+      "details":{
+        "label":"X-axis label",
+        "description":"Label to display below the x-axis",
+        "argument":"--x-label=",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:string"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"showXLabel",
+      "value":{
+        "default":true,
+        "type":"flag",
+        "validator":"",
+        "visible":true,
+        "required":false
+      },
+      "details":{
+        "label":"Show x-axis label?",
+        "description":"Select whether a label will be shown on the x axis",
+        "argument":"--show-x-label",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:boolean"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"ylabel",
+      "value":{
+        "default":"Magnitude",
+        "type":"string",
+        "validator":"",
+        "visible":true,
+        "required":false,
+        "enquote":true
+      },
+      "details":{
+        "label":"Y-axis label",
+        "description":"Label to display below the y-axis",
+        "argument":"--y-label=",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:string"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"showYLabel",
+      "value":{
+        "default":true,
+        "type":"flag",
+        "validator":"",
+        "visible":true,
+        "required":false,
+        "enquote":false
+      },
+      "details":{
+        "label":"Show y-axis label?",
+        "description":"Select whether a label will be shown on the y axis",
+        "argument":"--show-y-label",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:boolean"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"showLegend",
+      "value":{
+        "default":false,
+        "type":"flag",
+        "validator":"",
+        "visible":true,
+        "required":false,
+        "enquote":false
+      },
+      "details":{
+        "label":"Extract the first k bytes",
+        "description":"Select whether to include a legend in each chart",
+        "argument":"--show-legend",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:string"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"separateCharts",
+      "value":{
+        "default":false,
+        "type":"flag",
+        "validator":"",
+        "visible":true,
+        "required":false,
+        "enquote":false
+      },
+      "details":{
+        "label":"Extract the first k bytes",
+        "description":"Select whether to include a legend in each chart",
+        "argument":"--file-per-series",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:boolean"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"height",
+      "value":{
+        "default":512,
+        "type":"number",
+        "validator":"\\d+",
+        "visible":true,
+        "required":false,
+        "enquote":false
+      },
+      "details":{
+        "label":"Chart height",
+        "description":"The height in pixels of each chart",
+        "argument":"--height=",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:integer"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"width",
+      "value":{
+        "default":1024,
+        "type":"number",
+        "validator":"\\d+",
+        "visible":true,
+        "required":false,
+        "enquote":false
+      },
+      "details":{
+        "label":"Chart width",
+        "description":"The width in pixels of each chart",
+        "argument":"--width=",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:integer"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
+    },
+    {
+      "id":"background",
+      "value":{
+        "default":"#FFFFFF",
+        "type":"string",
+        "validator":"^#(?:[0-9a-fA-F]{6}){1}$",
+        "visible":true,
+        "required":false,
+        "enquote":true
+      },
+      "details":{
+        "label":"Background color",
+        "description":"The hexadecimal background color of the charts. White by default",
+        "argument":"--background=",
+        "showArgument":true,
+        "repeatArgument":false
+      },
+      "semantics":{
+        "ontology":[
+          "xs:string"
+        ],
+        "minCardinality":0,
+        "maxCardinality":1
+      }
     }
-  }, {
-    "id": "chartType",
-    "value": {
-      "default": ["bar", "line"],
-      "type": "enumeration",
-      "enum_values": [{
-        "bar": "Bar Chart"
-      }, {
-        "line": "Line Chart"
-      }],
-      "visible": true,
-      "required": true
-    },
-    "details": {
-      "label": "Chart types",
-      "description": "Select one or more chart types to generate for each dataset",
-      "argument": "",
-      "showArgument": false
-    },
-    "semantics": {
-      "ontology": [
-        "xs:enumeration",
-        "xs:string"
-      ]
-    }
-  }, {
-    "id": "xlabel",
-    "value": {
-      "default": "Time",
-      "type": "string",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "X-axis label",
-      "description": "Label to display below the x-axis",
-      "argument": "",
-      "showArgument": false
-    },
-    "semantics": {
-      "ontology": [
-        "xs:string"
-      ]
-    }
-  }, {
-    "id": "showXLabel",
-    "value": {
-      "default": true,
-      "type": "flag",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Show x-axis label?",
-      "description": "Select whether a label will be shown on the x axis",
-      "argument": "--show-x-label",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:boolean"
-      ]
-    }
-  }, {
-    "id": "ylabel",
-    "value": {
-      "default": "Magnitude",
-      "type": "string",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Y-axis label",
-      "description": "Label to display below the y-axis",
-      "argument": "",
-      "showArgument": false
-    },
-    "semantics": {
-      "ontology": [
-        "xs:string"
-      ]
-    }
-  }, {
-    "id": "showYLabel",
-    "value": {
-      "default": true,
-      "type": "flag",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Show y-axis label?",
-      "description": "Select whether a label will be shown on the y axis",
-      "argument": "--show-y-label",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:boolean"
-      ]
-    }
-  }, {
-    "id": "showLegend",
-    "value": {
-      "default": false,
-      "type": "flag",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Extract the first k bytes",
-      "description": "Select whether to include a legend in each chart",
-      "argument": "--show-legend",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:string"
-      ]
-    }
-  }, {
-    "id": "separateCharts",
-    "value": {
-      "default": false,
-      "type": "flag",
-      "validator": "",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Extract the first k bytes",
-      "description": "Select whether to include a legend in each chart",
-      "argument": "--file-per-series",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:boolean"
-      ]
-    }
-  }, {
-    "id": "height",
-    "value": {
-      "default": 512,
-      "type": "number",
-      "validator": "\\d+",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Chart height",
-      "description": "The height in pixels of each chart",
-      "argument": "--height=",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:integer"
-      ]
-    }
-  }, {
-    "id": "width",
-    "value": {
-      "default": 1024,
-      "type": "number",
-      "validator": "\\d+",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Chart width",
-      "description": "The width in pixels of each chart",
-      "argument": "--width=",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:integer"
-      ]
-    }
-  }, {
-    "id": "background",
-    "value": {
-      "default": "#FFFFFF",
-      "type": "string",
-      "validator": "^#(?:[0-9a-fA-F]{6}){1}$",
-      "visible": true,
-      "required": false
-    },
-    "details": {
-      "label": "Background color",
-      "description": "The hexadecimal background color of the charts. White by default",
-      "argument": "--background=",
-      "showArgument": true
-    },
-    "semantics": {
-      "ontology": [
-        "xs:string"
-      ]
-    }
-  }]
+  ]
 }

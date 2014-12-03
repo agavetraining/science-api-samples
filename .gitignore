@@ -16,6 +16,7 @@ target
 .project
 .settings
 .classpath
+.pydevproject
 
 # Apple system files
 .DS_Store
@@ -43,6 +44,7 @@ apps/docker-demo/docker-runner-1.1.2
 apps/docker-demo/generic-runtimes
 apps/docker-demo/run-from-github
 apps/docker-demo/science-app-images
+apps/pyplot-demo/advanced/pyplot-demo-advanced-0.1.0/live
 
 apps/pyplot-demo/archive
 apps/docker-runner-1.1.2

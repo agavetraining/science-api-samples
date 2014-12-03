@@ -1,20 +1,6 @@
 #set -x
 WRAPPERDIR=$( cd "$( dirname "$0" )" && pwd )
 
-# Set the x and y labels. Since we need to quote the values, we check for existence first
-# rather than prefixing with an argument defined and passed in from the app description.
-if [[ -n "${xlabel}" ]]; then
-	X_LABEL="--x-label=${xlabel}"
-else
-	X_LABEL="--x-label="
-fi
-
-if [[ -n "${ylabel}" ]]; then
-	Y_LABEL="--y-label=${ylabel}"
-else
-	Y_LABEL="--y-label="
-fi
-
 # The application bundle is already here. We check to see if we need to unpack
 # it using the boolean parameter `unpackInputs` passed in.
 if [ -n "${unpackInputs}" ]; then
@@ -34,7 +20,7 @@ if [ -n "${unpackInputs}" ]; then
 			bunzip "$i"
 		elif [ "$dataset_extension" == 'rar' ]; then
 			unrar "$i"
-		else
+		elif [ "$dataset_extension" != 'csv' ]; then
 			echo "Unable to unpack dataset due to unrecognized file extension, ${dataset_extension}. Terminating job ${AGAVE_JOB_ID}" >&2
 			${AGAVE_JOB_CALLBACK_FAILURE}
 			exit
@@ -57,7 +43,7 @@ for i in `find $WRAPPERDIR -name "*.csv"`; do
 		mkdir -p "$outdir"
 
 
-		python $WRAPPERDIR/lib/main.py ${showYLabel} "${Y_LABEL}" ${showXLabel} "${X_LABEL}" ${showLegend} ${height} ${width} ${background} ${format} ${separateCharts} -v --output-location=$outdir --chart-type=$j $i
+		python $WRAPPERDIR/lib/main.py ${showYLabel} ${ylabel} ${showXLabel} ${xlabel} ${showLegend} ${height} ${width} ${background} ${format} ${separateCharts} -v --output-location=$outdir --chart-type=$j $i
 
 		# send a callback notification for subscribers to receive alerts after every chart is generated
 		${AGAVE_JOB_CALLBACK_NOTIFICATION}
