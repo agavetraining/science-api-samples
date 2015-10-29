@@ -1,0 +1,20 @@
+{
+	"id": "ncbi",
+	"name": "NCBI ASN.1 Catalog",
+	"status": "UP",
+	"type": "STORAGE",
+	"description": "Readonly mirror of the NCBI ASN.1 catalog.",
+	"site": "ncbi.nih.gov",
+	"storage": {
+		"host": "ftp.ncbi.nih.gov",
+		"port": 21,
+		"protocol": "FTP",
+		"rootDir": "/ncbi-asn1",
+		"homeDir": "/",
+		"auth": {
+			"username": "anonymous",
+			"password": null,
+			"type": "ANONYMOUS"
+		}
+	}
+}

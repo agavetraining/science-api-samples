@@ -24,10 +24,12 @@
       "label": "Dockerfile",
       "description": "Dockerfile to build the container that will be run as the executable. This is optional. Only include if you need to build a new container that is not present in the Docker central index and your app bundle does not already have a Dockerfile in it.",
       "argument": null,
-      "showArgument": false
+      "showArgument": false,
+      "repeatArgument": false
     },
     "semantics": {
-      "minCardinality": 1,
+      "minCardinality": 0,
+      "maxCardinality": 1,
       "ontology": []
     },
     "value": {
@@ -37,14 +39,16 @@
   }, {
     "id": "appBundle",
     "details": {
-      "defaut": "agave://data.iplantcollaborative.org/dooley/apps/cloud-runner-0.1.0/test/testdata.tgz",
+      "defaut": "agave://araport-storage-00/mock/apps/cloud-runner-0.1.0/test/testdata.tgz",
       "label": "Application bundle",
       "description": "Compressed work folder containing application and binaries to be run in the Docker container. zip, gz.",
       "argument": null,
-      "showArgument": false
+      "showArgument": false,
+      "repeatArgument": false
     },
     "semantics": {
-      "minCardinality": 1,
+      "minCardinality": 0,
+      "maxCardinality": 1,
       "ontology": []
     },
     "value": {
